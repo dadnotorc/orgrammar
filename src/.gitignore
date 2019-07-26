@@ -1,0 +1,14 @@
+# Compiled class file
+*.class
+
+# Build generated files
+bin
+*.iml
+
+# IDEs and editors
+.classpath
+.idea/
+.project
+.settings/
+
+out/
