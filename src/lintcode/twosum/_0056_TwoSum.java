@@ -10,6 +10,8 @@ import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 
 /**
  * 56. Two Sum
+ * Easy
+ * Apple, LinkedIn, Airbnb, Facebook, Dropbox, Microsoft, Amazon, Uber
  *
  * Given an array of integers, find two numbers such that they add up to a
  *  specific target number.
@@ -45,24 +47,26 @@ public class _0056_TwoSum {
     public int[] twoSumHashMap(int[] numbers, int target) {
         // write your code here
 
-        // 使用HashMap记录当前值的下标(index)以及当前值与目标值的差值. 以差值作为entry key, 下标作为entry value
-        //  在数组的后续搜索中, 如果遇到已存在于HashMap的值, 即找到了相应的一组
+        // 使用HashMap记录当前值的下标(index)以及当前值与目标值的差值.
+        // 以差值作为entry key, 下标作为entry value
+        // 在数组的后续搜索中, 如果遇到已存在于HashMap的值, 即找到了相应的一组
         // 假设数组中仅可能存在一组答案, 所以无需考虑重复值的存在
         HashMap<Integer, Integer> map = new HashMap<>();
 
         for (int i = 0; i < numbers.length; i++) {
-            if (map.get(numbers[i]) != null) {
+            if (map.containsKey(numbers[i])) {
                 return new int[] {map.get(numbers[i]), i};
             }
             map.put(target - numbers[i], i);
         }
 
-        return new int[]{};
+        return new int[0];
     }
 
 
     /**
      * 使用 two pointers
+     * TODO 这段有bug
      */
 
     class Pair {
