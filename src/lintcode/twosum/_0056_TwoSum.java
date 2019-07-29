@@ -1,4 +1,10 @@
 package lintcode.twosum;
+/*
+Easy
+Sort, Hash Table, Array, Two Pointers
+Apple, LinkedIn, Airbnb, Facebook, Dropbox, Microsoft, Amazon, Uber
+FAQ++
+ */
 
 import org.junit.jupiter.api.Test;
 
@@ -10,8 +16,6 @@ import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 
 /**
  * 56. Two Sum
- * Easy
- * Apple, LinkedIn, Airbnb, Facebook, Dropbox, Microsoft, Amazon, Uber
  *
  * Given an array of integers, find two numbers such that they add up to a
  *  specific target number.

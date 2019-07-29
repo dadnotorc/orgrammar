@@ -38,7 +38,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
  * Challenge
  * - O(n) time
  */
-public class _0032_MinWindowSubstring {
+public class _0032_MinimumWindowSubstring {
 
     /**
      * 使用array, 速度较快
@@ -181,7 +181,7 @@ public class _0032_MinWindowSubstring {
     void test1() {
         String source = "abc", target = "ac";
         String expected = "abc";
-        String actual = new _0032_MinWindowSubstring().minWindow(source,target);
+        String actual = new _0032_MinimumWindowSubstring().minWindow(source,target);
         assertTrue(expected.equals(actual));
     }
 
@@ -189,7 +189,7 @@ public class _0032_MinWindowSubstring {
     void test2() {
         String source = "adobecodebanc", target = "abc";
         String expected = "banc";
-        String actual = new _0032_MinWindowSubstring().minWindow(source,target);
+        String actual = new _0032_MinimumWindowSubstring().minWindow(source,target);
         assertTrue(expected.equals(actual));
     }
 
@@ -197,7 +197,7 @@ public class _0032_MinWindowSubstring {
     void test3() {
         String source = "abc", target = "aa";
         String expected = "";
-        String actual = new _0032_MinWindowSubstring().minWindow(source,target);
+        String actual = new _0032_MinimumWindowSubstring().minWindow(source,target);
         assertTrue(expected.equals(actual));
     }
 
@@ -205,7 +205,7 @@ public class _0032_MinWindowSubstring {
     void test4() {
         String source = "a", target = "aa";
         String expected = "";
-        String actual = new _0032_MinWindowSubstring().minWindow(source,target);
+        String actual = new _0032_MinimumWindowSubstring().minWindow(source,target);
         assertTrue(expected.equals(actual));
     }
 
@@ -213,7 +213,7 @@ public class _0032_MinWindowSubstring {
     void test5() {
         String source = "daboc", target = "abc";
         String expected = "aboc";
-        String actual = new _0032_MinWindowSubstring().minWindow(source,target);
+        String actual = new _0032_MinimumWindowSubstring().minWindow(source,target);
         assertTrue(expected.equals(actual));
     }
 
@@ -221,7 +221,7 @@ public class _0032_MinWindowSubstring {
     void test6() {
         String source = "aboccb", target = "abc";
         String expected = "aboc";
-        String actual = new _0032_MinWindowSubstring().minWindow(source,target);
+        String actual = new _0032_MinimumWindowSubstring().minWindow(source,target);
         assertTrue(expected.equals(actual));
     }
 
@@ -229,7 +229,7 @@ public class _0032_MinWindowSubstring {
     void test7() {
         String source = "aaaaaaaaaaaabbbbbcdd", target = "abcdd";
         String expected = "abbbbbcdd";
-        String actual = new _0032_MinWindowSubstring().minWindow(source,target);
+        String actual = new _0032_MinimumWindowSubstring().minWindow(source,target);
         System.out.println("=" + actual + "=");
         assertTrue(expected.equals(actual));
     }
@@ -238,7 +238,7 @@ public class _0032_MinWindowSubstring {
     void test8() {
         String source = "aabc", target = "abc";
         String expected = "abc";
-        String actual = new _0032_MinWindowSubstring().minWindow(source,target);
+        String actual = new _0032_MinimumWindowSubstring().minWindow(source,target);
         System.out.println("=" + actual + "=");
         assertTrue(expected.equals(actual));
     }
