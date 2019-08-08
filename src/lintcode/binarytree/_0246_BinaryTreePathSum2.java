@@ -1,3 +1,8 @@
+/*
+Easy
+DFS, Recursion, Binary Tree
+Amazon
+ */
 package lintcode.binarytree;
 
 import util.TreeNode;
@@ -7,8 +12,6 @@ import java.util.List;
 
 /**
  * 246. Binary Tree Path Sum II
- * Easy
- * Amazon
  *
  * Your are given a binary tree in which each node contains a value.
  * Design an algorithm to get all paths which sum to a given value.

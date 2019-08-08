@@ -1,3 +1,8 @@
+/*
+Medium
+Binary Tree
+Amazon, Facebook, Google, LinkedIn, Microsoft, Uber
+ */
 package lintcode.binarytree;
 
 import org.junit.jupiter.api.Test;
@@ -11,9 +16,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
  * 7. Serialize and Deserialize Binary Tree
- * Medium
- * Amazon, Facebook, Google, LinkedIn, Microsoft, Uber
- *
+
  * Design an algorithm and write code to serialize and deserialize a binary tree.
  * Writing the tree to a file is called 'serialization' and reading back from
  *  the file to reconstruct the exact same binary tree is 'deserialization'.
@@ -41,7 +44,8 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
  *  2   3
  * it will be serialized {1,2,3}
  *
- * Our data serialization use BFS traversal. This is just for when you got Wrong Answer and want to debug the input.
+ * Our data serialization use BFS traversal. This is just for when you got
+ * Wrong Answer and want to debug the input.
  * You can use other method to do serializaiton and deserialization.
  */
 public class _0007_SerializeDeserializeBinaryTree {
@@ -170,9 +174,6 @@ public class _0007_SerializeDeserializeBinaryTree {
         assertTrue(expSe.equals(actSe));
 
         TreeNode deRoot = new _0007_SerializeDeserializeBinaryTree().deserialize(actSe);
-        System.out.println(deRoot.val);
-        System.out.println(deRoot.left.val);
-        System.out.println(deRoot.right.val);
-        assertNull(deRoot.left.left);
+        assertNull(deRoot);
     }
 }

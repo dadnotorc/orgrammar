@@ -1,10 +1,10 @@
-package lintcode.twosum;
 /*
 Easy
 Sort, Hash Table, Array, Two Pointers
 Apple, LinkedIn, Airbnb, Facebook, Dropbox, Microsoft, Amazon, Uber
 FAQ++
  */
+package lintcode.twosum;
 
 import org.junit.jupiter.api.Test;
 
@@ -45,8 +45,8 @@ public class _0056_TwoSum {
      * @param target: target = numbers[index1] + numbers[index2]
      * @return: [index1, index2] (index1 < index2)
      *
-     * 时间复杂度: O(n). HashMap的put/get一般情况下为O(1)
-     * 空间复杂度: O(n). 用于存储HashMap
+     * time: O(n). HashMap的put/get一般情况下为O(1)
+     * space: O(n). 用于存储HashMap
      */
     public int[] twoSumHashMap(int[] numbers, int target) {
         // write your code here

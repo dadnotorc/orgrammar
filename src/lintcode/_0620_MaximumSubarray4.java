@@ -1,9 +1,9 @@
-package lintcode;
 /*
 Medium
+Subarray, Array, Two Pointers
 Amazon, Facebook
-#Subarray, #Array, #Two Pointers
  */
+package lintcode;
 
 import org.junit.jupiter.api.Test;
 
@@ -23,21 +23,13 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
  * 2. k > 0
  *
  * Example 1:
- * Input:
- * [-2,2,-3,4,-1,2,1,-5,3]
- * 5
- * Output:
- * 5
- * Explanation:
- * [2,-3,4,-1,2,1]
- * sum=5
+ * Input: [-2,2,-3,4,-1,2,1,-5,3], 5
+ * Output: 5
+ * Explanation: [2,-3,4,-1,2,1], sum=5
  *
  * Example 2:
- * Input:
- * [5,-10,4]
- * 2
- * Output:
- * -1
+ * Input: [5,-10,4], 2
+ * Output: -1
  */
 public class _0620_MaximumSubarray4 {
 
@@ -48,6 +40,8 @@ public class _0620_MaximumSubarray4 {
      * 右指针指在i位, 左指针指去i-k+1位, 左右指针之间subarray长度为k
      * minSum记录index 1到i-k+1之间, 最小的前缀和.
      * 当前前缀和 - k位之前的最小前缀和 = 当前subarray之和. 纪录最大值并返回
+     * time: O(n)
+     * space: O(1)
      */
     public int maxSubarray4(int[] nums, int k) {
         int ans = Integer.MIN_VALUE;
@@ -55,7 +49,7 @@ public class _0620_MaximumSubarray4 {
 
         int l = 0, r = 0;
         // 注意, 这里不能用 minSum = Integer.MAX_VALUE;
-        // 因为当右指针指去k-1时, 当前subarry和 = nums[r] - 0;
+        // 因为当右指针指去k-1时, 当前subarray和 = nums[r] - 0;
         // 之后才开始寻找更小的前缀和
         int minSum = 0;
 

@@ -36,7 +36,7 @@ import java.util.PriorityQueue;
 public class Heap_MergeSubFiles {
 
     /**
-     * 取最小值 - 使用 min heap
+     * 取最小值 - 使用 minheap
      *
      * @param numOfSubFiles the number of the sub files
      * @param files a list containing the sizes of the sub files

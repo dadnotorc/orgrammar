@@ -1,10 +1,10 @@
-package lintcode.binarytree;
 /*
 Medium
 Binary Tree Traversal, Queue, Binary Tree, BFS
 Apple, LinkedIn, Amazon, Facebook, Microsoft, Uber
 FAQ
  */
+package lintcode.binarytree;
 
 import util.TreeNode;
 
