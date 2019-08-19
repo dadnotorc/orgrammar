@@ -6,10 +6,10 @@ FAQ+
  */
 package lintcode.twopointers;
 
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 /**
  * 415. Valid Palindrome
@@ -98,56 +98,56 @@ public class _0415_ValidPalindrome {
     }
 
     @Test
-    void test0() {
+    public void test0() {
         String s = null;
         assertTrue(isPalindrome(s));
         assertTrue(isPalindrome_regex(s));
     }
 
     @Test
-    void test1() {
+    public void test1() {
         String s = "race a car";
         assertFalse(isPalindrome(s));
         assertFalse(isPalindrome_regex(s));
     }
 
     @Test
-    void test2() {
+    public void test2() {
         String s = "A man, a plan, a canal: Panama";
         assertTrue(isPalindrome(s));
         assertTrue(isPalindrome_regex(s));
     }
 
     @Test
-    void test3() {
+    public void test3() {
         String s = "";
         assertTrue(isPalindrome(s));
         assertTrue(isPalindrome_regex(s));
     }
 
     @Test
-    void test4() {
+    public void test4() {
         String s = "A";
         assertTrue(isPalindrome(s));
         assertTrue(isPalindrome_regex(s));
     }
 
     @Test
-    void test5() {
+    public void test5() {
         String s = "A a";
         assertTrue(isPalindrome(s));
         assertTrue(isPalindrome_regex(s));
     }
 
     @Test
-    void test6() {
+    public void test6() {
         String s = "Aba";
         assertTrue(isPalindrome(s));
         assertTrue(isPalindrome_regex(s));
     }
 
     @Test
-    void test7() {
+    public void test7() {
         String s = "A b,B A  ";
         assertTrue(isPalindrome(s));
         assertTrue(isPalindrome_regex(s));

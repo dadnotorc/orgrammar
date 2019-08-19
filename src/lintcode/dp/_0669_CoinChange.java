@@ -1,10 +1,10 @@
 package lintcode.dp;
 
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 
 import java.util.Hashtable;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.Assert.assertEquals;
 
 /**
  * 669. Coin Change
@@ -99,7 +99,7 @@ public class _0669_CoinChange {
     }
 
     @Test
-    void test1() {
+    public void test1() {
         int[] coins = {1,2,5};
         int amount = 11;
         int expected = 3;
@@ -108,7 +108,7 @@ public class _0669_CoinChange {
     }
 
     @Test
-    void test2() {
+    public void test2() {
         int[] coins = {2};
         int amount = 3;
         int expected = -1;

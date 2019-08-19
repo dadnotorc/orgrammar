@@ -1,12 +1,12 @@
 package leetcode;
 
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 
 import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.PriorityQueue;
 
-import static org.junit.jupiter.api.Assertions.assertArrayEquals;
+import static org.junit.Assert.assertArrayEquals;
 
 /**
  * 1122. Relative Sort Array
@@ -106,7 +106,7 @@ public class _1122_RelativeSortArray {
      */
 
     @Test
-    void test1() {
+    public void test1() {
         //int[] arr1 = {33,22,48,4,39,36,41,47,15,45};
         int[] arr1 = {33,22,48,4,60,36,41,47,15,45};
         int[] arr2 = {22,33,48,4};

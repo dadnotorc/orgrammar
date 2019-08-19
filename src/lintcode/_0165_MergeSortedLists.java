@@ -1,9 +1,10 @@
 package lintcode;
 
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
+import util.ListNode;
 
-import static org.junit.jupiter.api.Assertions.assertNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 
 /**
  * 165. Merge Two Sorted Lists
@@ -16,14 +17,6 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
  * space complexity: O(1)
  */
 public class _0165_MergeSortedLists {
-    public static class ListNode {
-        public int val;
-        public ListNode next;
-        public ListNode(int x) {
-            val = x;
-            next = null;
-        }
-    }
 
     /**
      * @param l1: ListNode l1 is the head of the linked list
@@ -57,29 +50,29 @@ public class _0165_MergeSortedLists {
     }
 
     @Test
-    void test1() {
+    public void test1() {
         // Input: list1 = null, list2 = 0->3->3->null
         // Output: 0->3->3->null
 
-        _0165_MergeSortedLists.ListNode l1 = null;
+        ListNode l1 = null;
 
-        _0165_MergeSortedLists.ListNode l2 = new _0165_MergeSortedLists.ListNode(0);
-        _0165_MergeSortedLists.ListNode node2 = l2;
-        node2.next = new _0165_MergeSortedLists.ListNode(3);
+        ListNode l2 = new ListNode(0);
+        ListNode node2 = l2;
+        node2.next = new ListNode(3);
         node2 = node2.next;
-        node2.next = new _0165_MergeSortedLists.ListNode(3);
+        node2.next = new ListNode(3);
         node2 = node2.next;
         node2.next = null;
 
-        _0165_MergeSortedLists.ListNode l3 = new _0165_MergeSortedLists.ListNode(0);
-        _0165_MergeSortedLists.ListNode node3 = l3;
-        node3.next = new _0165_MergeSortedLists.ListNode(3);
+        ListNode l3 = new ListNode(0);
+        ListNode node3 = l3;
+        node3.next = new ListNode(3);
         node3 = node3.next;
-        node3.next = new _0165_MergeSortedLists.ListNode(3);
+        node3.next = new ListNode(3);
         node3 = node3.next;
         node3.next = null;
 
-        _0165_MergeSortedLists.ListNode rstList = _0165_MergeSortedLists.mergeTwoLists(l1, l2);
+        ListNode rstList = _0165_MergeSortedLists.mergeTwoLists(l1, l2);
 
         while (l3 != null || rstList !=null) {
             assertTrue(l3.val == rstList.val);
@@ -91,41 +84,41 @@ public class _0165_MergeSortedLists {
     }
 
     @Test
-    void test2() {
+    public void test2() {
         // Input:  list1 =  1->3->8->11->15->null, list2 = 2->null
         // Output: 1->2->3->8->11->15->null
 
-        _0165_MergeSortedLists.ListNode l1 = new _0165_MergeSortedLists.ListNode(1);
-        _0165_MergeSortedLists.ListNode node1 = l1;
-        node1.next = new _0165_MergeSortedLists.ListNode(3);
+        ListNode l1 = new ListNode(1);
+        ListNode node1 = l1;
+        node1.next = new ListNode(3);
         node1 = node1.next;
-        node1.next = new _0165_MergeSortedLists.ListNode(8);
+        node1.next = new ListNode(8);
         node1 = node1.next;
-        node1.next = new _0165_MergeSortedLists.ListNode(11);
+        node1.next = new ListNode(11);
         node1 = node1.next;
-        node1.next = new _0165_MergeSortedLists.ListNode(15);
+        node1.next = new ListNode(15);
         node1 = node1.next;
         node1.next = null;
 
-        _0165_MergeSortedLists.ListNode l2 = new _0165_MergeSortedLists.ListNode(2);
-        _0165_MergeSortedLists.ListNode node2 = l2;
+        ListNode l2 = new ListNode(2);
+        ListNode node2 = l2;
         node2.next = null;
 
-        _0165_MergeSortedLists.ListNode l3 = new _0165_MergeSortedLists.ListNode(1);
-        _0165_MergeSortedLists.ListNode node3 = l3;
-        node3.next = new _0165_MergeSortedLists.ListNode(2);
+        ListNode l3 = new ListNode(1);
+        ListNode node3 = l3;
+        node3.next = new ListNode(2);
         node3 = node3.next;
-        node3.next = new _0165_MergeSortedLists.ListNode(3);
+        node3.next = new ListNode(3);
         node3 = node3.next;
-        node3.next = new _0165_MergeSortedLists.ListNode(8);
+        node3.next = new ListNode(8);
         node3 = node3.next;
-        node3.next = new _0165_MergeSortedLists.ListNode(11);
+        node3.next = new ListNode(11);
         node3 = node3.next;
-        node3.next = new _0165_MergeSortedLists.ListNode(15);
+        node3.next = new ListNode(15);
         node3 = node3.next;
         node3.next = null;
 
-        _0165_MergeSortedLists.ListNode rstList = _0165_MergeSortedLists.mergeTwoLists(l1, l2);
+        ListNode rstList = _0165_MergeSortedLists.mergeTwoLists(l1, l2);
 
         while (l3 != null || rstList !=null) {
             assertTrue(l3.val == rstList.val);

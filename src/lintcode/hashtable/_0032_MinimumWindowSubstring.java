@@ -1,11 +1,12 @@
 package lintcode.hashtable;
 
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 
 import java.util.Enumeration;
 import java.util.Hashtable;
 
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.Assert.assertTrue;
+
 
 /**
  * 32. Minimum Window Substring
@@ -178,7 +179,7 @@ public class _0032_MinimumWindowSubstring {
     }
 
     @Test
-    void test1() {
+    public void test1() {
         String source = "abc", target = "ac";
         String expected = "abc";
         String actual = new _0032_MinimumWindowSubstring().minWindow(source,target);
@@ -186,7 +187,7 @@ public class _0032_MinimumWindowSubstring {
     }
 
     @Test
-    void test2() {
+    public void test2() {
         String source = "adobecodebanc", target = "abc";
         String expected = "banc";
         String actual = new _0032_MinimumWindowSubstring().minWindow(source,target);
@@ -194,7 +195,7 @@ public class _0032_MinimumWindowSubstring {
     }
 
     @Test
-    void test3() {
+    public void test3() {
         String source = "abc", target = "aa";
         String expected = "";
         String actual = new _0032_MinimumWindowSubstring().minWindow(source,target);
@@ -202,7 +203,7 @@ public class _0032_MinimumWindowSubstring {
     }
 
     @Test
-    void test4() {
+    public void test4() {
         String source = "a", target = "aa";
         String expected = "";
         String actual = new _0032_MinimumWindowSubstring().minWindow(source,target);
@@ -210,7 +211,7 @@ public class _0032_MinimumWindowSubstring {
     }
 
     @Test
-    void test5() {
+    public void test5() {
         String source = "daboc", target = "abc";
         String expected = "aboc";
         String actual = new _0032_MinimumWindowSubstring().minWindow(source,target);
@@ -218,7 +219,7 @@ public class _0032_MinimumWindowSubstring {
     }
 
     @Test
-    void test6() {
+    public void test6() {
         String source = "aboccb", target = "abc";
         String expected = "aboc";
         String actual = new _0032_MinimumWindowSubstring().minWindow(source,target);
@@ -226,7 +227,7 @@ public class _0032_MinimumWindowSubstring {
     }
 
     @Test
-    void test7() {
+    public void test7() {
         String source = "aaaaaaaaaaaabbbbbcdd", target = "abcdd";
         String expected = "abbbbbcdd";
         String actual = new _0032_MinimumWindowSubstring().minWindow(source,target);
@@ -235,7 +236,7 @@ public class _0032_MinimumWindowSubstring {
     }
 
     @Test
-    void test8() {
+    public void test8() {
         String source = "aabc", target = "abc";
         String expected = "abc";
         String actual = new _0032_MinimumWindowSubstring().minWindow(source,target);

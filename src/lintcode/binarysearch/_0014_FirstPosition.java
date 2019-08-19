@@ -1,8 +1,8 @@
 package lintcode.binarysearch;
 
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.Assert.assertTrue;
 
 /**
  * 14. First Position of Target
@@ -55,7 +55,7 @@ public class _0014_FirstPosition {
     }
 
 	@Test
-	void test1() {
+	public void test1() {
 		int[] nums = new int[] {1,4,4,5,6,6,7,8,9,10};
 		int target = 1;
 		int result = (new _0014_FirstPosition().binarySearch(nums, target));
@@ -64,7 +64,7 @@ public class _0014_FirstPosition {
 	}
 
 	@Test
-	void test2() {
+	public void test2() {
 		int[] nums = new int[] {1,2,3,3,4,5,10};
 		int target = 3;
 		int result = (new _0014_FirstPosition().binarySearch(nums, target));
@@ -73,7 +73,7 @@ public class _0014_FirstPosition {
 	}
 
 	@Test
-	void test3() {
+	public void test3() {
 		int[] nums = new int[] {1,2,3,3,4,5,10};
 		int target = 6;
 		int result = (new _0014_FirstPosition().binarySearch(nums, target));

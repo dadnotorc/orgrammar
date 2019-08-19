@@ -1,13 +1,13 @@
 package interviews;
 
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 
-import static org.junit.jupiter.api.Assertions.assertArrayEquals;
+import static org.junit.Assert.assertArrayEquals;
 
 class FindLargestSubarrayTest {
 
     @Test
-    void test0() {
+    public void test0() {
         int[] a = {1, -2, 10, -1, 20, -100};
         int[] exp = {10, -1, 20};
         int[] act = new FindLargestSubarray().continuousSubarraySum(a);
@@ -15,7 +15,7 @@ class FindLargestSubarrayTest {
     }
 
     @Test
-    void test1() {
+    public void test1() {
         int[] a = {0};
         int[] exp = {0};
         int[] act = new FindLargestSubarray().continuousSubarraySum(a);
@@ -23,7 +23,7 @@ class FindLargestSubarrayTest {
     }
 
     @Test
-    void test2() {
+    public void test2() {
         int[] a = {-3, 1, 3, -3, 4};
         int[] exp = {1, 3, -3, 4};
         int[] act = new FindLargestSubarray().continuousSubarraySum(a);
@@ -31,7 +31,7 @@ class FindLargestSubarrayTest {
     }
 
     @Test
-    void test3() {
+    public void test3() {
         int[] a = {0, 1, 0, 1};
         int[] exp = {0, 1, 0, 1};
         int[] act = new FindLargestSubarray().continuousSubarraySum(a);
@@ -39,7 +39,7 @@ class FindLargestSubarrayTest {
     }
 
     @Test
-    void test4() {
+    public void test4() {
         int[] a = {-4,7,-8,6,-5,-3,4};
         int[] exp = {7};
         int[] act = new FindLargestSubarray().continuousSubarraySum(a);
@@ -47,7 +47,7 @@ class FindLargestSubarrayTest {
     }
 
     @Test
-    void test5() {
+    public void test5() {
         int[] a = {-3,1,3,-4,7};
         int[] exp = {1,3,-4,7};
         int[] act = new FindLargestSubarray().continuousSubarraySum(a);
@@ -55,7 +55,7 @@ class FindLargestSubarrayTest {
     }
 
     @Test
-    void test6() {
+    public void test6() {
         int[] a = {1,0,0,1};
         int[] exp = {1,0,0,1};
         int[] act = new FindLargestSubarray().continuousSubarraySum(a);
@@ -63,7 +63,7 @@ class FindLargestSubarrayTest {
     }
 
     @Test
-    void test7() {
+    public void test7() {
         int[] a = {-1,0,0,1};
         int[] exp = {0,0,1};
         int[] act = new FindLargestSubarray().continuousSubarraySum(a);
@@ -71,7 +71,7 @@ class FindLargestSubarrayTest {
     }
 
     @Test
-    void test8() {
+    public void test8() {
         int[] a = {0,0,0,1};
         int[] exp = {0,0,0,1};
         int[] act = new FindLargestSubarray().continuousSubarraySum(a);
@@ -82,7 +82,7 @@ class FindLargestSubarrayTest {
      * 注意 这个case
      */
     @Test
-    void test9() {
+    public void test9() {
         int[] a = {-1,-2,-3,-100,1,2,3,100};
         int[] exp = {1,2,3,100};
         int[] act = new FindLargestSubarray().continuousSubarraySum(a);
@@ -90,7 +90,7 @@ class FindLargestSubarrayTest {
     }
 
     @Test
-    void test10() {
+    public void test10() {
         int[] a = {-101,-33,-44,-55,-67,-78,-101,-33,-44,-55,-67,-78,-100,-200,-1000,-22,-100,-200,-1000,-22};
         int[] exp = {-22};
         int[] act = new FindLargestSubarray().continuousSubarraySum(a);
@@ -98,7 +98,7 @@ class FindLargestSubarrayTest {
     }
 
     @Test
-    void test11() {
+    public void test11() {
         int[] a = {1,0,0,0};
         int[] exp = {1};
         int[] act = new FindLargestSubarray().continuousSubarraySum(a);
@@ -106,7 +106,7 @@ class FindLargestSubarrayTest {
     }
 
     @Test
-    void test12() {
+    public void test12() {
         int[] a = {};
         int[] exp = {};
         int[] act = new FindLargestSubarray().continuousSubarraySum(a);

@@ -1,11 +1,11 @@
 package lintcode.stack;
 
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 
 import java.util.ArrayDeque;
 import java.util.Deque;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.Assert.assertEquals;
 
 /**
  * 421. Simplify Path
@@ -75,7 +75,7 @@ public class _0421_SimplifyPath {
     }
 
     @Test
-    void test1() {
+    public void test1() {
         String in = "/home/";
         String expected = "/home";
         String actual = new _0421_SimplifyPath().simplifyPath(in);
@@ -84,7 +84,7 @@ public class _0421_SimplifyPath {
     }
 
     @Test
-    void test2() {
+    public void test2() {
         String in = "/a/./../../c/";
         String expected = "/c";
         String actual = new _0421_SimplifyPath().simplifyPath(in);
@@ -93,7 +93,7 @@ public class _0421_SimplifyPath {
     }
 
     @Test
-    void test3() {
+    public void test3() {
         String in = "/../";
         String expected = "/";
         String actual = new _0421_SimplifyPath().simplifyPath(in);
@@ -102,7 +102,7 @@ public class _0421_SimplifyPath {
     }
 
     @Test
-    void test4() {
+    public void test4() {
         String in = "/a//b/";
         String expected = "/a/b";
         String actual = new _0421_SimplifyPath().simplifyPath(in);
@@ -111,7 +111,7 @@ public class _0421_SimplifyPath {
     }
 
     @Test
-    void test5() {
+    public void test5() {
         String in = "/a/./../";
         String expected = "/";
         String actual = new _0421_SimplifyPath().simplifyPath(in);
@@ -120,7 +120,7 @@ public class _0421_SimplifyPath {
     }
 
     @Test
-    void test6() {
+    public void test6() {
         String in = "/a/b/c/../";
         String expected = "/a/b";
         String actual = new _0421_SimplifyPath().simplifyPath(in);

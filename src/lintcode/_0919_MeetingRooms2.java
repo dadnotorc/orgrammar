@@ -1,11 +1,11 @@
 package lintcode;
 
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 import util.Interval;
 
 import java.util.*;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.Assert.assertEquals;
 
 /**
  * 919. Meeting Rooms II
@@ -128,7 +128,7 @@ public class _0919_MeetingRooms2 {
     }
 
     @Test
-    void test1() {
+    public void test1() {
         List<Interval> list = new ArrayList<>();
         list.add(new Interval(0, 30));
         list.add(new Interval(5, 10));
@@ -138,7 +138,7 @@ public class _0919_MeetingRooms2 {
     }
 
     @Test
-    void test2() {
+    public void test2() {
         List<Interval> list = new ArrayList<>();
         list.add(new Interval(2, 7));
         assertEquals(1, new _0919_MeetingRooms2().minMeetingRooms(list));

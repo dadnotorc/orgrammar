@@ -1,11 +1,11 @@
 package lintcode.stack;
 
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 
 import java.util.ArrayDeque;
 import java.util.Deque;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.Assert.assertEquals;
 
 /**
  * 978. Basic Calculator
@@ -87,14 +87,14 @@ public class _0978_BasicCalculator {
     }
 
     @Test
-    void test1() {
+    public void test1() {
         String s = "1 + 1";
         int actual = new _0978_BasicCalculator().calculate(s);
         assertEquals(2, actual);
     }
 
     @Test
-    void test2() {
+    public void test2() {
         String s = "(1+(4+5+2)-3)+(6+8)";
         int actual = new _0978_BasicCalculator().calculate(s);
         assertEquals(23, actual);

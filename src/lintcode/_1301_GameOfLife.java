@@ -1,10 +1,9 @@
 package lintcode;
 
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 import util.helper;
 
-import static org.junit.jupiter.api.Assertions.assertArrayEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.Assert.*;
 
 /**
  * 1301. Game of Life
@@ -201,7 +200,7 @@ public class _1301_GameOfLife {
     }
 
     @Test
-    void test1() {
+    public void test1() {
         int[][] board = {{0,1,0},{0,0,1},{1,1,1},{0,0,0}};
         int[][] expected = {{0,0,0},{1,0,1},{0,1,1},{0,1,0}};
 
@@ -216,7 +215,7 @@ public class _1301_GameOfLife {
     }
 
     @Test
-    void test2() {
+    public void test2() {
         int[][] board = {{0,1,0},{0,0,1},{1,1,1},{0,0,0}};
         int[][] expected = {{0,0,0},{1,0,1},{0,1,1},{0,1,0}};
 

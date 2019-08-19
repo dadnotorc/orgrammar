@@ -1,6 +1,6 @@
 package lintcode;
 
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 import util.helper;
 
 import java.util.ArrayList;
@@ -8,7 +8,8 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.Assert.assertArrayEquals;
+import static org.junit.Assert.assertTrue;
 
 /**
  * 1380. Log Sorting
@@ -107,7 +108,7 @@ public class _1380_LogSorting {
     */
 
     @Test
-    void test1() {
+    public void test1() {
         String[] logs = {
                 "zo4 4 7",
                 "a100 Act zoo",
@@ -124,7 +125,7 @@ public class _1380_LogSorting {
     }
 
     @Test
-    void test2() {
+    public void test2() {
         String[] logs = {
                 "zo4 4 7",
                 "a100 Actzoo",

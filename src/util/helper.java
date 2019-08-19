@@ -1,5 +1,7 @@
 package util;
 
+import lintcode._0165_MergeSortedLists;
+
 public class helper {
 	public static void main(String[] args) {
 //        String str = "abc";
@@ -11,15 +13,19 @@ public class helper {
 //        }
 //        System.out.print("\n");
 
-        int[][] d = {{1,2}, {3,4}, {5,6}, {7,8}};
-        System.out.println(d[0][0]);
-        System.out.println(d[0][1]);
-        System.out.println(d[1][0]);
-        System.out.println(d[1][1]);
+//        int[][] d = {{1,2}, {3,4}, {5,6}, {7,8}};
+//        System.out.println(d[0][0]);
+//        System.out.println(d[0][1]);
+//        System.out.println(d[1][0]);
+//        System.out.println(d[1][1]);
+//
+//        int[] d0 = d[0];
+//        System.out.println(d0[0]);
+//        System.out.println(d0[1]);
 
-        int[] d0 = d[0];
-        System.out.println(d0[0]);
-        System.out.println(d0[1]);
+        int a = -13;
+        System.out.println(a % 10);
+
     }
 
     public boolean isOdd(int n) {
@@ -76,6 +82,17 @@ public class helper {
 	    System.out.print("array=");
 	    for (int a : arr) {
             System.out.print(a + ", ");
+        }
+        System.out.print("\n");
+    }
+
+    public static void log(ListNode l) {
+        while (l != null) {
+            System.out.print(l.val);
+            if (l.next != null) {
+                System.out.print("->");
+            }
+            l = l.next;
         }
         System.out.print("\n");
     }

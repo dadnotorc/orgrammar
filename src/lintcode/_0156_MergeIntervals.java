@@ -1,6 +1,6 @@
 package lintcode;
 
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 import util.Interval;
 
 import java.util.ArrayList;
@@ -8,7 +8,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.Assert.assertEquals;
 
 /**
  * 156. Merge Intervals
@@ -66,7 +66,7 @@ public class _0156_MergeIntervals {
     }
 
     @Test
-    void test1() {
+    public void test1() {
         List<Interval> list = new ArrayList<>();
         list.add(new Interval(1, 3));
         List<Interval> expected = new ArrayList<>();
@@ -78,7 +78,7 @@ public class _0156_MergeIntervals {
     }
 
     @Test
-    void test2() {
+    public void test2() {
         List<Interval> list = new ArrayList<>();
         list.add(new Interval(1, 3));
         list.add(new Interval(2, 6));
@@ -100,7 +100,7 @@ public class _0156_MergeIntervals {
     }
 
     @Test
-    void test3() {
+    public void test3() {
         List<Interval> list = new ArrayList<>();
         list.add(new Interval(2, 3));
         list.add(new Interval(4, 5));

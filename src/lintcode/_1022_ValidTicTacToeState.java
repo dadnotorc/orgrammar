@@ -1,9 +1,8 @@
 package lintcode;
 
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.Assert.*;
 
 /**
  * 1022. Valid Tic-Tac-Toe State
@@ -117,28 +116,28 @@ public class _1022_ValidTicTacToeState {
     }
 
     @Test
-    void test1() {
+    public void test1() {
         String[] b = {"O  ", "   ", "   "};
         boolean actual = new _1022_ValidTicTacToeState().validTicTacToe(b);
         assertFalse(actual);
     }
 
     @Test
-    void test2() {
+    public void test2() {
         String[] b = {"XOX", " X ", "   "};
         boolean actual = new _1022_ValidTicTacToeState().validTicTacToe(b);
         assertFalse(actual);
     }
 
     @Test
-    void test3() {
+    public void test3() {
         String[] b = {"XXX", "   ", "OOO"};
         boolean actual = new _1022_ValidTicTacToeState().validTicTacToe(b);
         assertFalse(actual);
     }
 
     @Test
-    void test4() {
+    public void test4() {
         String[] b = {"XOX", "O O", "XOX"};
         boolean actual = new _1022_ValidTicTacToeState().validTicTacToe(b);
         assertTrue(actual);

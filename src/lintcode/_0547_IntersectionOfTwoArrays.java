@@ -1,12 +1,12 @@
 package lintcode;
 
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Iterator;
 
-import static org.junit.jupiter.api.Assertions.assertArrayEquals;
+import static org.junit.Assert.assertArrayEquals;
 
 /**
  * 547. Intersection of Two Arrays
@@ -188,7 +188,7 @@ public class _0547_IntersectionOfTwoArrays {
     }
 
     @Test
-    void test1() {
+    public void test1() {
         int[] a = {1,2,2,1};
         int[] b = {2,2};
         int[] expected = {2};
@@ -203,7 +203,7 @@ public class _0547_IntersectionOfTwoArrays {
     }
 
     @Test
-    void test2() {
+    public void test2() {
         int[] a = {1,2};
         int[] b = {2};
         int[] expected = {2};
@@ -218,7 +218,7 @@ public class _0547_IntersectionOfTwoArrays {
     }
 
     @Test
-    void test3() {
+    public void test3() {
         int[] a = {7,3,5,9,7,3};
         int[] b = {5,3,5,8};
         int[] expected = {3,5};

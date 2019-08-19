@@ -1,11 +1,11 @@
 package lintcode;
 
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 
 import java.util.LinkedList;
 import java.util.Queue;
 
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.Assert.assertTrue;
 
 /**
  * 611. Knight Shortest Path
@@ -147,7 +147,7 @@ public class _0611_KnightShortestPath {
     }*/
 
     @Test
-    void test1() {
+    public void test1() {
         boolean[][] grid = new boolean[][]{{false,false,false}, {false,false,false}, {false,false,false}};
         _0611_KnightShortestPath.Point source = new _0611_KnightShortestPath.Point(2, 0);
         _0611_KnightShortestPath.Point dest = new _0611_KnightShortestPath.Point(2, 2);
@@ -157,7 +157,7 @@ public class _0611_KnightShortestPath {
     }
 
     @Test
-    void test2() {
+    public void test2() {
         boolean[][] grid = new boolean[][]{{false,true,false}, {false,false,true}, {false,false,false}};
         _0611_KnightShortestPath.Point source = new _0611_KnightShortestPath.Point(2, 0);
         _0611_KnightShortestPath.Point dest = new _0611_KnightShortestPath.Point(2, 2);

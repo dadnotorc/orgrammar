@@ -1,9 +1,9 @@
 package leetcode;
 
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 /**
  * 1094. Car Pooling
@@ -64,7 +64,7 @@ public class _1094_1001Stations {
     */
 
     @Test
-    void test1() {
+    public void test1() {
         int[][] trips = new int[][] {{2,1,5},{3,3,7}};
         int capacity = 4;
         boolean actual = (new _1094_1001Stations().carPooling(trips, capacity));
@@ -72,7 +72,7 @@ public class _1094_1001Stations {
     }
 
     @Test
-    void test2() {
+    public void test2() {
         int[][] trips = new int[][] {{2,1,5},{3,3,7}};
         int capacity = 5;
         boolean actual = (new _1094_1001Stations().carPooling(trips, capacity));
@@ -80,7 +80,7 @@ public class _1094_1001Stations {
     }
 
     @Test
-    void test3() {
+    public void test3() {
         int[][] trips = new int[][] {{2,1,5},{3,5,7}};
         int capacity = 3;
         boolean actual = (new _1094_1001Stations().carPooling(trips, capacity));
@@ -88,7 +88,7 @@ public class _1094_1001Stations {
     }
 
     @Test
-    void test4() {
+    public void test4() {
         int[][] trips = new int[][] {{3,2,7},{3,7,9},{8,3,9}};
         int capacity = 11;
         boolean actual = (new _1094_1001Stations().carPooling(trips, capacity));

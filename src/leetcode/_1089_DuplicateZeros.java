@@ -1,10 +1,10 @@
 package leetcode;
 
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 
 import java.util.HashSet;
 
-import static org.junit.jupiter.api.Assertions.assertArrayEquals;
+import static org.junit.Assert.assertArrayEquals;
 
 /**
  * 1089. Duplicate Zeros
@@ -116,7 +116,7 @@ public class _1089_DuplicateZeros {
 
 
     @Test
-    void test1() {
+    public void test1() {
         int[] arr = new int[]{1,0,2,3,0,4,5,0};
         int[] expected = {1,0,0,2,3,0,0,4};
         new _1089_DuplicateZeros().duplicateZeros(arr);
@@ -124,7 +124,7 @@ public class _1089_DuplicateZeros {
     }
 
     @Test
-    void test2() {
+    public void test2() {
         int[] arr = new int[]{1,2,3};
         int[] expected = {1,2,3};
         new _1089_DuplicateZeros().duplicateZeros(arr);

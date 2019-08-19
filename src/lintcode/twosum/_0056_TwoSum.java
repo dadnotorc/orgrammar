@@ -6,13 +6,13 @@ FAQ++
  */
 package lintcode.twosum;
 
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.HashMap;
 
-import static org.junit.jupiter.api.Assertions.assertArrayEquals;
+import static org.junit.Assert.assertArrayEquals;
 
 /**
  * 56. Two Sum
@@ -122,7 +122,7 @@ public class _0056_TwoSum {
     }
 
     @Test
-    void test1() {
+    public void test1() {
         int[] numbers = {2,7,11,15};
         int target = 9;
         int[] expected = {0,1};
@@ -133,7 +133,7 @@ public class _0056_TwoSum {
     }
 
     @Test
-    void test2() {
+    public void test2() {
         int[] numbers = {15,2,7,11};
         int target = 9;
         int[] expected = {1,2};

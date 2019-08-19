@@ -1,6 +1,6 @@
 package leetcode;
 
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 
 import java.util.Hashtable;
 
@@ -69,7 +69,7 @@ public class _5130_NumberOfEquivalentDominoPairs {
      * Expected: 3
      */
     @Test
-    void test1() {
+    public void test1() {
 
     }
 }

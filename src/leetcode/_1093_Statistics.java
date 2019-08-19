@@ -1,8 +1,8 @@
 package leetcode;
 
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.Assert.assertTrue;
 
 /**
  * 1093. Statistics from a Large Sample
@@ -92,7 +92,7 @@ public class _1093_Statistics {
     }
 
     @Test
-    void test1() {
+    public void test1() {
         // sample = [1,2,2,2,3,3,3,3]
         int[] count = new int[]{0,1,3,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
                 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
@@ -110,7 +110,7 @@ public class _1093_Statistics {
     }
 
     @Test
-    void test2() {
+    public void test2() {
         // sample = [1,1,1,1,2,2,2,3,3,4,4]
         int[] count = new int[]{0,4,3,2,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
                 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
@@ -128,7 +128,7 @@ public class _1093_Statistics {
     }
 
     @Test
-    void test3() {
+    public void test3() {
         // sample = [0,0,1,2,3,4]
         int[] count = new int[]{2,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
                 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
@@ -146,7 +146,7 @@ public class _1093_Statistics {
     }
 
     @Test
-    void test4() {
+    public void test4() {
         int[] count = new int[]{2725123,2529890,2612115,3807943,3002363,3107290,
                 2767526,981092,896521,2576757,2808163,3315813,2004022,2516900,
                 607052,1203189,2907162,1849193,1486120,743035,3621726,3366475,

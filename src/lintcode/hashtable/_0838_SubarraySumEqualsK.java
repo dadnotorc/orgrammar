@@ -1,10 +1,10 @@
 package lintcode.hashtable;
 
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 
 import java.util.Hashtable;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.Assert.assertEquals;
 
 /**
  * 838. Subarray Sum Equals K
@@ -132,7 +132,7 @@ public class _0838_SubarraySumEqualsK {
     }
 
     @Test
-    void test1() {
+    public void test1() {
         int[] nums = {1,1,1};
         int k = 2;
         int expected = 2;
@@ -145,7 +145,7 @@ public class _0838_SubarraySumEqualsK {
     }
 
     @Test
-    void test2() {
+    public void test2() {
         int[] nums = {2,1,-1,1,2};
         int k = 3;
         int expected = 4;
@@ -158,7 +158,7 @@ public class _0838_SubarraySumEqualsK {
     }
 
     @Test
-    void test3() {
+    public void test3() {
         int[] nums = {-4,-1,-6,16,13,2,-1,-4,6,6,-9,13,3,-6,-6,16,8,-10,2,1,0,8,6,16,11,0,10,-6,-5,16};
         int k = 12;
         int expected = 5;

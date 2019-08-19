@@ -1,12 +1,12 @@
 package lintcode;
 
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.Assert.assertTrue;
 
 /**
  * 235. Prime Factorization
@@ -47,7 +47,7 @@ public class _0235_PrimeFactorization {
     }
 
     @Test
-    void test1() {
+    public void test1() {
         List<Integer> expected = Arrays.asList(2, 5);
         List<Integer> actual = _0235_PrimeFactorization.primeFactorization(10);
 
@@ -58,7 +58,7 @@ public class _0235_PrimeFactorization {
     }
 
     @Test
-    void test2() {
+    public void test2() {
         List<Integer> expected = Arrays.asList(2, 2, 3, 5, 11);
         List<Integer> actual = _0235_PrimeFactorization.primeFactorization(660);
 

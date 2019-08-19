@@ -1,10 +1,10 @@
 package lintcode.twosum;
 
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 
 import java.util.Arrays;
 
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.Assert.assertTrue;
 
 /**High Five
  * 533. Two Sum - Closest to target
@@ -46,7 +46,7 @@ public class _0533_TwoSumClosest {
     }
 
     @Test
-    void test1() {
+    public void test1() {
         int[] nums = new int[] {-1, 2, 1, -4};
         int target = 4;
         int result = (new _0533_TwoSumClosest().twoSumClosest(nums, target));
@@ -55,7 +55,7 @@ public class _0533_TwoSumClosest {
     }
 
     @Test
-    void test2() {
+    public void test2() {
         int[] nums = new int[] {-1, -1, -1, -4};
         int target = 4;
         int result = (new _0533_TwoSumClosest().twoSumClosest(nums, target));

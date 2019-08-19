@@ -1,8 +1,8 @@
 package leetcode;
 
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 
-import static org.junit.jupiter.api.Assertions.assertArrayEquals;
+import static org.junit.Assert.assertArrayEquals;
 
 /**
  * 1109. Corporate Flight Bookings
@@ -44,7 +44,7 @@ public class _1109_FlightBookings {
     }
 
     @Test
-    void test1() {
+    public void test1() {
         int[][] bookings = {{1,2,10},{2,3,20},{2,5,25}};
         int n = 5;
         int[] expected = {10,55,45,25,25};

@@ -5,9 +5,9 @@ Amazon, Facebook
  */
 package lintcode;
 
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.Assert.assertEquals;
 
 
 /**
@@ -72,19 +72,19 @@ public class _0620_MaximumSubarray4 {
     }
 
     @Test
-    void test1() {
+    public void test1() {
         int act = maxSubarray4(new int[]{-2,2,-3,4,-1,2,1,-5,3}, 5);
         assertEquals(5, act);
     }
 
     @Test
-    void test2() {
+    public void test2() {
         int act = maxSubarray4(new int[]{5,-10,4}, 2);
         assertEquals(-1, act);
     }
 
     @Test
-    void test3() {
+    public void test3() {
         int act = maxSubarray4(new int[]{5}, 1);
         assertEquals(5, act);
     }

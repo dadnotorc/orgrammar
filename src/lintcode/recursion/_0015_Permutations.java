@@ -1,10 +1,11 @@
 package lintcode.recursion;
 
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 
 import java.util.*;
 
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.Assert.assertTrue;
+
 
 /**
  * 15. Permutations
@@ -122,7 +123,7 @@ public class _0015_Permutations {
     }
 
     @Test
-    void test1() {
+    public void test1() {
         int[] nums = {1};
         List expected = new ArrayList<>();
         List<Integer> l1 = new ArrayList<>();
@@ -133,7 +134,7 @@ public class _0015_Permutations {
     }
 
     @Test
-    void test2() {
+    public void test2() {
         int[] nums = {1,2,3};
         List expected = new ArrayList<>();
         expected.add(new ArrayList<>(Arrays.asList(1, 2, 3)));

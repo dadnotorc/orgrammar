@@ -1,11 +1,11 @@
 package leetcode.stack;
 
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 
 import java.util.ArrayDeque;
 import java.util.Deque;
 
-import static org.junit.jupiter.api.Assertions.assertArrayEquals;
+import static org.junit.Assert.assertArrayEquals;
 
 /**
  * 1111. Maximum Nesting Depth of Two Valid Parentheses Strings
@@ -72,7 +72,7 @@ public class _1111 {
     }
 
     @Test
-    void test1() {
+    public void test1() {
         String seq = "(()())";
         int[] expected = {0,1,1,1,1,0};
         int[] actual = new _1111().maxDepthAfterSplit(seq);
@@ -80,7 +80,7 @@ public class _1111 {
     }
 
     @Test
-    void test2() {
+    public void test2() {
         String seq = "()(())()";
         int[] expected = {0,0,0,1,1,0,1,1};
         int[] actual = new _1111().maxDepthAfterSplit(seq);

@@ -5,14 +5,15 @@ Amazon, Facebook, Google, LinkedIn, Microsoft, Uber
  */
 package lintcode.binarytree;
 
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 import util.TreeNode;
 
 import java.util.LinkedList;
 import java.util.Queue;
 
-import static org.junit.jupiter.api.Assertions.assertNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
+
 
 /**
  * 7. Serialize and Deserialize Binary Tree
@@ -141,7 +142,7 @@ public class _0007_SerializeDeserializeBinaryTree {
     }
 
     @Test
-    void test1() {
+    public void test1() {
         TreeNode n0 = new TreeNode(3);
         TreeNode n1 = new TreeNode(9);
         TreeNode n2 = new TreeNode(20);
@@ -165,7 +166,7 @@ public class _0007_SerializeDeserializeBinaryTree {
     }
 
     @Test
-    void test2() {
+    public void test2() {
         TreeNode n0 = null;
 
         String expSe = "{}";

@@ -1,12 +1,12 @@
 package lintcode;
 
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 import util.Interval;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.Assert.assertEquals;
 
 /**
  * 839. Merge Two Sorted Interval Lists
@@ -96,7 +96,7 @@ public class _0839_MergeSortedIntervalLists {
     }
 
     @Test
-    void test1() {
+    public void test1() {
         // test list input
         List<Interval> list1 = new ArrayList<>();
         list1.add(new Interval(1, 2));
@@ -117,7 +117,7 @@ public class _0839_MergeSortedIntervalLists {
     }
 
     @Test
-    void test2() {
+    public void test2() {
         // test list input
         List<Interval> list1 = new ArrayList<>();
         list1.add(new Interval(1, 2));
@@ -141,7 +141,7 @@ public class _0839_MergeSortedIntervalLists {
     }
 
     @Test
-    void test3() {
+    public void test3() {
         // test list input
         List<Interval> list1 = new ArrayList<>();
         list1.add(new Interval(1, 3));

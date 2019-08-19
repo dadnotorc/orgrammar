@@ -6,9 +6,9 @@ FAQ++
  */
 package lintcode;
 
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.Assert.assertEquals;
 
 /**
  * 41. Maximum Subarray
@@ -61,28 +61,28 @@ public class _0041_MaximumSubarray {
     }
 
     @Test
-    void test1() {
+    public void test1() {
         int[] nums = {-2,2,-3,4,-1,2,1,-5,3};
         int act = maxSubArray(nums);
         assertEquals(6, act);
     }
 
     @Test
-    void test2() {
+    public void test2() {
         int[] nums = {1,2,3,4};
         int act = maxSubArray(nums);
         assertEquals(10, act);
     }
 
     @Test
-    void test3() {
+    public void test3() {
         int[] nums = {-4};
         int act = maxSubArray(nums);
         assertEquals(-4, act);
     }
 
     @Test
-    void test4() {
+    public void test4() {
         int[] nums = {-1,-2,-3,-100,-1,-50};
         int act = maxSubArray(nums);
         assertEquals(-1, act);

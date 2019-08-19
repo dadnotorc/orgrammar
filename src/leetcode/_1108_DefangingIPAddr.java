@@ -1,8 +1,8 @@
 package leetcode;
 
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.Assert.assertEquals;
 
 /**
  * 1108. Defanging an IP Address
@@ -35,7 +35,7 @@ public class _1108_DefangingIPAddr {
     }
 
     @Test
-    void test1() {
+    public void test1() {
         String address = "1.1.1.1";
         String expected = "1[.]1[.]1[.]1";
         String actual = new _1108_DefangingIPAddr().defangIPaddr(address);
@@ -43,7 +43,7 @@ public class _1108_DefangingIPAddr {
     }
 
     @Test
-    void test2() {
+    public void test2() {
         String address = "255.100.50.0";
         String expected = "255[.]100[.]50[.]0";
         String actual = new _1108_DefangingIPAddr().defangIPaddr(address);
