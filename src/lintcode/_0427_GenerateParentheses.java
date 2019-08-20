@@ -27,7 +27,7 @@ public class _0427_GenerateParentheses {
         List<String> ans = new ArrayList<>();
         if (n <= 0) { return ans; }
 
-        helper(ans, "", n, n);
+        dfs(ans, "", n, n);
         return ans;
     }
 
@@ -40,12 +40,48 @@ public class _0427_GenerateParentheses {
      *    - 左括号剩余数 =　右括号剩余数： 只能添加左括号, 递归进下一层
      *    - 左括号剩余数 >　右括号剩余数： 不可能存在
      */
-    private void helper(List<String> l, String s, int left, int right) {
+    private void dfs(List<String> l, String s, int left, int right) {
         if (left == 0 && right == 0) { // 递归出口
             l.add(s);
             return; // 别忘了结束递归
         }
 
+        if (left > 0) {
+            dfs(l, s + "(", left - 1, right);
+        }
 
+        if (right > 0 && left < right) {
+            dfs(l, s + ")", left, right - 1);
+        }
+    }
+
+    /* Method 2 - use string builder */
+
+    /**
+     * 使用StringBuilder, 避免每次生成一个新的String
+     */
+    public List<String> generateParenthesis_StringBuilder(int n) {
+        List<String> ans = new ArrayList<>();
+        if (n <= 0) { return ans; }
+
+        dfs(ans, new StringBuilder(), n, n);
+        return ans;
+    }
+
+    private void dfs(List<String> l, StringBuilder sb, int left, int right) {
+        if (left == 0 && right == 0) {
+            l.add(sb.toString());
+            return;
+        }
+
+        if (left > 0) {
+            dfs(l, sb.append("("), left - 1, right);
+            sb.deleteCharAt(sb.length() - 1);
+        }
+
+        if (right > 0 && left < right) {
+            dfs(l, sb.append(")"), left, right - 1);
+            sb.deleteCharAt(sb.length() - 1);
+        }
     }
 }
