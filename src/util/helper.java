@@ -96,4 +96,17 @@ public class helper {
         }
         System.out.print("\n");
     }
+
+    public static String printList(ListNode n) {
+	    StringBuilder sb = new StringBuilder();
+	    while (n != null) {
+	        sb.append(n.val);
+	        if (n.next != null)
+	            sb.append(" -> ");
+	        else
+	            sb.append(" -> NULL");
+	        n= n.next;
+        }
+	    return sb.toString();
+    }
 }

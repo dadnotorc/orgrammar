@@ -1,5 +1,9 @@
 package explore;
 
+import org.junit.Test;
+import util.ListNode;
+import util.helper;
+
 /**
  * 24. Swap Nodes in Pairs
  * Medium
@@ -27,13 +31,15 @@ public class Recursion_SwapNodesInPairs {
         return newHead;
     }
 
+    @Test
+    public void test1() {
+        util.ListNode n1 = new util.ListNode(1);
+        n1.next = new util.ListNode(2);
+        n1.next.next = new util.ListNode(3);
+        n1.next.next.next = new util.ListNode(4);
 
-
-    public class ListNode {
-        int val;
-        ListNode next;
-        ListNode(int x) {
-            val = x;
-        }
+        System.out.println("Input:  " + helper.printList(n1));
+        ListNode act = swapPairs(n1);
+        System.out.println("Output: " + helper.printList(act));
     }
 }
