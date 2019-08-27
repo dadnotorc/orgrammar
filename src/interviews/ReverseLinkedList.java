@@ -21,9 +21,11 @@ public class ReverseLinkedList {
      * Google
      */
 
-    public ListNode reverseIteratively(ListNode head) {
-        if (head == null)
-            return null;
+    /* Method 1 - Iteratively with stack */
+
+    public ListNode reverseIteratively_Stack(ListNode head) {
+        if (head == null || head.next == null)
+            return head;
 
         Deque<Integer> stack = new ArrayDeque<>();
         while (head != null) {
@@ -41,16 +43,49 @@ public class ReverseLinkedList {
         return ans;
     }
 
-    // todo fix bug
+    /* Method 2 - Recursively */
+
     public ListNode reverseRecursively(ListNode head) {
         if (head == null || head.next == null)
             return head;
 
-        head.next = reverseRecursively(head.next);
-        ListNode newHead = head.next;
-        head.next = null;
+        ListNode newHead = new ListNode(0);
+        reverse(head, newHead);
 
-        return newHead;
+        return newHead.next;
+    }
+
+    // 当cur到达倒数第二个值时,再次递归到达最后一位,在递归出口将new head指最后一个值
+    // 将cur.next.next指向自己(原本指向NULL),并将cur.next清除
+    // 此时,new head指向最后一位,最后一位.next指向cur, 完成转向
+    private void reverse(ListNode cur, ListNode head) {
+        if (cur.next == null) {
+            head.next = cur;
+            return;
+        }
+
+        reverse(cur.next, head);
+        cur.next.next = cur;
+        cur.next = null;
+    }
+
+    /* Method 3 - Interatively */
+
+    public ListNode reverseIteratively(ListNode head) {
+        if (head == null || head.next == null)
+            return head;
+
+        ListNode prev = null;
+        ListNode next;
+
+        while (head != null) {
+            next = head.next;
+            head.next = prev;
+            prev = head;
+            head = next;
+        }
+
+        return prev;
     }
 
     @Test
@@ -61,13 +96,29 @@ public class ReverseLinkedList {
         n1.next.next.next = new ListNode(1);
         n1.next.next.next.next = new ListNode(0);
 
-        System.out.println("Original:    " + helper.printList(n1));
-        ListNode actIteratively = reverseIteratively(n1);
-        System.out.println("Iteratively: " + helper.printList(actIteratively));
+        System.out.println("Original:      " + helper.printList(n1));
+        ListNode actIteratively_stack = reverseIteratively_Stack(n1);
+        System.out.println("Iteratively_s: " + helper.printList(actIteratively_stack));
 
-        System.out.println("Original:    " + helper.printList(n1));
+        n1 = new ListNode(4);
+        n1.next = new ListNode(3);
+        n1.next.next = new ListNode(2);
+        n1.next.next.next = new ListNode(1);
+        n1.next.next.next.next = new ListNode(0);
+
+        System.out.println("Original:      " + helper.printList(n1));
+        ListNode actIteratively = reverseIteratively(n1);
+        System.out.println("Iteratively:   " + helper.printList(actIteratively));
+
+        n1 = new ListNode(4);
+        n1.next = new ListNode(3);
+        n1.next.next = new ListNode(2);
+        n1.next.next.next = new ListNode(1);
+        n1.next.next.next.next = new ListNode(0);
+
+        System.out.println("Original:      " + helper.printList(n1));
         ListNode actRecursively = reverseRecursively(n1);
-        System.out.println("Recursively: " + helper.printList(actRecursively));
+        System.out.println("Recursively:   " + helper.printList(actRecursively));
     }
 
     @Test
@@ -75,12 +126,22 @@ public class ReverseLinkedList {
         ListNode n1 = new ListNode(1);
         n1.next = new ListNode(0);
 
-        System.out.println("Original:    " + helper.printList(n1));
-        ListNode actIteratively = reverseIteratively(n1);
-        System.out.println("Iteratively: " + helper.printList(actIteratively));
+        System.out.println("Original:      " + helper.printList(n1));
+        ListNode actIteratively_stack = reverseIteratively_Stack(n1);
+        System.out.println("Iteratively_s: " + helper.printList(actIteratively_stack));
 
-        System.out.println("Original:    " + helper.printList(n1));
+        n1 = new ListNode(1);
+        n1.next = new ListNode(0);
+
+        System.out.println("Original:      " + helper.printList(n1));
+        ListNode actIteratively = reverseIteratively(n1);
+        System.out.println("Iteratively:   " + helper.printList(actIteratively));
+
+        n1 = new ListNode(1);
+        n1.next = new ListNode(0);
+
+        System.out.println("Original:      " + helper.printList(n1));
         ListNode actRecursively = reverseRecursively(n1);
-        System.out.println("Recursively: " + helper.printList(actRecursively));
+        System.out.println("Recursively:   " + helper.printList(actRecursively));
     }
 }
