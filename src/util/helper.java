@@ -2,6 +2,8 @@ package util;
 
 import lintcode._0165_MergeSortedLists;
 
+import java.util.List;
+
 public class helper {
 	public static void main(String[] args) {
 //        String str = "abc";
@@ -86,17 +88,6 @@ public class helper {
         System.out.print("\n");
     }
 
-    public static void log(ListNode l) {
-        while (l != null) {
-            System.out.print(l.val);
-            if (l.next != null) {
-                System.out.print("->");
-            }
-            l = l.next;
-        }
-        System.out.print("\n");
-    }
-
     public static String printList(ListNode n) {
 	    StringBuilder sb = new StringBuilder();
 	    while (n != null) {
@@ -108,5 +99,19 @@ public class helper {
 	        n= n.next;
         }
 	    return sb.toString();
+    }
+
+    public static String printList(List<Integer> list) {
+        StringBuilder sb = new StringBuilder();
+        int size = list.size();
+        sb.append("[");
+        for (int i = 0; i < size; i++) {
+            sb.append(list.get(i));
+
+            if (i + 1 < size)
+                sb.append(", ");
+        }
+        sb.append("]");
+        return sb.toString();
     }
 }
