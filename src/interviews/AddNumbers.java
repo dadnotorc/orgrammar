@@ -59,7 +59,7 @@ public class AddNumbers {
         l2.next = new ListNode(6);
         l2.next.next = new ListNode(4);
 
-        System.out.println(helper.printList(add(l1, l2)));
+        System.out.println(helper.listToString(add(l1, l2)));
 
         // 99 + 9999 = 10098
         ListNode l3 = new ListNode(9);
@@ -70,6 +70,6 @@ public class AddNumbers {
         l4.next.next = new ListNode(9);
         l4.next.next.next = new ListNode(9);
 
-        System.out.println(helper.printList(add(l3, l4)));
+        System.out.println(helper.listToString(add(l3, l4)));
     }
 }

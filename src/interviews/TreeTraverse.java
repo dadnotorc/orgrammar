@@ -19,11 +19,11 @@ import java.util.Queue;
  * Amazon
  */
 public class TreeTraverse {
-    public class TreeNode {
-        public String name;
-        public int level;
-        public int income;
-        public List<TreeNode> directReport;
+    class TreeNode {
+        String name;
+        int level;
+        int income;
+        List<TreeNode> directReport;
         public TreeNode(String name, int level, int income) {
             this.name = name;
             this.level = level;

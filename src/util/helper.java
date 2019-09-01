@@ -80,15 +80,19 @@ public class helper {
         }
     }
 
-    public static void log(int[] arr) {
-	    System.out.print("array=");
-	    for (int a : arr) {
-            System.out.print(a + ", ");
+    public static String arrayToString(int[] arr) {
+        StringBuilder sb = new StringBuilder();
+        sb.append("[");
+        for (int i = 0; i < arr.length; i++) {
+            sb.append(arr[i]);
+            if (i + 1 < arr.length)
+                sb.append(", ");
         }
-        System.out.print("\n");
+        sb.append("]");
+        return sb.toString();
     }
 
-    public static String printList(ListNode n) {
+    public static String listToString(ListNode n) {
 	    StringBuilder sb = new StringBuilder();
 	    while (n != null) {
 	        sb.append(n.val);
@@ -101,7 +105,7 @@ public class helper {
 	    return sb.toString();
     }
 
-    public static String printList(List<Integer> list) {
+    public static String listToString(List<Integer> list) {
         StringBuilder sb = new StringBuilder();
         int size = list.size();
         sb.append("[");

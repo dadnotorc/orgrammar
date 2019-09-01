@@ -221,12 +221,12 @@ public class _1301_GameOfLife {
 
         new _1301_GameOfLife().gameOfLife1(board);
 
-        assertTrue(expected.length == board.length);
-        assertTrue(expected[0].length == board[0].length);
+        assertEquals(expected.length, board.length);
+        assertEquals(expected[0].length, board[0].length);
 
         for (int i = 0; i < board.length; i++) {
-            helper.log(expected[i]);
-            helper.log(board[i]);
+            System.out.println(helper.arrayToString(expected[i]));
+            System.out.println(helper.arrayToString(board[i]));
             assertArrayEquals(expected[i], board[i]);
         }
     }

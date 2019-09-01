@@ -60,8 +60,8 @@ public class SortList {
         nums.add(3);
         nums.add(2);
         nums.add(1);
-        System.out.println("Input: " + helper.printList(nums));
+        System.out.println("Input: " + helper.listToString(nums));
         ArrayList<Integer> act = sortNums_hashmap(nums);
-        System.out.println("Output: " + helper.printList(act));
+        System.out.println("Output: " + helper.listToString(act));
     }
 }

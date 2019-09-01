@@ -38,8 +38,8 @@ public class Recursion_SwapNodesInPairs {
         n1.next.next = new util.ListNode(3);
         n1.next.next.next = new util.ListNode(4);
 
-        System.out.println("Input:  " + helper.printList(n1));
+        System.out.println("Input:  " + helper.listToString(n1));
         ListNode act = swapPairs(n1);
-        System.out.println("Output: " + helper.printList(act));
+        System.out.println("Output: " + helper.listToString(act));
     }
 }
