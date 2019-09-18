@@ -2,6 +2,9 @@ package interviews;
 
 import org.junit.Test;
 
+import java.util.ArrayDeque;
+import java.util.Deque;
+
 /**
  * You are given the root of a binary tree. Invert the binary tree in place.
  * That is, all left children should become right children, and all right
@@ -23,11 +26,16 @@ import org.junit.Test;
  *  \  / \
  *   f e  d
  *
+ * Twitter
  */
 public class InvertBinaryTree {
 
     public void invert(TreeNode root) {
+        if (root == null)
+            return;
 
+        Deque<TreeNode> deque = new ArrayDeque<>();
+        // todo
     }
 
     class TreeNode {
@@ -63,6 +71,7 @@ public class InvertBinaryTree {
         n2.left = n5;
 
         n0.preorder(); // output: a b d e c f
+        System.out.println("\n");
         invert(n0);
         n0.preorder(); // output: a c f b e d
     }
