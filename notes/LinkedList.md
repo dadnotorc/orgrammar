@@ -8,10 +8,10 @@
 
 ```java
 class ListNode {
-    public int val;
-    public ListNode next;
+    int val;
+    ListNode next;
 
-    public ListNode(int val) {
+    ListNode(int val) {
         this.val = val;
         this.next = null;
     }
@@ -19,6 +19,10 @@ class ListNode {
 ```
 
 * 输入和输出是否均为ListNode
+
+# 是否使用recursion
+
+链表长度为***n***时, 如果使用recursion, 深度会很深, 可能导致栈溢出-stack overflow
 
 
 # Find middle of the linked list
