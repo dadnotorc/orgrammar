@@ -91,9 +91,8 @@ public class _0009_FizzBuzz {
         m2.put(5, "buzz");
 
         for (int i = 1; i <= n; i++) {
-            String s = m1.getOrDefault(i % 15 + 15,
-                    m1.getOrDefault(i % 3 + 3, "")
-                            + m2.getOrDefault(i % 5 + 5, ""));
+            String s = m1.getOrDefault(i % 15 + 15, m1.getOrDefault(i % 3 + 3, "")
+                    + m2.getOrDefault(i % 5 + 5, ""));
             ans.add(s.isEmpty() ? String.valueOf(i) : s);
         }
 
