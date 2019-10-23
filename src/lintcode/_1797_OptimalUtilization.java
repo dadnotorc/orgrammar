@@ -25,7 +25,7 @@ package lintcode;
  * Output:
  * [2, 3]
  */
-public class _1797 {
+public class _1797_OptimalUtilization {
 
     /**
      *
