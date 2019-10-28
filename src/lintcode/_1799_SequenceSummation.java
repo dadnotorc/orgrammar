@@ -42,6 +42,7 @@ public class _1799_SequenceSummation {
         return (start + end) * (end - start + 1) / 2;
     }
 
+    // 解法 2
     public long equlSum_two(long i, long j, long k) {
         if (i < k)
             return j + getSum(k, j - 1) * 2 + getSum(i, k - 1);

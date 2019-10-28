@@ -1,6 +1,6 @@
 /*
 Hard
-#DP
+DP
 Amazon
  */
 package lintcode.dp;

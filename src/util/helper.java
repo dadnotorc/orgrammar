@@ -7,9 +7,7 @@ import java.util.List;
 public class helper {
 	public static void main(String[] args) {
 //        String str = "abc";
-//
 //        String[] subs = str.split("/");
-//
 //        for (String s : subs) {
 //            System.out.print("-" + s + "-");
 //        }
@@ -25,9 +23,9 @@ public class helper {
 //        System.out.println(d0[0]);
 //        System.out.println(d0[1]);
 
-        int a = -13;
-        System.out.println(a % 10);
+//        System.out.println(-13 % 10);
 
+        System.out.println(14 & 13);
     }
 
     public boolean isOdd(int n) {
@@ -117,5 +115,12 @@ public class helper {
         }
         sb.append("]");
         return sb.toString();
+    }
+
+    public static boolean isPowerOfTwo(int n) {
+        if (n <= 0)
+            return false;
+        // 如果 n = 2 ^ x, n 的二进制值为 10000, n-1 为 01111
+        return  ((n & (n-1)) == 0);
     }
 }

@@ -27,6 +27,7 @@ import java.util.Hashtable;
  */
 public class _5130_NumberOfEquivalentDominoPairs {
 
+    // todo
     public int numEquivDominoPairs(int[][] dominoes) {
         int ans = 0;
 
