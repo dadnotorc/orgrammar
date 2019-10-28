@@ -5,6 +5,8 @@ Salesforce
  */
 package lintcode;
 
+import org.junit.Test;
+
 /**
  * 1453. Minimum Amount
  *
@@ -26,7 +28,44 @@ package lintcode;
  */
 public class _1453_MinimumAmount {
 
-//    public int MinimumAmount(int[] price) {
-//        // write your code here
-//    }
+    /**
+     * time:  O(n)
+     * space: O(1)
+     */
+    public int minimumAmount(int[] price) {
+        if (price == null || price.length == 0)
+            return 0;
+
+        int ans = price[0], discount = price[0];
+
+        for (int i = 1; i < price.length; i++) {
+            ans += price[i] <= discount ? 0 : (price[i] - discount);
+
+            if (price[i] < discount)
+                discount = price[i];
+        }
+
+        return ans;
+    }
+
+    @Test
+    public void test1() {
+        int[] price = {5, 2, 1, 7};
+        // 5 + 0 + 0 + 6 = 11
+        org.junit.Assert.assertEquals(minimumAmount(price), 11);
+    }
+
+    @Test
+    public void test2() {
+        int[] price = {5, 1, 2, 7};
+        // 5 + 0 + 1 + 6 = 12
+        org.junit.Assert.assertEquals(minimumAmount(price), 12);
+    }
+
+    @Test
+    public void test3() {
+        int[] price = {1, 2, 5, 7};
+        // 1 + 1 + 4 + 6 = 12
+        org.junit.Assert.assertEquals(minimumAmount(price), 12);
+    }
 }
