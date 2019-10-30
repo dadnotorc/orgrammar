@@ -5,6 +5,8 @@ Google, Facebook, Salesforce
  */
 package lintcode;
 
+import org.junit.Test;
+
 /**
  * 575. Decode String
  *
@@ -29,7 +31,30 @@ package lintcode;
 public class _0575_DecodeString {
 
     // todo
-//    public String expressionExpand(String s) {
-//
-//    }
+    public String expressionExpand(String s) {
+        if (s == null || s.length() == 0)
+            return "";
+
+        StringBuilder sb = new StringBuilder();
+
+        return sb.toString();
+    }
+
+    @Test
+    public void test1() {
+        String exp = "abcaaa";
+        org.junit.Assert.assertTrue(exp.equals(expressionExpand("abc3[a]")));
+    }
+
+    @Test
+    public void test2() {
+        String exp = "adadpfpfpfadadpfpfpfadadpfpfpfxyz";
+        org.junit.Assert.assertTrue(exp.equals(expressionExpand("3[2[ad]3[pf]]xyz")));
+    }
+
+    @Test
+    public void test3() {
+        String exp = "xaaaaaaaaaaaay";
+        org.junit.Assert.assertTrue(exp.equals(expressionExpand("x12[a]y")));
+    }
 }
