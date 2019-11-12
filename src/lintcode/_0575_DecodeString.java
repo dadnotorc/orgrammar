@@ -64,7 +64,7 @@ public class _0575_DecodeString {
     // 获得stack上层里非数字的字符串
     private String popStr(Stack<Object> stack) {
         Stack<String> buffer = new Stack<>();
-        while (!stack.isEmpty() && stack.peek() instanceof String) {
+        while (!stack.isEmpty() && stack.peek() instanceof String) { // 遇到数字后跳出
             buffer.push((String) stack.pop()); // 第一次转向
         }
 
@@ -76,26 +76,62 @@ public class _0575_DecodeString {
         return sb.toString();
     }
 
-    // todo 解法二 递归
-    public String expressionExpand_recursion(String s) {
+    // 解法二 递归, 使用global variable记录当前位置
 
+    int index = 0;
+
+    public String expressionExpand_recursion(String s) {
+        if (s == null || s.length() == 0)
+            return "";
+
+        int repNum = 0;
+        StringBuilder sb = new StringBuilder();
+
+        while (index < s.length()) {
+            char c = s.charAt(index);
+
+            if (c == '[') { // 进入下一层递归
+                index++; // 跳过'['
+                String tmp = expressionExpand_recursion(s);
+
+                for (int i = 0; i < repNum; i++) {
+                    sb.append(tmp);
+                }
+                repNum = 0;
+            } else if (c == ']') { // 跳回上一层
+                index++; // 跳过']'
+                return sb.toString();
+            } else if (Character.isDigit(c)) { // 更新repNum
+                repNum = repNum * 10 + c - '0';
+                index++;
+            } else {
+                sb.append(c);
+                index++;
+            }
+        }
+
+        return sb.toString();
     }
+
 
     @Test
     public void test1() {
         String exp = "abcaaa";
         org.junit.Assert.assertTrue(exp.equals(expressionExpand_iterative("abc3[a]")));
+        org.junit.Assert.assertTrue(exp.equals(expressionExpand_recursion("abc3[a]")));
     }
 
     @Test
     public void test2() {
         String exp = "adadpfpfpfadadpfpfpfadadpfpfpfxyz";
         org.junit.Assert.assertTrue(exp.equals(expressionExpand_iterative("3[2[ad]3[pf]]xyz")));
+        org.junit.Assert.assertTrue(exp.equals(expressionExpand_recursion("3[2[ad]3[pf]]xyz")));
     }
 
     @Test
     public void test3() {
         String exp = "xaaaaaaaaaaaay";
         org.junit.Assert.assertTrue(exp.equals(expressionExpand_iterative("x12[a]y")));
+        org.junit.Assert.assertTrue(exp.equals(expressionExpand_recursion("x12[a]y")));
     }
 }
