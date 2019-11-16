@@ -22,7 +22,7 @@ package lintcode.sort;
 public class _0005_KthLargestElement {
 
     public int kthLargestElement(int n, int[] nums) {
-        // write your code here
+        // todo
         return 0;
     }
 }
