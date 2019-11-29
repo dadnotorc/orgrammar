@@ -8,6 +8,7 @@ package lintcode.twosum;
 
 import org.junit.Test;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.HashMap;
@@ -41,16 +42,12 @@ import static org.junit.Assert.assertArrayEquals;
  */
 public class _0056_TwoSum {
     /**
-     * @param numbers: An array of Integer
-     * @param target: target = numbers[index1] + numbers[index2]
-     * @return: [index1, index2] (index1 < index2)
+     * 解法1: 使用HashMap
      *
-     * time: O(n). HashMap的put/get一般情况下为O(1)
+     * time:  O(n). HashMap的put/get一般情况下为O(1)
      * space: O(n). 用于存储HashMap
      */
     public int[] twoSumHashMap(int[] numbers, int target) {
-        // write your code here
-
         // 使用HashMap记录当前值的下标(index)以及当前值与目标值的差值.
         // 以差值作为entry key, 下标作为entry value
         // 在数组的后续搜索中, 如果遇到已存在于HashMap的值, 即找到了相应的一组
@@ -69,56 +66,74 @@ public class _0056_TwoSum {
 
 
     /**
-     * 使用 two pointers
-     * TODO 这段有bug
+     * 解法2: 使用 two pointers
+     *
+     * time:  O(nlogn). 因为需要先排序 O(nlogn), 再双指针 O(n)
+     * space: O(n). 用于存储 Pair array
      */
 
     class Pair {
         int index;
-        int value;
+        Integer value;
 
         Pair(int index, int value) {
             this.index = index;
             this.value = value;
         }
+
+        int getIndex() {
+            return this.index;
+        }
+
+        Integer getValue() {
+            return this.value;
+        }
+    }
+
+    class ValueComparator implements Comparator<Pair> {
+        @Override
+        public int compare(Pair o1, Pair o2) {
+            return o1.getValue().compareTo(o2.getValue());
+        }
     }
 
     public int[] twoSumTwoPointers(int[] numbers, int target) {
+        if (numbers == null || numbers.length == 0)
+            return new int[0];
+
         //先用pair记录当前值和对应的下标, 因为之后会对数组重新排序
         Pair[] pairs = new Pair[numbers.length];
         for (int i = 0; i < numbers.length; i++) {
-            pairs[i] = new Pair(numbers[i], i);
+            pairs[i] = new Pair(i, numbers[i]);
         }
 
-        Arrays.sort(pairs, new Comparator<Pair>() {
-            @Override
-            public int compare(Pair o1, Pair o2) {
-                if (o1.value > o2.value) {
-                    return 1;
-                } else if (o1.value < o2.value) {
-                    return -1;
-                } else {
-                    return 0;
-                }
-            }
-        });
+//        Arrays.sort(pairs, new Comparator<Pair>() {
+//            @Override
+//            public int compare(Pair o1, Pair o2) {
+//                return o1.value.compareTo(o2.value);
+//            }
+//        });
+
+        Arrays.sort(pairs, new ValueComparator());
 
         int l = 0, r = pairs.length - 1;
 
         while (l < r) {
-            if (pairs[l].value + pairs[r].value == target) {
-                int indexL = pairs[l].index;
-                int indexR = pairs[r].index;
-                int[] result = {Math.min(indexL, indexR), Math.max(indexL, indexR)};
-                return result;
-            } else if (pairs[l].value + pairs[r].value < target) {
-                l++;
-            } else {
-                r--;
+            if (pairs[l].getValue() + pairs[r].getValue() == target) {
+                // index1 must be less than index2.
+                if (pairs[l].getIndex() < pairs[r].getIndex())
+                    return new int[] {pairs[l].getIndex(), pairs[r].getIndex()};
+                else
+                    return new int[] {pairs[r].getIndex(), pairs[l].getIndex()};
             }
+
+            if (pairs[l].getValue() + pairs[r].getValue() < target)
+                l++;
+            else
+                r--;
         }
 
-        return new int[]{};
+        return new int[0];
     }
 
     @Test
