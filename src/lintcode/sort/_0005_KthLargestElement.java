@@ -1,3 +1,8 @@
+/*
+Medium
+Quick Sort, Sort
+Facebook, Google
+ */
 package lintcode.sort;
 
 /**
