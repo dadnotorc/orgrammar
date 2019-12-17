@@ -27,7 +27,9 @@ import org.junit.Test;
  */
 public class _0200_LongestPalindromicSubstring {
 
-    // todo 读 https://www.geeksforgeeks.org/manachers-algorithm-linear-time-longest-palindromic-substring-part-1/
+    // todo Manancher's Algorithm
+    // https://www.geeksforgeeks.org/manachers-algorithm-linear-time-longest-palindromic-substring-part-1/
+    // https://www.jiuzhang.com/solution/longest-palindromic-substring/
 
     /**
      * 中心枚举法
@@ -41,13 +43,13 @@ public class _0200_LongestPalindromicSubstring {
         int ansStartIndex = 0, curLen = 0, maxLen = 0;
 
         for (int i = 0; i < s.length(); i++) {
-             curLen = findPalindrome(s, i, i);
+             curLen = findPalindrome(s, i, i); // 奇数长度
              if (curLen > maxLen) {
                  maxLen = curLen;
                  ansStartIndex = i - maxLen / 2;
              }
 
-             curLen = findPalindrome(s, i, i + 1);
+             curLen = findPalindrome(s, i, i + 1); // 偶数长度
              if (curLen > maxLen) {
                  maxLen = curLen;
                  ansStartIndex = i - maxLen / 2 + 1;
@@ -74,10 +76,44 @@ public class _0200_LongestPalindromicSubstring {
         return len;
     }
 
+
+    /**
+     * DP 解法
+     */
+    public String longestPalindrome_DP(String s) {
+        if (s == null || s.length() == 0)
+            return s;
+
+        int strLen = s.length();
+        int ansStartIndex = 0, maxLen = 0;
+
+        // 记录从i开始到j结束的substring是否是palindrome
+        boolean[][] dp = new boolean[strLen][strLen];
+
+        for (int i = strLen - 1; i >= 0; i--) {
+            for (int j = i; j < strLen; j++) {
+                dp[i][j] = (s.charAt(i) == s.charAt(j)
+                        &&
+                        (j - i < 3 //从i到j的substring长度<=3, 这时只要首尾相等即可
+                                || dp[i+1][j-1]) //substring长度>3, 这时需要较短的substring也是palindrome
+                        );
+
+                //寻找更长的substring
+                if (dp[i][j] && (j - i + 1) > maxLen) {
+                    ansStartIndex = i;
+                    maxLen = j - i + 1;
+                }
+            }
+        }
+        return s.substring(ansStartIndex, ansStartIndex + maxLen);
+    }
+
+
     @Test
     public void test0() {
         String s = "a";
         org.junit.Assert.assertEquals("a", longestPalindrome(s));
+        org.junit.Assert.assertEquals("a", longestPalindrome_DP(s));
     }
 
     @Test
@@ -85,6 +121,7 @@ public class _0200_LongestPalindromicSubstring {
         String s = "banana";
         System.out.println("act=" + longestPalindrome(s));
         org.junit.Assert.assertTrue("anana".equals(longestPalindrome(s)));
+        org.junit.Assert.assertTrue("anana".equals(longestPalindrome_DP(s)));
     }
 
     @Test
@@ -92,6 +129,7 @@ public class _0200_LongestPalindromicSubstring {
         String s = "million";
         System.out.println("act=" + longestPalindrome(s));
         org.junit.Assert.assertTrue("illi".equals(longestPalindrome(s)));
+        org.junit.Assert.assertTrue("illi".equals(longestPalindrome_DP(s)));
     }
 
     @Test
@@ -99,6 +137,7 @@ public class _0200_LongestPalindromicSubstring {
         String s = "tracecars";
         System.out.println("act=" + longestPalindrome(s));
         org.junit.Assert.assertTrue("racecar".equals(longestPalindrome(s)));
+        org.junit.Assert.assertTrue("racecar".equals(longestPalindrome_DP(s)));
     }
 
     @Test
@@ -106,6 +145,7 @@ public class _0200_LongestPalindromicSubstring {
         String s = "aabc";
         System.out.println("act=" + longestPalindrome(s));
         org.junit.Assert.assertTrue("aa".equals(longestPalindrome(s)));
+        org.junit.Assert.assertTrue("aa".equals(longestPalindrome_DP(s)));
     }
 
     @Test
@@ -113,6 +153,7 @@ public class _0200_LongestPalindromicSubstring {
         String s = "abcdzdcab";
         String exp = "cdzdc";
         org.junit.Assert.assertEquals(exp, longestPalindrome(s));
+        org.junit.Assert.assertEquals(exp, longestPalindrome_DP(s));
     }
 
     @Test
@@ -120,6 +161,7 @@ public class _0200_LongestPalindromicSubstring {
         String s = "aa";
         String exp = "aa";
         org.junit.Assert.assertEquals(exp, longestPalindrome(s));
+        org.junit.Assert.assertEquals(exp, longestPalindrome_DP(s));
     }
 
     @Test
@@ -127,6 +169,7 @@ public class _0200_LongestPalindromicSubstring {
         String s = "abcdzdcab";
         String exp = "cdzdc";
         org.junit.Assert.assertEquals(exp, longestPalindrome(s));
+        org.junit.Assert.assertEquals(exp, longestPalindrome_DP(s));
     }
 
     @Test
@@ -134,6 +177,7 @@ public class _0200_LongestPalindromicSubstring {
         String s = "aba";
         String exp = "aba";
         org.junit.Assert.assertEquals(exp, longestPalindrome(s));
+        org.junit.Assert.assertEquals(exp, longestPalindrome_DP(s));
     }
 
     @Test
@@ -141,6 +185,7 @@ public class _0200_LongestPalindromicSubstring {
         String s = "ab";
         String exp = "a";
         org.junit.Assert.assertEquals(exp, longestPalindrome(s));
+        //org.junit.Assert.assertEquals(exp, longestPalindrome_DP(s));
     }
 
     @Test
@@ -148,6 +193,7 @@ public class _0200_LongestPalindromicSubstring {
         String s = "abbbba";
         String exp = "abbbba";
         org.junit.Assert.assertEquals(exp, longestPalindrome(s));
+        org.junit.Assert.assertEquals(exp, longestPalindrome_DP(s));
     }
 
     @Test
@@ -155,6 +201,7 @@ public class _0200_LongestPalindromicSubstring {
         String s = "abbbb";
         String exp = "bbbb";
         org.junit.Assert.assertEquals(exp, longestPalindrome(s));
+        org.junit.Assert.assertEquals(exp, longestPalindrome_DP(s));
     }
 
     @Test
@@ -162,6 +209,7 @@ public class _0200_LongestPalindromicSubstring {
         String s = "abbbbc";
         String exp = "bbbb";
         org.junit.Assert.assertEquals(exp, longestPalindrome(s));
+        org.junit.Assert.assertEquals(exp, longestPalindrome_DP(s));
     }
 
     @Test
@@ -169,6 +217,7 @@ public class _0200_LongestPalindromicSubstring {
         String s = "ccc";
         String exp = "ccc";
         org.junit.Assert.assertEquals(exp, longestPalindrome(s));
+        org.junit.Assert.assertEquals(exp, longestPalindrome_DP(s));
     }
 
     @Test
@@ -176,6 +225,7 @@ public class _0200_LongestPalindromicSubstring {
         String s = "abbcde";
         String exp = "bb";
         org.junit.Assert.assertEquals(exp, longestPalindrome(s));
+        org.junit.Assert.assertEquals(exp, longestPalindrome_DP(s));
     }
 
     @Test
@@ -183,5 +233,6 @@ public class _0200_LongestPalindromicSubstring {
         String s = "aaa";
         String exp = "aaa";
         org.junit.Assert.assertEquals(exp, longestPalindrome(s));
+        org.junit.Assert.assertEquals(exp, longestPalindrome_DP(s));
     }
 }
