@@ -1,3 +1,8 @@
+/*
+Easy
+Hash Table
+Facebook, Google
+ */
 package lintcode.hashtable;
 
 import org.junit.Test;
