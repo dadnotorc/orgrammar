@@ -25,7 +25,15 @@ public class helper {
 
 //        System.out.println(-13 % 10);
 
-        System.out.println(14 & 13);
+//        System.out.println(14 & 13);
+
+        // 14 = 1110
+        System.out.println((14 >> 0) + " : " + ((14 >> 0) & 1));
+        System.out.println((14 >> 1) + " : " + ((14 >> 1) & 1));
+        System.out.println((14 >> 2) + " : " + ((14 >> 2) & 1));
+        System.out.println((14 >> 3) + " : " + ((14 >> 3) & 1));
+
+
     }
 
     public boolean isOdd(int n) {
