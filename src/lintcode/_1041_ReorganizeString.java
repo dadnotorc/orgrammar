@@ -37,7 +37,7 @@ public class _1041_ReorganizeString {
      * 注意 char c = (char) ('a' + (val % 100)); 转换的时候, 需要使用(char)来cast
      *
      * time:  O(nlogn) 因为用到sorting
-     * space: O(n)
+     * space: O(n) 创建的char array
      */
     public String reorganizeString(String S) {
         int n = S.length();
