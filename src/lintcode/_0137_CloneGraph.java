@@ -1,0 +1,217 @@
+/*
+Medium
+#BFS, #DFS, #Hash Table
+Facebook, Google, Uber
+FAQ
+ */
+package lintcode;
+
+import sun.management.GcInfoBuilder;
+
+import java.util.*;
+
+/**
+ * 137. Clone Graph
+ *
+ * Clone an undirected graph. Each node in the graph contains a label
+ * and a list of its neighbors. Nodes are labeled uniquely.
+ *
+ * You need to return a deep copied graph, which has the same structure
+ * as the original graph, and any changes to the new graph will not have
+ * any effect on the original graph.
+ *
+ * Notice
+ * - You need return the node with the same label as the input node.
+ *
+ * Example1
+ * Input:
+ * {1,2,4#2,1,4#4,1,2}
+ * Output:
+ * {1,2,4#2,1,4#4,1,2}
+ * Explanation:
+ * 1------2
+ *  \     |
+ *   \    |
+ *    \   |
+ *     \  |
+ *       4
+
+ * Clarification
+ * How we serialize an undirected graph: http://www.lintcode.com/help/graph/
+ */
+public class _0137_CloneGraph {
+
+    /* 解法1 */
+
+    /**
+     * 三次遍历
+     * 1. 从原图中获得所有的点
+     * 2. 复制点 (获得新的nodes)
+     * 3. 复制边 (获得新的edges)
+     */
+    public UndirectedGraphNode cloneGraph(UndirectedGraphNode node) {
+        if (node == null)
+            return null;
+
+        // 先获得图中所有节点, 存入list中
+        // 使用BFS
+        ArrayList<UndirectedGraphNode> oldNodes = getNodes_BFS(node);
+
+        // 使用DFS Recursion
+//        ArrayList<UndirectedGraphNode> oldNodes = new ArrayList<>();
+//        HashSet<UndirectedGraphNode> set = new HashSet<>();
+//        getNodes_DFS_Recursive(node, oldNodes, set);
+
+        // 使用DFS Non-recursion
+//        ArrayList<UndirectedGraphNode> oldNodes = getNode_DFS_NonRecursive(node);
+
+
+        // 复制节点, 使用 HashMap 存储旧节点->新节点的mapping
+        HashMap<UndirectedGraphNode, UndirectedGraphNode> map = new HashMap<>();
+        for (UndirectedGraphNode oldNode : oldNodes)
+            map.put(oldNode, new UndirectedGraphNode(oldNode.label));
+
+        // 复制边 (节点的neighbors)
+        for (UndirectedGraphNode oldNode : oldNodes) {
+            UndirectedGraphNode newNode = map.get(oldNode);
+
+            for (UndirectedGraphNode oldNodeNeighbor : oldNode.neighbors) {
+                UndirectedGraphNode newNodeNeighbor = map.get(oldNodeNeighbor); // 注意这一步, 要选新的节点作为neighbor
+                newNode.neighbors.add(newNodeNeighbor);
+            }
+        }
+
+        return map.get(node);
+    }
+
+    /* 解法1.1 - 使用BFS, 获得图中所有节点 */
+    private ArrayList<UndirectedGraphNode> getNodes_BFS(UndirectedGraphNode node) {
+        Queue<UndirectedGraphNode> queue = new LinkedList<>();
+        HashSet<UndirectedGraphNode> set = new HashSet<>(); // 作用是确保节点的独立性
+
+        queue.offer(node);
+        set.add(node);
+
+        while (!queue.isEmpty()) {
+            UndirectedGraphNode curNode = queue.poll();
+            for (UndirectedGraphNode neighbor : curNode.neighbors) {
+                if (!set.contains(neighbor)) {
+                    set.add(neighbor);
+                    queue.offer(neighbor);
+                }
+            }
+        }
+
+        return new ArrayList<UndirectedGraphNode>(set); // 注意 HashSet 到 ArrayList 的转换
+    }
+
+    /* 解法1.2 - 使用DFS + Recursion, 获得图中所有节点 */
+    private void getNodes_DFS_Recursive(UndirectedGraphNode node,
+                                        ArrayList<UndirectedGraphNode> nodes,
+                                        HashSet<UndirectedGraphNode> set) {
+        if (set.contains(node))
+            return;
+
+        set.add(node);
+        nodes.add(node);
+        for (UndirectedGraphNode neighbor : node.neighbors)
+            getNodes_DFS_Recursive(neighbor, nodes, set);
+    }
+
+    /* 解法1.3 - 使用DFS + Stack (non recursion), 获得图中所有节点 */
+    private ArrayList<UndirectedGraphNode> getNode_DFS_NonRecursive(UndirectedGraphNode node) {
+        Stack<StackElement> stack = new Stack<>();
+        HashSet<UndirectedGraphNode> set = new HashSet<>();
+
+        stack.push(new StackElement(node, -1));
+        set.add(node);
+
+        while (!stack.isEmpty()) {
+            StackElement curEle = stack.peek(); // 先不pop, 确认其所有neighbor都已访问后再pop
+            curEle.neighborIndex++;
+
+            // 已访问过该节点所有neighbor, 无需保留
+            if (curEle.neighborIndex == curEle.node.neighbors.size()) {
+                stack.pop();
+                continue;
+            }
+
+            UndirectedGraphNode neighbor = curEle.node.neighbors.get(curEle.neighborIndex);
+
+            if (set.contains(neighbor))
+                continue;
+
+            stack.push(new StackElement(neighbor, -1));
+            set.add(neighbor);
+        }
+
+        return new ArrayList<UndirectedGraphNode>(set);
+    }
+
+    class StackElement {
+        UndirectedGraphNode node;
+        int neighborIndex;
+        public StackElement(UndirectedGraphNode node, int neighborIndex) {
+            this.node = node;
+            this.neighborIndex = neighborIndex;
+        }
+    }
+
+
+    /* 解法2 */
+
+    /**
+     * 把解法1中的第一步和第二步合并, 一边寻找节点一边复制. 所以是两次便利
+     * 1. 从原图中获得所有节点, 并复制
+     * 2. 复制边
+     *
+     * 步骤1中, 是利用ArrayList来实现Queue, 而不是LinkedList, 所以也可理解为BFS
+     */
+    public UndirectedGraphNode cloneGraph_2(UndirectedGraphNode node) {
+        if (node == null)
+            return null;
+
+        // map存储旧节点->新节点的mapping
+        HashMap<UndirectedGraphNode, UndirectedGraphNode> map = new HashMap<>();
+        // list存储原图中所有节点 uniquely
+        ArrayList<UndirectedGraphNode> oldNodes = new ArrayList<>();
+
+        map.put(node, new UndirectedGraphNode(node.label));
+        oldNodes.add(node);
+
+        int index = 0;
+        while (index < oldNodes.size()) {
+            UndirectedGraphNode oldNode = oldNodes.get(index);
+            for (UndirectedGraphNode oldNodeNeighbor : oldNode.neighbors) {
+                if (!map.containsKey(oldNodeNeighbor)) {
+                    map.put(oldNodeNeighbor, new UndirectedGraphNode(oldNodeNeighbor.label));
+                    oldNodes.add(oldNodeNeighbor);
+                }
+            }
+            index++; // 别忘了更新index
+        }
+
+        for (UndirectedGraphNode oldNode : oldNodes) {
+            UndirectedGraphNode newNode = map.get(oldNode);
+
+            for (UndirectedGraphNode oldNodeNeighbor : oldNode.neighbors) {
+                UndirectedGraphNode newNodeNeighbor = map.get(oldNodeNeighbor);
+                newNode.neighbors.add(newNodeNeighbor);
+            }
+        }
+
+        return map.get(node);
+    }
+
+
+
+    // Definition for Undirected graph.
+     class UndirectedGraphNode {
+         int label;
+         List<UndirectedGraphNode> neighbors;
+         UndirectedGraphNode(int x) {
+             label = x;
+             neighbors = new ArrayList<UndirectedGraphNode>();
+         }
+     }
+}

@@ -1,3 +1,9 @@
+/*
+Medium
+#String, #Stack
+Facebook, Microsoft
+FAQ
+ */
 package lintcode.stack;
 
 import org.junit.Test;
@@ -9,8 +15,6 @@ import static org.junit.Assert.assertEquals;
 
 /**
  * 421. Simplify Path
- * Medium
- * Facebook, Microsoft
  *
  * Given an absolute path for a file (Unix-style), simplify it.
  *
