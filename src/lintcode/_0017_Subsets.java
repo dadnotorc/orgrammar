@@ -5,9 +5,7 @@ Amazon, Facebook, Uber
  */
 package lintcode;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 /**
  * 17. Subsets
@@ -91,5 +89,105 @@ public class _0017_Subsets {
 
         // 递归出口
         // return;
+    }
+
+    /* 解法 3 - BFS */
+    /**
+     * 一层一层的寻找所有子集
+     * []
+     * [1], [2], [3]
+     * [1,2], [1,3], [2,3]
+     * [1,2,3]
+     *
+     * time:  O(2^n)
+     */
+    public List<List<Integer>> subsets_3(int[] nums) {
+        List<List<Integer>> ans = new ArrayList<>();
+        if (nums == null)
+            return ans;
+        if (nums.length == 0) {
+            ans.add(new ArrayList<>());
+            return ans;
+        }
+
+        // 先 sort, 保证队列中数字从小到大排列
+        Arrays.sort(nums);
+
+        // BFS
+        Queue<List<Integer>> queue = new LinkedList<>();
+        queue. offer(new ArrayList<Integer>());
+
+        while (!queue.isEmpty()) {
+            List<Integer> subset = queue.poll();
+            ans.add(subset);
+
+            for (int i = 0; i < nums.length; i++) {
+
+                // 当前subset为空
+                // 或者subset中不包含nums[i] (subset最后一位 < nums[i]) 不用考虑相等的情况, 因为原数组中所有数字的都不相同
+                // 在subset基础上, 创建新subset, 并加入数组中未加入的新数字
+                if (subset.size() == 0 || subset.get(subset.size() - 1) < nums[i]) {
+
+                    List<Integer> newSubset = new ArrayList<>(subset);
+                    newSubset.add(nums[i]);
+                    queue.offer(newSubset);
+                }
+            }
+        }
+
+        return ans;
+    }
+
+    /* 解法 4 - 使用binary operation */
+
+    /**
+     * 数组有n个数组, 所以子集的总数为 2^n, 等于 1 << n
+     *         例如 [1,2,3] -> 共有2^3 = 8个子集
+     *         每个子集对应[0, 2^n - 1]中一个数字的二进制, 例如
+     *         []  --> 0 0 0 --> 0
+     *         [1] --> 0 0 1 --> 1
+     *         [2] --> 0 1 0 --> 2
+     *         [3] --> 1 0 0 --> 4
+     *         ...
+     *         [1,2,3] --> 1 1 1 --> 7
+     *
+     *
+     * // 1<<n 是指位运算中, 1向左移动n位
+     *     // 例如 1<<4 等于二进制10000 即十进制2^4=16
+     *
+     * // i=1, j=0, 1 & (2^0) = 1 & 1 = 1
+     *                     // i=1, j=1, 1 & (2^1) = 1 & 10 = 0
+     *                     // i=1, j=2, 1 & (2^2) = 1 & 100 = 0
+     *
+     *                     // i=4, j=0, 4 & (2^0) = 100 & 1 = 0
+     *                     // i=4, j=1, 4 & (2^1) = 100 & 10 = 0
+     *                     // i=4, j=2, 4 & (2^2) = 100 & 100 = 100 = 4
+     *
+     *                     // i=7, j=0, 7 & (2^0) = 111 & 1 = 1
+     *                     // i=7, j=1, 7 & (2^1) = 111 & 10 = 10 = 2
+     *                     // i=7, j=2, 7 & (2^2) = 111 & 100 = 100 = 4
+     */
+    public List<List<Integer>> subsets_4(int[] nums) {
+        List<List<Integer>> ans = new ArrayList<>();
+        if (nums == null)
+            return ans;
+        if (nums.length == 0) {
+            ans.add(new ArrayList<>());
+            return ans;
+        }
+
+        Arrays.sort(nums);
+
+        for (int i = 0; i < (1<<nums.length); i++) {
+            List<Integer> subset = new ArrayList<>();
+            for (int j = 0; j < nums.length; j++) {
+                if ((i & (1<<j)) != 0) {
+                    subset.add(nums[j]);
+                }
+            }
+
+            ans.add(subset);
+        }
+        return ans;
     }
 }
