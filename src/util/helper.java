@@ -2,8 +2,7 @@ package util;
 
 import lintcode._0165_MergeSortedLists;
 
-import java.util.List;
-import java.util.SortedSet;
+import java.util.*;
 
 public class helper {
 	public static void main(String[] args) {
@@ -13,6 +12,7 @@ public class helper {
 //            System.out.print("-" + s + "-");
 //        }
 //        System.out.print("\n");
+        // 输出 = -abc-
 
 //        int[][] d = {{1,2}, {3,4}, {5,6}, {7,8}};
 //        System.out.println(d[0][0]);
@@ -23,18 +23,32 @@ public class helper {
 //        int[] d0 = d[0];
 //        System.out.println(d0[0]);
 //        System.out.println(d0[1]);
+        // 输出 = 1 2 3 4 1 2
 
 //        System.out.println(-13 % 10);
+        // 输出 = -3
 
 //        System.out.println(14 & 13);
+        // 输出 = 12
 
-        // 14 = 1110
+//        System.out.println(7& 2);
+        // 输出 = 2
+
+        // 14 = 1110;
 //        System.out.println((14 >> 0) + " : " + ((14 >> 0) & 1));
-//        System.out.println((14 >> 1) + " : " + ((14 >> 1) & 1));
-//        System.out.println((14 >> 2) + " : " + ((14 >> 2) & 1));
-//        System.out.println((14 >> 3) + " : " + ((14 >> 3) & 1));
+//        System.out.println((14 >> 1) + " : " + ((14 >> 1) & 1)); // 111 = 7
+//        System.out.println((14 >> 2) + " : " + ((14 >> 2) & 1)); // 11 = 3
+//        System.out.println((14 >> 3) + " : " + ((14 >> 3) & 1)); // 1 = 1
+        // 输出 = 14 : 0  7 : 1   3 : 1    1 : 1
 
-        System.out.println(7& 2);
+//        String[] names = {"Alice", "Bob", "Charlie", "Bob", "Alice"};
+//        Set<String> set = new HashSet<String>(Arrays.asList(names));
+////        for (String s : set)
+////            System.out.println(s);
+//        Iterator<String> it = set.iterator();
+//        while (it.hasNext())
+//            System.out.println(it.next());
+        // 输出 = Bob Alice Charlie
     }
 
     public boolean isOdd(int n) {
