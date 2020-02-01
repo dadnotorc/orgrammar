@@ -5,6 +5,10 @@ Airbnb, Facebook, Google, Snapchat, Twitter
  */
 package lintcode;
 
+import org.junit.Test;
+
+import java.util.*;
+
 /**
  * 892. Alien Dictionary
  *
@@ -40,8 +44,118 @@ package lintcode;
  */
 public class _0892_Alien_Dictionary {
 
+    /**
+     * Step 1: 创建Map, key为words中出现过的所有字符'c', value为words中 > 'c' 的字符 (用Set记录)
+     * Step 2: 创建入度Map, key为所有字符, value为字典中先于该字符的数量 (Interger)
+     * Step 3: 拓扑排序, 先把入度为0的字符放去Priority Queue.
+     *         每次取出一个入度为0的字符'c', 找出 > 'c'的其他字符, 将其入度-1. 如该字符入度为0, 加入PQ中
+     */
     public String alienOrder(String[] words) {
-        // Write your code here
+        Map<Character, Set<Character>> graph = constructGraph(words);
+        Map<Character, Integer> indegree = getIndegree(graph);
+        return topologicalSorting(graph, indegree);
     }
 
+    private Map<Character, Set<Character>> constructGraph (String[] words) {
+        Map<Character, Set<Character>> graph = new HashMap<>();
+
+        // create nodes - 遍历每个词中的所有字符
+        for (String s : words) {
+            for (int i = 0; i < s.length(); i++) {
+                char c = s.charAt(i);
+                if (!graph.containsKey(c)) {
+                    graph.put(c, new HashSet<Character>());
+                }
+            }
+        }
+
+        // create edges - 比较相邻的两个词中字符先后顺序
+        for (int i = 0; i < words.length - 1; i++) {
+            int index = 0; // 每次都需归零, 从第一个字符开始
+            while (index < words[i].length() && index < words[i+1].length()) {
+                char c1= words[i].charAt(index);
+                char c2= words[i+1].charAt(index);
+                if (c1 != c2) {
+                    // 按先后顺序, 得到 c1 < c2
+                    graph.get(c1).add(c2);
+                    break; // 注意: 找到不同后退出, 不要在比较后续字符!
+                }
+                index++;
+            }
+        }
+
+        return graph;
+    }
+
+    // 入度 = 字典中, 有多少字符先于当前字符
+    private Map<Character, Integer> getIndegree(Map<Character, Set<Character>> graph) {
+        Map<Character, Integer> indegree = new HashMap<>();
+
+        for (Character c : graph.keySet()) {
+            indegree.put(c, 0);
+        }
+
+        for (Character c : graph.keySet()) {
+            for (Character d : graph.get(c)) {
+                indegree.put(d, indegree.get(d) + 1);
+            }
+        }
+
+        // 两个for循环不合并的原因是, 要先保证所有字符在indegree图中已经存在一个entry
+
+        return indegree;
+    }
+
+    private String topologicalSorting(Map<Character, Set<Character>> graph, Map<Character, Integer> indegree) {
+
+        StringBuilder sb = new StringBuilder();
+
+        // 先加入度为0的字符
+
+        // 使用PriorityQueue的原因是, "return the smallest in normal lexicographical order"
+        PriorityQueue<Character> pq = new PriorityQueue<>();
+        for (Character c : indegree.keySet()) {
+            if (indegree.get(c) == 0)
+                pq.offer(c);
+        }
+
+        while (!pq.isEmpty()) {
+            Character head = pq.poll();
+            sb.append(head);
+
+            // 入度中的字符已取走, 把后续字符的入度 - 1
+            // 如果后续字符入度变成0, 加入队列中
+            for (Character neighbor : graph.get(head)) {
+                indegree.put(neighbor, indegree.get(neighbor) - 1);
+                if (indegree.get(neighbor) == 0)
+                    pq.offer(neighbor);
+            }
+        }
+
+        if (sb.length() != graph.size())
+            return "";
+
+        return sb.toString();
+    }
+
+    @Test
+    public void test1() {
+        String[] words = {"wrt","wrf","er","ett","rftt"};
+        org.junit.Assert.assertTrue("output = " + alienOrder(words),"wertf".equals(alienOrder(words)));
+    }
+
+    @Test
+    public void test2() {
+        String[] words = {"ze", "yf", "xd", "wd", "vd", "ua", "tt", "sz",
+                "rd", "qd", "pz", "op", "nw", "mt", "ln", "ko", "jm", "il",
+                "ho", "gk", "fa", "ed", "dg", "ct", "bb", "ba"};
+        org.junit.Assert.assertTrue("output = " + alienOrder(words),"zyxwvutsrqponmlkjihgfedcba".equals(alienOrder(words)));
+    }
+
+    @Test
+    public void test3() {
+        // 如果使用Queue, 而非PriorityQueue, 此测试会fail
+        String[] words = {"zy","zx"};
+        org.junit.Assert.assertTrue("output = " + alienOrder(words),"yxz".equals(alienOrder(words)));
+    }
 }
