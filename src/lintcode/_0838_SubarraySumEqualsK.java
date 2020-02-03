@@ -3,7 +3,7 @@ Easy
 Hash Table
 Facebook, Google
  */
-package lintcode.hashtable;
+package lintcode;
 
 import org.junit.Test;
 
@@ -32,6 +32,8 @@ import static org.junit.Assert.assertEquals;
  * subarray [0,1], [1,4], [0,3] and [3,4]
  *
  * 注意：　数值可正可负
+ *
+ * 此题关键: 求 [i,j] 之和 = [0,j] 之和 - [0,i] 之和
  */
 public class _0838_SubarraySumEqualsK {
 

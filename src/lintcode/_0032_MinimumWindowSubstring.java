@@ -1,4 +1,4 @@
-package lintcode.hashtable;
+package lintcode;
 
 import org.junit.Test;
 

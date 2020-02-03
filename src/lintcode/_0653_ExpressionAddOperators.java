@@ -37,24 +37,26 @@ import java.util.List;
  */
 public class _0653_ExpressionAddOperators {
 
+    // todo input = "000000000000", 0 时, 会内存溢出
+
     public List<String> addOperators(String num, int target) {
         List<String> ans = new ArrayList<>();
-        dfs(num, target, 0, "", 0, 0, ans);
+        dfs(num, target, ans, 0, "", 0, 0);
         return ans;
     }
 
     /**
      *
      * @param num input的数字
-     * @param target 需要达到的target
+     * @param target input需要达到的target
+     * @param ans output的答案
      * @param start 当前指针所在, 指去num中某个数字
      * @param exp 当前组成的公式
      * @param res 当前公式的结果
      * @param lastNum 当前公式中, 最后一个数字
-     * @param ans output的答案
      */
-    private void dfs(String num, int target, int start,
-                     String exp, long res, long lastNum, List<String> ans) {
+    private void dfs(String num, int target, List<String> ans,
+                     int start, String exp, long res, long lastNum) {
 
         // 递归出口 - start已指完所有数字, 如sum等于target, 将str加入ans中
         if (start == num.length()) {
@@ -64,22 +66,23 @@ public class _0653_ExpressionAddOperators {
         }
 
         for (int i = start; i < num.length(); i++) {
+            // 如果使用int, num很大的时候会无法完成, 例如 input = "3456237490", 9191
             long x = Long.parseLong(num.substring(start, i + 1));
 
             if (start == 0) {
-                dfs(num, target, i + 1, "" + x, x, x, ans);
+                dfs(num, target, ans, i + 1, "" + x, x, x);
             } else {
                 // 加法
-                dfs(num, target, i + 1, exp + "+" + x, res + x, x, ans);
+                dfs(num, target, ans, i + 1, exp + "+" + x, res + x, x);
 
                 // 减法
-                dfs(num, target, i + 1, exp + "-" + x, res - x, -x, ans);
+                dfs(num, target, ans, i + 1, exp + "-" + x, res - x, -x);
 
                 // 乘法 注意没有括号, 要先减掉上个数字, 先执行乘法
-                dfs(num, target, i + 1, exp + "x" + x,
-                        res - lastNum + lastNum * x, lastNum * x, ans);
+                dfs(num, target, ans, i + 1, exp + "*" + x, res - lastNum + lastNum * x, lastNum * x);
             }
 
+            // 注意: 如果当前x为0, 说明从start往后的数字是以0开头, 例如01,02, 这些数字是无效的, 所以必须退出循环
             if (x == 0)
                 break;
         }
