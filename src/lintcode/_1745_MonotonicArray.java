@@ -31,6 +31,19 @@ import org.junit.Test;
  */
 public class _1745_MonotonicArray {
 
+    /* 解法2 - 九章参考 */
+    // 遍历一次, 判断是否有递增或者递减的单调性, 满足其中一项即可
+    // 写法较简单, 但是运行时间较长, 因为每组对比要完成两次
+    public boolean isMonotonic_jiuzhang(int[] A) {
+        boolean isIncreasing = true, isDecreasing = true;
+
+        for (int i = 1; i < A.length; i++) {
+            isIncreasing &= A[i - 1] <= A[i];
+            isDecreasing &= A[i - 1] >= A[i];
+        }
+        return isIncreasing || isDecreasing;
+    }
+
     public boolean isMonotonic(int[] A) {
         if (A != null && A.length <= 1)
             return true;
@@ -57,19 +70,6 @@ public class _1745_MonotonicArray {
         }
 
         return true;
-    }
-
-    /* 解法2 - 九章参考 */
-    // 遍历一次, 判断是否有递增或者递减的单调性, 满足其中一项即可
-    // 写法较简单, 但是运行时间较长, 因为每组对比要完成两次
-    public boolean isMonotonic_jiuzhang(int[] A) {
-        boolean isIncreasing = true, isDecreasing = true;
-
-        for (int i = 1; i < A.length; i++) {
-            isIncreasing &= A[i - 1] <= A[i];
-            isDecreasing &= A[i - 1] >= A[i];
-        }
-        return isIncreasing || isDecreasing;
     }
 
     @Test

@@ -38,26 +38,24 @@ import static org.junit.Assert.assertEquals;
 public class _0838_SubarraySumEqualsK {
 
     /**
-     * 九章算法 解答
+     * 九章算法 解答 - 此题重点是在hashtable中记录前缀和, 及其出现次数
+     * key为 prefixSum[i], value 为该数组和出现过的次数
      *
-     * 假设数组长度n. 获得前缀和 prefix-sum 数组后:
-     *   nums[i]表示从 0 位加到 i 位的数组和
-     *   nums[j]表示从 0 位加到 j 位的数组和, j > i
-     *   nums[j]-nums[i]表示从 i+1 位加到 j 位的数组和
+     * prefixSum[i]表示从 0 位加到 i 位的数组和
+     * prefixSum[j]表示从 0 位加到 j 位的数组和, j > i
+     * prefixSum[j]-prefixSum[i]表示从 i+1 位加到 j 位的数组和
      *
-     * hashtable中, key为 nums[i], value 为该数组和出现过的次数
-     *
-     * 遍历前缀和数组时, 每个nums[i]:
-     *   如果hashtable中存在 nums[i]-k 为key的entry, 将其value加入答案
-     *   将 nums[i] 出现次数 +1
+     * 访问每个前缀和prefixSum[i]时:
+     *   1. 如果hashtable中存在 prefixSum[i]-k 为key的entry, 将其value加入答案
+     *   2. 将 prefixSum[i] 出现次数 +1
      *
      * 例2: [2,1,-1,1,2], 前缀和数组为 [2,3,2,3,5]
-     *  当前数组和 nums[i] > k 时, 检查是否存在数组和nums[a]满足 nums[i]-k = nums[a] (i > a)
-     *  例如,当遍历到 nums[4] = 5 时, nums[4]-3 = 2 = nums[0] = nums[2], 表示
-     *    从0+1为开始到4, 数组和为3 -> [1,4]
-     *    从2+1为开始到4, 数组和为3 -> [3,4]
-     *  当前数组和 nums[i] = k 时, 表示从0位到i位数组和为k, 所以答案 +1
-     *  当前数组和 nums[i] < k 时, 表示仍需要继续添加数字, 所以继续向后遍历
+     *  当遍历到前缀和 nums[i] 时, 检查是否存在 nums[a]满足 nums[a] = nums[i] - k. 例如:
+     *  - 当遍历到 nums[1] = 3 时, nums[1]-3 = 0 = 一个数都不加, 表示 [0,1]数组和 = k
+     *  - 当遍历到 nums[3] = 3 时, nums[3]-3 = 0 = 一个数都不加, 表示 [0,3]数组和 = k
+     *  - 当遍历到 nums[4] = 5 时, nums[4]-3 = 2 = nums[0] = nums[2], 表示
+     *     从0的下一位(1)开始到4, 数组和为3 -> [1,4]
+     *     从2的下一位(3)开始到4, 数组和为3 -> [3,4]
      */
     public int subarraySumEqualsK(int[] nums, int k) {
         // 先求出前缀和prefixSum 数组
@@ -66,11 +64,11 @@ public class _0838_SubarraySumEqualsK {
         }
 
         Hashtable<Integer, Integer> tb = new Hashtable<>();
-        tb.put(0,1); // 当prefixsum = k, 既找到1组答案, 所以 key = 0, value = 1
+        tb.put(0,1); // (前缀数组和, 出现次数)  当一个数字都不加的时候, 前缀和=0, 其出现次数=1
         int ans = 0;
         for (int curPrefixSum : nums) {
 
-            if (tb.containsKey(curPrefixSum - k)) { //当前prefixSum与k之间差值
+            if (tb.containsKey(curPrefixSum - k)) { //存在nums[a], s.t nums[a] = 前缀和 nums[i] - k
                 ans += tb.get(curPrefixSum - k);
             }
 
@@ -88,7 +86,7 @@ public class _0838_SubarraySumEqualsK {
     public int subarraySumEqualsK_s(int[] nums, int k) {
         int curPrefixSum = 0;
         Hashtable<Integer, Integer> tb = new Hashtable<>();
-        tb.put(0,1); // 当prefixsum = k, 既找到1组答案, 所以 key = 0, value = 1
+        tb.put(0,1); // (前缀数组和, 出现次数)  当一个数字都不加的时候, 前缀和=0, 其出现次数=1
         int ans = 0;
         for (int i = 0; i < nums.length; i++) {
             curPrefixSum += nums[i];
@@ -114,8 +112,7 @@ public class _0838_SubarraySumEqualsK {
      *
      * Do NOT use!
      */
-    public int subarraySumEqualsK_Expensive(int[] nums, int k) {
-        // write your code here
+    public int subarraySumEqualsK_bruteforce(int[] nums, int k) {
         if (nums == null || nums.length == 0) {
             return 0;
         }
@@ -137,6 +134,118 @@ public class _0838_SubarraySumEqualsK {
         }
         return ans;
     }
+
+
+    /**
+     * nums = [1,2,3,4]
+     *                   4
+     *           3     3+4
+     *     2   2+3   2+3+4
+     * 1 1+2 1+2+3 1+2+3+4
+     *
+     * dp[3][3]=nums[3]
+     * dp[2][2]=nums[2]; dp[2][3]=dp[2][2]+dp[3][3]
+     * dp[1][1]=nums[1]; dp[1][2]=dp[1][1]+dp[2][2]; dp[1][3]=dp[1][1]+dp[2][3]
+     * dp[0][0]=nums[0]; dp[0][1]=dp[0][0]+dp[1][1]; dp[0][2]=dp[0][0]+dp[1][2]; dp[0][3]=dp[0][0]+dp[1][3]
+     *
+     * 时间 n+(n-1)+(n-2)+...+(n-(n-1)) = n*n-(1+2+...+(n-1)) = n^2 + (1+(n-1))*(n-1)/2 = n*n + n*(n-1)/2
+     * time:  O(n^2)
+     * space: O(n^2)
+     *
+     * Memory Limit Exceeded
+     */
+    public int subarraySumEqualsK_dp_1(int[] nums, int k) {
+        if (nums == null || nums.length == 0)
+            return 0;
+
+        int ans = 0, n = nums.length;
+        int[][] dp = new int[n][n];
+
+        for (int i = n - 1; i >= 0; i--) {
+            for (int j = i; j < n; j++) {
+                if (i == j) {
+                    dp[i][j] = nums[i];
+                } else {
+                    dp[i][j] = dp[i][i] + dp[i+1][j];
+                }
+
+                if (dp[i][j] == k)
+                    ans++;
+            }
+        }
+
+        return ans;
+    }
+
+
+    /**
+     * nums = [1,2,3,4]
+     *                   4
+     *           3     3+4
+     *     2   2+3   2+3+4
+     * 1 1+2 1+2+3 1+2+3+4
+     *
+     * 这次使用1D array, 每次只记录上一行的答案, 例如
+     * i j                 i j                       i j                      i j
+     * ---                 ---                       ---                      ---
+     * 3 3: dp[3]=nums[3]
+     * 2 2: dp[2]=nums[2]; 2 3: dp[3]=dp[2]+老dp[3]
+     * 1 1: dp[1]=nums[1]; 1 2: dp[2]=dp[1]+老dp[2]; 1 3: dp[3]=dp[1]+老dp[3]
+     * 0 0: dp[0]=nums[0]; 0 1: dp[1]=dp[0]+老dp[1]; 1 2: dp[2]=dp[0]+老dp[2]; 1 3: dp[3]=dp[0]+老dp[3]
+     *
+     * time:  O(n^2)
+     * space: O(n)
+     *
+     * 可惜仍然会超时 Time Limit Exceeded
+     */
+    public int subarraySumEqualsK_dp_2(int[] nums, int k) {
+        if (nums == null || nums.length == 0)
+            return 0;
+
+        int ans = 0, n = nums.length;
+        int[] dp = new int[n];
+
+        for (int i = n - 1; i >= 0; i--) {
+            for (int j = i; j < n; j++) {
+                if (i == j) {
+                    dp[j] = nums[j];
+                } else {
+                    dp[j] = dp[i] + dp[j];
+                }
+
+                if (dp[j] == k)
+                    ans++;
+            }
+        }
+
+        return ans;
+    }
+
+
+
+
+        /**
+         * 这个解法的问题是, table中可能含有多个 k - nums[i], 但是答案只增加一次
+         * 例如 nums = [2,1,-1,1,2], k = 3
+         * prefixSum = [2,3,2,3,5] 答案有4个 [0,1], [1,4], [0,3] and [3,4]
+         */
+    public int subarraySumEqualsK_withbug(int[] nums, int k) {
+        if (nums == null || nums.length == 0)
+            return 0;
+
+        int ans = 0;
+        Hashtable<Integer, Integer> table = new Hashtable<>();
+        table.put(0, nums[0]); // (pos, value)
+        for (int i = 1; i < nums.length; i++) {
+            if (table.containsValue(k - nums[i]))
+                ans++;
+
+            table.put(i, table.get(i-1) + nums[i]);
+        }
+
+        return ans;
+    }
+
 
     @Test
     public void test1() {
