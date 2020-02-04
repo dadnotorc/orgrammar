@@ -64,10 +64,10 @@ public class _0837_PalindromicSubstrings {
 
     /**
      * 解法2 - 九章参考 https://www.jiuzhang.com/solution/palindromic-substrings/#tag-highlight
-     * 考虑如果substring(j,i)如果是回文串，那么str[i]和str[j]一定相同，并且一定满足以下两个条件之一
-     * 1.substring(j+1,i-1)也是回文串
-     * 2.i-j<=2，即substring(j,i)长度<=2
-     * 那么我们就只需要顺着这个思路dp就行了
+     * 考虑如果substring(l,r)如果是回文串，那么str[l]和str[r]一定相同，并且一定满足以下两个条件之一
+     * 1. r-l<=2，即substring(l,r)长度<=3 (例如 a, aa, aba)
+     * 2. substring(l+1,r-1)也是回文串
+     * 那么我们就只需要顺着这个思路dp就行了. 注意: 1,2的顺序不能乱, 不然当r=0时, 会out of index
      *
      * DP的用途是避免重复判断已知的回文串
      * time:  O(n ^ 2)
@@ -82,16 +82,16 @@ public class _0837_PalindromicSubstrings {
         // dp[j][i] 表示从j到i的子字符串是否为回文串
         int[][] dp = new int[n][n];
 
-        for (int i = 0; i < n; i++) {
-            for (int j = 0; j <= i; j++) { // j <= i 保证子字符串有效
-                if (str.charAt(j) == str.charAt(i)
-                        && (i - j <= 2 || dp[j + 1][i - 1] == 1)) {
-                    dp[j][i] = 1;
+        for (int r = 0; r < n; r++) {
+            for (int l = 0; l <= r; l++) {  // j <= i 保证子字符串有效
+                if (str.charAt(l) == str.charAt(r)
+                        && (r - l <= 2 || dp[l + 1][r - 1] == 1)) { // 必须先判断l,r之间长度, 再看dp
+                    dp[l][r] = 1;
                 } else {
-                    dp[j][i] = 0;
+                    dp[l][r] = 0;
                 }
 
-                ans += dp[j][i];
+                ans += dp[l][r];
             }
         }
 
