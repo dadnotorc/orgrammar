@@ -79,11 +79,11 @@ public class _0837_PalindromicSubstrings {
 
         int ans = 0, n = str.length();
 
-        // dp[j][i] 表示从j到i的子字符串是否为回文串
+        // dp[l][r] 表示从l到r的子字符串是否为回文串
         int[][] dp = new int[n][n];
 
         for (int r = 0; r < n; r++) {
-            for (int l = 0; l <= r; l++) {  // j <= i 保证子字符串有效
+            for (int l = 0; l <= r; l++) {  // l <= r 保证子字符串有效
                 if (str.charAt(l) == str.charAt(r)
                         && (r - l <= 2 || dp[l + 1][r - 1] == 1)) { // 必须先判断l,r之间长度, 再看dp
                     dp[l][r] = 1;
