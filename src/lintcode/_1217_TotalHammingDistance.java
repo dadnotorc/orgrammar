@@ -40,7 +40,10 @@ import org.junit.Test;
  */
 public class _1217_TotalHammingDistance {
 
-    public int totalHammingDistance(int[] nums) {
+    /**
+     * 解法1 - 假设32位机器
+     */
+    public int totalHammingDistance_1(int[] nums) {
         if (nums == null || nums.length == 0)
             return 0;
 
@@ -63,21 +66,60 @@ public class _1217_TotalHammingDistance {
         return ans;
     }
 
+
+    /**
+     * 解法2 - 使用bitwise XOR 计算两个int之间的bits difference
+     */
+    public int totalHammingDistance_2(int[] nums) {
+        // 使用 >> 做bits operation
+        // 计算hamming distance的公式 = 当前位1的数量 X 当前位0的数量
+
+        if (nums == null || nums.length <= 1)
+            return 0;
+
+        int ans = 0;
+
+        for (int i = 0; i < nums.length -1; i++) {
+            for (int j = i + 1; j < nums.length; j++) {
+                ans += hammingDistance(nums[i], nums[j]);
+            }
+        }
+
+        return ans;
+    }
+
+    private int hammingDistance(int x, int y) {
+        int tmp = x ^ y; // bitwise XOR -> 某个bit为1 表示当前位不同
+
+        //统计出tmp中有多少位1, 即有多少位不同
+        int count = 0;
+
+        while (tmp != 0) {
+            count++;
+            tmp = tmp & (tmp - 1);
+        }
+
+        return count;
+    }
+
     @Test
     public void test0() {
         int[] nums = {14, 14};
-        org.junit.Assert.assertEquals(0, totalHammingDistance(nums));
+        org.junit.Assert.assertEquals(0, totalHammingDistance_1(nums));
+        org.junit.Assert.assertEquals(0, totalHammingDistance_2(nums));
     }
 
     @Test
     public void test1() {
         int[] nums = {4, 14, 2};
-        org.junit.Assert.assertEquals(6, totalHammingDistance(nums));
+        org.junit.Assert.assertEquals(6, totalHammingDistance_1(nums));
+        org.junit.Assert.assertEquals(6, totalHammingDistance_2(nums));
     }
 
     @Test
     public void test2() {
         int[] nums = {2, 1, 0};
-        org.junit.Assert.assertEquals(4, totalHammingDistance(nums));
+        org.junit.Assert.assertEquals(4, totalHammingDistance_1(nums));
+        org.junit.Assert.assertEquals(4, totalHammingDistance_2(nums));
     }
 }

@@ -38,6 +38,7 @@ public class _0551_NestedListWeightSum {
         return helper(nestedList, 1);
     }
 
+    // 重点在于每次将 depth+1, 并带入下一层. 完成下层计算, 返回计算结果给上层, 并恢复depth
     private int helper(List<NestedInteger> nestedList, int depth) {
         if (nestedList == null || nestedList.size() == 0)
             return 0;
@@ -66,12 +67,13 @@ public class _0551_NestedListWeightSum {
         int sum = 0;
 
         Queue<NestedInteger> queue = new LinkedList<>();
+        // 将每层中的各个NestedInteger存入queue中
         for (NestedInteger item : nestedList)
             queue.offer(item);
 
         int depth = 1;
         while (!queue.isEmpty()) {
-            // the size of items with the same depth
+            // 记住每层开始时, 将长度保存, 因为在循环中, queue长度会变化
             int size = queue.size();
 
             for (int i = 0; i < size; i++) {

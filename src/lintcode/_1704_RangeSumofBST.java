@@ -7,6 +7,9 @@ package lintcode;
 
 import util.TreeNode;
 
+import java.util.LinkedList;
+import java.util.Queue;
+
 /**
  * 1704. Range Sum of BST
  *
@@ -39,7 +42,7 @@ public class _1704_RangeSumofBST {
      * node <= L < R 时, 左子树只会更小, 但右子树可能符合条件, 所以只搜索右子树
      * L < R <= node 时, 右子树只会更大, 但左子树可能符合条件, 所以只搜索左子树
      */
-    public int rangeSumBST(TreeNode root, int L, int R) {
+    public int rangeSumBST_recursion(TreeNode root, int L, int R) {
         int sum = 0;
 
         if (root == null)
@@ -49,11 +52,34 @@ public class _1704_RangeSumofBST {
             sum += root.val;
 
         if (root.val > L)
-            sum += rangeSumBST(root.left, L, R);
+            sum += rangeSumBST_recursion(root.left, L, R);
 
         if (root.val < R)
-            sum += rangeSumBST(root.right, L, R);
+            sum += rangeSumBST_recursion(root.right, L, R);
 
         return sum;
+    }
+
+    public int rangeSumBST_iterative(TreeNode root, int L, int R) {
+        Queue<TreeNode> q = new LinkedList<>();
+        q.offer(root);
+
+        int ans = 0;
+
+        while (!q.isEmpty()) {
+            TreeNode node = q.poll();
+            if (node != null) {
+                if (node.val >= L && node.val <= R)
+                    ans += node.val;
+
+                if (node.val > L)
+                    q.offer(node.left);
+
+                if (node.val < R)
+                    q.offer(node.right);
+            }
+        }
+
+        return ans;
     }
 }

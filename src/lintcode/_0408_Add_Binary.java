@@ -27,31 +27,39 @@ import org.junit.Test;
  */
 public class _0408_Add_Binary {
 
+    /**
+     * 1. 查char的整数值 a.charAt(i) - '0'
+     * 2. 算进位用 '/', 算当前位值用 '%'
+     * 3. 循环做完了别忘了进位
+     * 4. 用StringBuilder, 最后要先reverse
+     *
+     * time:  O(n)  n为a,b中较长字符串长度 n=Math.max(a.length(), b.length())
+     * space: O(1)
+     */
     public String addBinary(String a, String b) {
-        if (a == null || a.length() == 0)
-            return b ==  null ? "" : b;
 
-        if (b == null || b.length() == 0)
-            return a;
+        if (a == null || b == null)
+            return a == null ? (b == null ? "" : b) : a;
 
-        String ansStr = "";
+        StringBuilder sb = new StringBuilder();
         int carry = 0;
 
         for (int i = a.length() - 1, j = b.length() - 1; i >= 0 || j >= 0; i--, j--) {
-            int curSum = carry;
+            int curSum = carry; // 先把进位加进来
 
             // 注意判断 a和b 可能不等长
-            curSum += (i >= 0) ? a.charAt(i) - '0' : 0;
-            curSum += (j >= 0) ? b.charAt(j) - '0' : 0;
+            curSum += i < 0 ? 0 : a.charAt(i) - '0';
+            curSum += j < 0 ? 0 : b.charAt(j) - '0';
 
-            ansStr = (curSum % 2) + ansStr;
             carry = curSum / 2;
+            sb.append(curSum % 2);
         }
 
+        // 别忘了进位
         if (carry != 0)
-            ansStr = carry + ansStr;
+            sb.append(carry);
 
-        return ansStr;
+        return sb.reverse().toString(); // 要先转向
     }
 
     @Test

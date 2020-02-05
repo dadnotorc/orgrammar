@@ -59,26 +59,79 @@ import java.util.*;
 public class _1506_AllNodesDistanceKinBinaryTree {
 
     /**
-     * 此题关键点为, 使用queue记录target周围节点, 并以距离区分, 例如
-     * null, target, null, 距离1的节点们, null, ..., null, 距离K的节点们
-     *
-     * 访问到非空节点时, 将其全部未访问过的父子节点加入queue中;
-     * 当访问到null节点时, 说明距离target距离相等的所有节点已加入queue
+     * 先遍历整个树, 画出<childNode, parentNode>关系图
+     * 使用queue, 先将target放入, 然后按距离由近到远, 将附近nodes放进queue
+     * 使用set, 记录已访问过的节点
      */
-    public List<Integer> distanceK(TreeNode root, TreeNode target, int K) {
+    public List<Integer> distanceK_1(TreeNode root, TreeNode target, int K) {
 
-        // 使用 DFS 遍历整个树
-//        Map<TreeNode, TreeNode> parentNodeMap = new HashMap<>();
-//        dfs(root, null, parentNodeMap);
-
-        // 使用 BFS 遍历
-        Map<TreeNode, TreeNode> parentNodeMap = bfs(root);
+        // key = child node; value = parent node
+        Map<TreeNode, TreeNode> childParentMap = new HashMap<>();
+        dfs(root, null, childParentMap);
 
         // 获得父子节点关系图后, 从target点出发, 寻找距离为K的节点
         // 可以是子节点, 或者父节点, 或者sibling节点
 
-        // 此queue记录target周围节点, 以距离长短区分, 不同距离节点之间用null分割, 例如
-        // null, target, null, 距离1的节点们 ...
+        Queue<TreeNode> nodesByDistance = new LinkedList<>();
+        Set<TreeNode> visitedNodes = new HashSet<>();
+
+        nodesByDistance.offer(target);
+        visitedNodes.add(target);
+
+        // 用curNodes 和 newNodes 记录当前距离的节点数量, +1距离后的节点数量
+        int distance = 0;
+
+        while (!nodesByDistance.isEmpty()) {
+
+            if (distance == K) {
+                List<Integer> ans = new LinkedList<>();
+                for (TreeNode n : nodesByDistance)
+                    ans.add(n.val);
+
+                return ans;
+            } else {
+                int curNodes = nodesByDistance.size();
+                for (int i = 0; i < curNodes; i++) {
+                    TreeNode node = nodesByDistance.poll();
+
+                    if (node.left != null && !visitedNodes.contains(node.left)) {
+                        nodesByDistance.offer(node.left);
+                        visitedNodes.add(node.left);
+                    }
+
+                    if (node.right != null && !visitedNodes.contains(node.right)) {
+                        nodesByDistance.offer(node.right);
+                        visitedNodes.add(node.right);
+                    }
+
+                    TreeNode parent = childParentMap.get(node);
+                    if (parent != null && !visitedNodes.contains(parent)) {
+                        nodesByDistance.offer(parent);
+                        visitedNodes.add(parent);
+                    }
+                }
+                distance++; // 别忘了增加距离
+            }
+        }
+
+        return new LinkedList<>(); // 未找到任何结果, 返回空值
+    }
+
+    /**
+     * 此解法使用queue记录target周围节点, 使用null节点来区分距离远近例如
+     * null, target, null, 距离1的节点们, null, ..., null, 距离K的节点们
+     *
+     * 访问到非空节点时, 将其全部未访问过的父子节点加入queue中;
+     * 当访问到null节点时, 说明距离target距离相等的所有节点已加入queue
+     *
+     * 注意距离K可以等于0
+     */
+    public List<Integer> distanceK_2(TreeNode root, TreeNode target, int K) {
+
+        Map<TreeNode, TreeNode> parentNodeMap = bfs(root);
+
+        // 先加null, 再加target的理由是:
+        // distance可以从0开始, 这样满足如果要找的是距离为0的节点(即本身)
         Queue<TreeNode> nodesQueue = new LinkedList<>();
         nodesQueue.offer(null);
         nodesQueue.offer(target);

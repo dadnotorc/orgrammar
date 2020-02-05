@@ -49,6 +49,10 @@ public class helper {
 //        while (it.hasNext())
 //            System.out.println(it.next());
         // 输出 = Bob Alice Charlie
+        StringBuilder sb = new StringBuilder();
+
+        sb.append(4 /2 );
+        sb.reverse().toString();
     }
 
     public boolean isOdd(int n) {
