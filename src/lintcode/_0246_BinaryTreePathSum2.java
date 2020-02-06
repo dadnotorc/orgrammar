@@ -3,7 +3,7 @@ Easy
 DFS, Recursion, Binary Tree
 Amazon
  */
-package lintcode.binarytree;
+package lintcode;
 
 import util.TreeNode;
 

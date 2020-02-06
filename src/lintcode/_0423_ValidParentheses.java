@@ -4,7 +4,7 @@ Stack
 Amazon, Airbnb, Facebook, Google, Microsoft, Twitter, Uber
 FAQ++
  */
-package lintcode.stack;
+package lintcode;
 
 import org.junit.Test;
 

@@ -1,4 +1,4 @@
-package lintcode.dp;
+package lintcode;
 
 import org.junit.Test;
 

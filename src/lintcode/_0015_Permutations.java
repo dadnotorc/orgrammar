@@ -1,4 +1,4 @@
-package lintcode.recursion;
+package lintcode;
 
 import org.junit.Test;
 

@@ -3,7 +3,7 @@ Medium
 Binary Tree, BFS, DFS
 Amazon, Facebook
  */
-package lintcode.binarytree;
+package lintcode;
 
 import util.TreeNode;
 
@@ -81,9 +81,9 @@ public class _0760_BinaryTreeRightSideView {
 
     /**
      * 解法2 - DFS
-     * 此解的重点是使用 HashMap 记录当前层数 + 当前层最右节点的值
-     * 先遍历整个数, 获得 HashMap.
-     * 然后取得 HashMap 中每一个值
+     * 此解的重点是
+     * 1. 遍历树的时候, 先访问右子树, 再访问左子树
+     * 2. 遍历时, 使用 HashMap 记录当前层数 + 当前层最右节点的值 (当前层第一个碰到的节点)
      * time:  O(n)
      * space: O(m) m = depth of the tree
      */

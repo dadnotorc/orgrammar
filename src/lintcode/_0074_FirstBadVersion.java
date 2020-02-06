@@ -1,4 +1,4 @@
-package lintcode.binarysearch;
+package lintcode;
 
 import util.SVNRepo;
 

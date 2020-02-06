@@ -3,7 +3,7 @@ Easy
 Matrix, Binary Search
 Amazon, Yahoo
  */
-package lintcode.binarysearch;
+package lintcode;
 
 /**
  * 28. Search a 2D Matrix

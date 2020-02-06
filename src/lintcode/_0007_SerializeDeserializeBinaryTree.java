@@ -3,7 +3,7 @@ Medium
 Binary Tree
 Amazon, Facebook, Google, LinkedIn, Microsoft, Uber
  */
-package lintcode.binarytree;
+package lintcode;
 
 import org.junit.Test;
 import util.TreeNode;

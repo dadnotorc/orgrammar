@@ -4,7 +4,7 @@ Medium
 Facebook, Microsoft
 FAQ
  */
-package lintcode.stack;
+package lintcode;
 
 import org.junit.Test;
 
@@ -43,12 +43,20 @@ import static org.junit.Assert.assertEquals;
  */
 public class _0421_SimplifyPath {
 
+    /**
+     * 1. 使用split()分割folder, regex = "/+" 一个或多个 "/" or "//"
+     * 2. 把有效的目录push进stack, 把无效的目录pop出来
+     *
+     * 不要移除空白 (path = path.replaceAll("\\s+", "")), 因为目录名可以包含空格, 例如 /my\ folder/
+     * 注意不能使用StringBuilder的reverse(), 因为会把目录名也反转
+     */
     public String simplifyPath(String path) {
         // write your code here
         if (path == null || path.length() == 0) {
             return "";
         }
 
+        // divide into substrings divided by "/" or "//"
         String[] subs = path.split("/+");
 
         // 使用stack, FILO
@@ -69,11 +77,8 @@ public class _0421_SimplifyPath {
 
         String ans = "";
 
-        while (!stack.isEmpty()) {
-            //System.out.println(stack);
+        while (!stack.isEmpty())
             ans = "/" + stack.pop() + ans; //从后往前加
-            //System.out.println(ans);
-        }
 
         return ans.equals("") ? "/" : ans;
     }
@@ -126,6 +131,15 @@ public class _0421_SimplifyPath {
     @Test
     public void test6() {
         String in = "/a/b/c/../";
+        String expected = "/a/b";
+        String actual = new _0421_SimplifyPath().simplifyPath(in);
+        //System.out.println("\"" + actual + "\"");
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    public void test7() {
+        String in = "/a/    /b/../";
         String expected = "/a/b";
         String actual = new _0421_SimplifyPath().simplifyPath(in);
         //System.out.println("\"" + actual + "\"");

@@ -3,7 +3,7 @@ Naive
 Binary Tree
 AirBnB
  */
-package lintcode.binarytree;
+package lintcode;
 
 import org.junit.Test;
 import util.TreeNode;

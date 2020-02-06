@@ -4,7 +4,7 @@ String, Two Pointers
 LinkedIn, Facebook, Microsoft, Uber
 FAQ+
  */
-package lintcode.twopointers;
+package lintcode;
 
 import org.junit.Test;
 

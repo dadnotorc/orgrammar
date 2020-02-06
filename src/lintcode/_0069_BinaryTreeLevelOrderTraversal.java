@@ -4,7 +4,7 @@ Binary Tree Traversal, Queue, Binary Tree, BFS
 Apple, LinkedIn, Amazon, Facebook, Microsoft, Uber
 FAQ
  */
-package lintcode.binarytree;
+package lintcode;
 
 import util.TreeNode;
 

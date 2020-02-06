@@ -3,7 +3,7 @@ Medium
 Binary Tree
 LinkedIn
  */
-package lintcode.binarytree;
+package lintcode;
 
 /**
  * 649. Binary Tree Upside Down

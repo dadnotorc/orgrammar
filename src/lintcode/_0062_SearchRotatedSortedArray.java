@@ -1,4 +1,4 @@
-package lintcode.binarysearch;
+package lintcode;
 
 import org.junit.Test;
 

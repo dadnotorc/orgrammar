@@ -3,7 +3,7 @@ Hard
 DP
 Amazon
  */
-package lintcode.dp;
+package lintcode;
 
 /**
  * There are N piles of stones arranged in a row. The i-th pile has

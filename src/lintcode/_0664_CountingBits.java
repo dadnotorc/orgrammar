@@ -3,7 +3,7 @@ Medium
 Bit Manipulation, DP
 Salesforce
  */
-package lintcode.dp;
+package lintcode;
 
 import org.junit.Test;
 

@@ -3,7 +3,7 @@ Easy
 Binary Tree Traversal, Recursion
 Amazon, Facebook, Google
  */
-package lintcode.binarytree;
+package lintcode;
 
 import util.TreeNode;
 

@@ -42,6 +42,46 @@ import java.util.Arrays;
  */
 public class _0945_TaskScheduler {
 
+    /* 解法2 - 九章参考  */
+    /**
+     * 1. 获得tasks出现次数
+     * 2. 按出现数由少到多排序
+     * 3. best case:  无需加入任何idle -> interval = tasks.length
+     *    worst case: 所有tasks出现次数一样多 ->　(occurrences[max]-1) * (n+1) + 所有tasks个数 (或拥有max occurrences的个数)
+     *    (occurrences[max]-1) -> max task最后一次被执行之前, 已被执行的次数
+     *    (n+1) -> 每次max task repeat之前, 占用的intervals
+     *    两者取多者
+     *
+     * 例1, ['A','A','A','B','B','B'], n = 2
+     * A _ _ A _ _ A
+     * (3 - 1) * (2 + 1) 意思是, 在最后的任务之前, 有(3-1)段intervals, 每段interval长度为(2+1)
+     */
+    public int leastInterval_2(char[] tasks, int n) {
+
+        if (tasks == null || tasks.length <= 1)
+            return 1;
+
+        // 先统计各个task出现次数
+        int[] counts = new int[26];
+        for (char c : tasks)
+            counts[c - 'A']++;
+
+        Arrays.sort(counts); // 从少到多排列, 最后一项拥有 max count
+
+        // 从后往前, 找到数组中有多少项也具有 max count
+        // 这些项在填满间隔后(最后的任务时), 每项需要 +1
+        int tasksWithMaxCount = 1; // 从1开始的原因是要包含最后一项
+        int index = 24;
+
+        while (index >= 0 && counts[index] == counts[25]) {
+            index--;
+            tasksWithMaxCount++;
+        }
+
+        return Math.max(tasks.length, (counts[25] - 1) * (n + 1) + tasksWithMaxCount);
+    }
+
+
     /**
      * 假设 tasks 中之含有大写 A - Z
      *
@@ -89,44 +129,7 @@ public class _0945_TaskScheduler {
         return ans;
     }
 
-    /* 解法2 - 九章参考  */
 
-    /**
-     * 假设任务A次数最多, 在它最后一次任务之前,
-     * 前面大区间的interval之和为 (counts[A] - 1) * (n + 1) 这里的+1指的是加上A本身
-     *
-     * 例1, ['A','A','A','B','B','B'], n = 2
-     * A _ _ A _ _ A
-     * (3 - 1) * (2 + 1) 意思是, 在最后的任务之前, 有(3-1)段intervals, 每段interval长度为(2+1)
-     *
-     * 例2: ['A','A','A','B','B','B'], n = 1
-     * A _ A _ A
-     * (3 - 1) * (1 + 1)
-     */
-    public int leastInterval_2(char[] tasks, int n) {
-
-        if (tasks.length <= 1)
-            return 1;
-
-        // 先统计各个task出现次数
-        int[] counts = new int[26];
-        for (char c : tasks)
-            counts[c - 'A']++;
-
-        Arrays.sort(counts); // 从少到多排列, 最后一项拥有 max count
-
-        // 从后往前, 找到数组中有多少项也具有 max count
-        // 这些项在填满间隔后(最后的任务时), 每项需要 +1
-        int tasksWithMaxCount = 1; // 从1开始的原因是要包含最后一项
-        int index = 24;
-
-        while (index >= 0 && counts[index] == counts[25]) {
-            index--;
-            tasksWithMaxCount++;
-        }
-
-        return Math.max(tasks.length, (counts[25] - 1) * (n + 1) + tasksWithMaxCount);
-    }
 
     /* 解法3 ? */
     //todo 考虑使用 PriorityQueue
