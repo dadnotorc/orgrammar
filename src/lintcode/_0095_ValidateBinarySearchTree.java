@@ -73,7 +73,10 @@ public class _0095_ValidateBinarySearchTree {
                 && divideConquer(node.right, node.val, max);
     }
 
-    // 解法 2 - 循环
+
+    /**
+     * 解法 2 - 循环
+     */
     public boolean isValidBST_2(TreeNode root) {
         Stack<TreeNode> stack = new Stack<>();
 
@@ -83,7 +86,7 @@ public class _0095_ValidateBinarySearchTree {
             root = root.left;
         }
 
-        TreeNode lastNode = null;
+        TreeNode lastNode = null; // lastNode时已访问过的节点, 且一直在当前节点左边
 
         while (!stack.isEmpty()) {
 

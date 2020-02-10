@@ -1,3 +1,8 @@
+/*
+Medium
+#Sorted Array, #Array, #Binary Search
+Facebook, LinkedIn, Microsoft, Uber
+ */
 package lintcode;
 
 import org.junit.Test;
@@ -30,7 +35,7 @@ import static org.junit.Assert.assertEquals;
  *
  * 假设, 数组为上升数组
  */
-public class _0062_SearchRotatedSortedArray {
+public class _0062_SearchInRotatedSortedArray {
 
     public int search(int[] a, int target) {
         if (a == null || a.length == 0) {

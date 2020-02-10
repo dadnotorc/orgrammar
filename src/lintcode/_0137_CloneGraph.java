@@ -48,6 +48,9 @@ public class _0137_CloneGraph {
      * 1. 从原图中获得所有的点
      * 2. 复制点 (获得新的nodes)
      * 3. 复制边 (获得新的edges)
+     *
+     * 遍历时, 注意保证节点的独立性, 因为节点是undirected, 所以邻居的邻居可以是本身
+     * 跟新node添加neighbor的时候, 注意要选择新建出来的neighbor nodes
      */
     public UndirectedGraphNode cloneGraph(UndirectedGraphNode node) {
         if (node == null)
@@ -195,7 +198,7 @@ public class _0137_CloneGraph {
             UndirectedGraphNode newNode = map.get(oldNode);
 
             for (UndirectedGraphNode oldNodeNeighbor : oldNode.neighbors) {
-                UndirectedGraphNode newNodeNeighbor = map.get(oldNodeNeighbor);
+                UndirectedGraphNode newNodeNeighbor = map.get(oldNodeNeighbor); // 注意这一步, 要选新的节点作为neighbor
                 newNode.neighbors.add(newNodeNeighbor);
             }
         }

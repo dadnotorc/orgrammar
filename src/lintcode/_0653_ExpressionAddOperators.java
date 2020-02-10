@@ -67,7 +67,7 @@ public class _0653_ExpressionAddOperators {
 
         for (int i = start; i < num.length(); i++) {
             // 如果使用int, num很大的时候会无法完成, 例如 input = "3456237490", 9191
-            long x = Long.parseLong(num.substring(start, i + 1));
+            long x = Long.parseLong(num.substring(start, i + 1)); //不是每个digit, 可能是多个digits组成的数字
 
             if (start == 0) {
                 dfs(num, target, ans, i + 1, "" + x, x, x);

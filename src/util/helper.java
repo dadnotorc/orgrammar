@@ -6,12 +6,12 @@ import java.util.*;
 
 public class helper {
 	public static void main(String[] args) {
-        String str = "//a/b/c/    /d";
-        String newStr = str.replaceAll("\\s+", "");
-        String[] subs = newStr.split("/");
-        for (String s : subs) {
-            System.out.println("-" + s + "-");
-        }
+//        String str = "//a/b/c/    /d";
+//        String newStr = str.replaceAll("\\s+", "");
+//        String[] subs = newStr.split("/");
+//        for (String s : subs) {
+//            System.out.println("-" + s + "-");
+//        }
         // 输出 = -abc-
 
 //        int[][] d = {{1,2}, {3,4}, {5,6}, {7,8}};
@@ -49,6 +49,8 @@ public class helper {
 //        while (it.hasNext())
 //            System.out.println(it.next());
         // 输出 = Bob Alice Charlie
+
+        boolean x = 3 > 2;
     }
 
     public boolean isOdd(int n) {

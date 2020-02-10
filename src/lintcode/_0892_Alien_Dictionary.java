@@ -91,6 +91,8 @@ public class _0892_Alien_Dictionary {
     private Map<Character, Integer> getIndegree(Map<Character, Set<Character>> graph) {
         Map<Character, Integer> indegree = new HashMap<>();
 
+        // 不合并以下两个loop的原因是, 要先保证所有字符在indegree图中已经存在一个entry
+
         for (Character c : graph.keySet()) {
             indegree.put(c, 0);
         }
@@ -100,8 +102,6 @@ public class _0892_Alien_Dictionary {
                 indegree.put(d, indegree.get(d) + 1);
             }
         }
-
-        // 两个for循环不合并的原因是, 要先保证所有字符在indegree图中已经存在一个entry
 
         return indegree;
     }

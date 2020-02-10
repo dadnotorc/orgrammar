@@ -47,6 +47,7 @@ public class _0123_WordSearch {
 
         for (int i = 0; i < height; i++) {
             for (int j = 0; j < width; j++) {
+                // 不可以直接 return dfs(), 因为遍历仍未做完
                 if (dfs(board, i, j, word, 0, isVisited))
                     return true;
             }
@@ -63,7 +64,7 @@ public class _0123_WordSearch {
         if (board[x][y] != s.charAt(index)) // 当前字符不相符
             return false;
 
-        if (index == s.length() - 1) // 当前已到最后一位, 且所有字符都相符
+        if (index == s.length() - 1) // -1 是因为当前在最后一位, 且上一行判断确定了所有字符都相符
             return true;
 
         isVisited[x][y] = true; // 注意! 递归前, 先将当前位置标记
@@ -75,6 +76,7 @@ public class _0123_WordSearch {
             if (!isValid(neighborX, neighborY, board) || isVisited[neighborX][neighborY]) // 越界 或 已访问过
                 continue;
 
+            // 不可以直接 return dfs(), 因为遍历仍未做完
             if (dfs(board, neighborX, neighborY, s, index + 1, isVisited))
                 return true;
         }

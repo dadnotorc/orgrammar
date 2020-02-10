@@ -1,3 +1,8 @@
+/*
+Medium
+#Heap, #Interval, #Sweep line, #Greedy, #Sort
+Facebook, Google, Uber
+ */
 package lintcode;
 
 import org.junit.Test;

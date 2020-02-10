@@ -43,6 +43,10 @@ public class _0032_MinimumWindowSubstring {
 
     /**
      * 使用array, 速度较快
+     * 使用array记录target中每个字符出现次数,
+     * 右指针遍历时, 更新array中所有出现字符的次数 (都-1)
+     * 当target中所有字符都找齐 (validCharLen >= target.length()), 开始挪动左指针
+     * 左指针跳过所有无效字符, 直到最短字符串找到时结束, 每次左指针跳动, 更新答案长度
      */
     public String minWindow(String source, String target) {
         if (source == null || target == null) {
@@ -50,7 +54,6 @@ public class _0032_MinimumWindowSubstring {
         }
 
         int validCharLen = 0;
-        int tarLen = target.length();
         //+1的原因是避免错误的判断subStr跟source一样的情况
         //例如,s="abc" t="ac", subStr="abc"
         String subStr = "";
@@ -79,11 +82,11 @@ public class _0032_MinimumWindowSubstring {
             counts[rc]--;
 
             // 找到target中所有字符后, 左指针跳过无效字符
-            while(validCharLen >= tarLen) {
+            while(validCharLen >= target.length()) {
                 //先记录子字符串, 取较短的
                 if (subStrLen > right - left + 1) {
                     subStr = source.substring(left, right + 1);
-                    subStrLen = right - left + 1;
+                    subStrLen = subStr.length();
                 }
 
                 char lc = source.charAt(left);

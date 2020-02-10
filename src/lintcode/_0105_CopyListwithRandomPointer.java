@@ -45,32 +45,32 @@ public class _0105_CopyListwithRandomPointer {
 
         HashMap<RandomListNode, RandomListNode> map = new HashMap<>();
         RandomListNode dummy = new RandomListNode(-1);
-        RandomListNode newHead, curNode;
-        newHead = dummy;
+        RandomListNode pre, newNode;
+        pre = dummy;
 
         while (head != null) {
             // 拷贝当前head节点
             if (map.containsKey(head)) {
-                curNode = map.get(head);
+                newNode = map.get(head);
             } else {
-                curNode = new RandomListNode(head.label);
-                map.put(head, curNode);
+                newNode = new RandomListNode(head.label);
+                map.put(head, newNode);
             }
 
             // 拷贝当前head节点的random指针
-            if (head.random != null) {
+            if (head.random != null) { // 别忘了先判断是否为空
                 if (map.containsKey(head.random)) {
-                    curNode.random = map.get(head.random);
+                    newNode.random = map.get(head.random);
                 } else {
-                    curNode.random = new RandomListNode(head.random.label);
-                    map.put(head.random, curNode.random);
+                    newNode.random = new RandomListNode(head.random.label);
+                    map.put(head.random, newNode.random);
                 }
             }
 
             // 将newHead下一位指去新节点
-            newHead.next = curNode;
+            pre.next = newNode;
             // 向后挪动newHead的指针
-            newHead = curNode;
+            pre = newNode;
             // 向后挪动当前head节点指针
             head = head.next;
 
@@ -107,7 +107,11 @@ public class _0105_CopyListwithRandomPointer {
 
         copyAndInsertNext(head);
         copyRandom(head);
+        return splitRandomLists(head);
 
+    }
+
+    private RandomListNode splitRandomLists(RandomListNode head) {
         // 分割链表
         /*
            从下面
@@ -121,18 +125,17 @@ public class _0105_CopyListwithRandomPointer {
            dest: 1'->2'->3'
          */
         RandomListNode dummy = new RandomListNode(-1);
-        RandomListNode originHead, newHead;
-        originHead = head; // src
-        newHead = dummy; // dest
+        RandomListNode pre, newHead;
+        pre = dummy; // dest
 
-        while (originHead != null) {
-            RandomListNode temp = originHead.next; // temp指去1'
+        while (head != null) {
+            newHead = head.next; // newHead指去1'
 
-            originHead.next = temp.next; // 把1->1'的指向变成1->2
-            originHead = temp.next; // originHead指针从1指去2
+            head.next = newHead.next; // 把1->1'的指向变成1->2
+            head = newHead.next; // head指针从1指去2
 
-            newHead.next = temp; // 把dest链表连上1'
-            newHead = temp; // newHead指针从dummy指去1'
+            pre.next = newHead; // 把dest链表连上1'
+            pre = newHead; // pre指针从dummy指去1'
         }
 
         return dummy.next;
