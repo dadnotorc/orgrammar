@@ -1,6 +1,6 @@
 /*
 Easy
-Dynamic Programming
+#DP
  */
 package leetcode.dp;
 

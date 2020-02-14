@@ -1,6 +1,6 @@
 /*
 Medium
-Bit Manipulation, DP
+#Bit Manipulation, #DP
 Salesforce
  */
 package lintcode;

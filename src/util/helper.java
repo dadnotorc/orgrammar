@@ -50,7 +50,15 @@ public class helper {
 //            System.out.println(it.next());
         // 输出 = Bob Alice Charlie
 
-        boolean x = 3 > 2;
+//        boolean x = 3 > 2;
+
+//        String s = "abc".substring(3);
+//        System.out.println("\"" + s + "\"");
+//        System.out.println("len=" + s.length());
+
+        Set<String> set = new HashSet<>();
+        if (set.isEmpty())
+            System.out.println("empty");
     }
 
     public boolean isOdd(int n) {
