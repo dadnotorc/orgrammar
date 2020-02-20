@@ -104,7 +104,7 @@ public class _0032_MinimumWindowSubstring {
     }
 
     /**
-     * 使用hashtable, 速度比使用array较慢
+     * 使用Hashtable, 速度比使用array较慢
      */
     public String minWindow_hashtable(String source, String target) {
         // write your code here
@@ -117,7 +117,7 @@ public class _0032_MinimumWindowSubstring {
         }
 
         /**
-         * 将target中每个字符作为key存入hashtable, 对应value为该字符出现次数
+         * 将target中每个字符作为key存入Hashtable, 对应value为该字符出现次数
          * 该value也为在source中需要找到该字符的次数
          */
         Hashtable<Character, Integer> tb = new Hashtable<>();

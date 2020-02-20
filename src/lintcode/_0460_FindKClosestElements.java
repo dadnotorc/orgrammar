@@ -1,6 +1,6 @@
 /*
 Medium
-Two Pointers, Binary Search
+#Two Pointers, #Binary Search
 Amazon, Google
  */
 package lintcode;

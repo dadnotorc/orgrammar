@@ -1,6 +1,6 @@
 /*
 Medium
-String, Two Pointers
+#String, #Two Pointers
 LinkedIn, Facebook, Microsoft, Uber
 FAQ+
  */

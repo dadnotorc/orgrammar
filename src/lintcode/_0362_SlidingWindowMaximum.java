@@ -1,6 +1,6 @@
 /*
 Hard
-Deque, Two Pointers
+#Deque, #Two Pointers
 Amazon, Facebook, Google, Microsoft
  */
 package lintcode;

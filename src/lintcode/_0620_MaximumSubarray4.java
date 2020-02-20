@@ -1,6 +1,6 @@
 /*
 Medium
-Subarray, Array, Two Pointers
+#Subarray, #Array, #Two Pointers
 Amazon, Facebook
  */
 package lintcode;

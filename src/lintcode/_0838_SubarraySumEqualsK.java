@@ -38,7 +38,7 @@ import static org.junit.Assert.assertEquals;
 public class _0838_SubarraySumEqualsK {
 
     /**
-     * 九章算法 解答 - 此题重点是在hashtable中记录前缀和, 及其出现次数
+     * 九章算法 解答 - 此题重点是在Hashtable中记录前缀和, 及其出现次数
      * key为 prefixSum[i], value 为该数组和出现过的次数
      *
      * prefixSum[i]表示从 0 位加到 i 位的数组和
@@ -46,7 +46,7 @@ public class _0838_SubarraySumEqualsK {
      * prefixSum[j]-prefixSum[i]表示从 i+1 位加到 j 位的数组和
      *
      * 访问每个前缀和prefixSum[i]时:
-     *   1. 如果hashtable中存在 prefixSum[i]-k 为key的entry, 将其value加入答案
+     *   1. 如果Hashtable中存在 prefixSum[i]-k 为key的entry, 将其value加入答案
      *   2. 将 prefixSum[i] 出现次数 +1
      *
      * 例2: [2,1,-1,1,2], 前缀和数组为 [2,3,2,3,5]
