@@ -56,9 +56,11 @@ public class helper {
 //        System.out.println("\"" + s + "\"");
 //        System.out.println("len=" + s.length());
 
-        Set<String> set = new HashSet<>();
-        if (set.isEmpty())
-            System.out.println("empty");
+//        Set<String> set = new HashSet<>();
+//        if (set.isEmpty())
+//            System.out.println("empty");
+
+        swapXOR(5, 10);
     }
 
     public boolean isOdd(int n) {
@@ -74,6 +76,25 @@ public class helper {
             // odd
             return true;
         }
+    }
+
+    public static void swapXOR(int x, int y) {
+	    System.out.println("input x = " + x);
+	    System.out.println("input y = " + y);
+
+	    /*
+	    假设 x = 5 -> 0101; y = 10 -> 1010
+	    x ^ y = 1111
+	    1111 ^ x = 1111 ^ 0101 = 1010
+	    1111 ^ y = 1111 ^ 1010 = 0101
+	     */
+
+	    int xor = x ^ y;
+	    x = xor ^ x;
+	    y = xor ^ y;
+
+        System.out.println("output x = " + x);
+        System.out.println("output y = " + y);
     }
 
 
@@ -156,4 +177,6 @@ public class helper {
         // 如果 n = 2 ^ x, n 的二进制值为 10000, n-1 为 01111
         return  ((n & (n-1)) == 0);
     }
+
+
 }

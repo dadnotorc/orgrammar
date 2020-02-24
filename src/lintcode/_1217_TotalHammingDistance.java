@@ -102,6 +102,10 @@ public class _1217_TotalHammingDistance {
         return count;
     }
 
+
+
+
+
     @Test
     public void test0() {
         int[] nums = {14, 14};

@@ -2,7 +2,7 @@
 
 - &: bitwise and
 - |: bitwise or
-- &: bitwise XOR
+- ^: bitwise XOR
 - ~: bitwise compliment
 - <<: left shift
 - \>>: right shift
