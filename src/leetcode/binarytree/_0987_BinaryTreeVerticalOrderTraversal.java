@@ -1,3 +1,7 @@
+/*
+Medium
+Amazon
+ */
 package leetcode.binarytree;
 
 import util.TreeNode;
@@ -9,8 +13,6 @@ import java.util.TreeMap;
 
 /**
  * 987. Vertical Order Traversal of a Binary Tree
- * Medium
- * Amazon
  *
  * Given a binary tree, return the vertical order traversal of its nodes values.
  *
@@ -70,6 +72,9 @@ public class _0987_BinaryTreeVerticalOrderTraversal {
         /**
          * (multiple) nodes at location (x, y) -> map.get(x).get(y).poll()
          *
+         * 使用TreeMap的原因是
+         * 相对HashMap来说, TreeMap是sorted, natural ordering
+         *
          * 使用PriorityQueue的原因是
          *  "If two nodes have the same position, then the value of the node
          *    that is reported first is the value that is smaller."
@@ -78,11 +83,15 @@ public class _0987_BinaryTreeVerticalOrderTraversal {
          */
         TreeMap<Integer, TreeMap<Integer, PriorityQueue<Integer>>> map = new TreeMap<>();
 
-        // 先用 bfs / dfs 解析tree
+        // 遍历整个数, 用TreeMap来记录在 (x,y) 点对应 nodes 的值
+        // x 相同的节点放在一起 (y 不同)
+        // x,y 皆相同时, 按数值大小排列 (所以使用PriorityQueue)
         dfs(root, 0, 0, map);
 
         List<List<Integer>> list = new ArrayList<>();
-        for (TreeMap<Integer, PriorityQueue<Integer>> ys : map.values()) {
+
+        // x 值从小到大, y 值也从小到大
+        for (TreeMap<Integer, PriorityQueue<Integer>> ys : map.values()) { // 注意 用 .values()
             list.add(new ArrayList<>());
             for (PriorityQueue<Integer> nodes : ys.values()) {
                 while (!nodes.isEmpty()) {
@@ -97,9 +106,6 @@ public class _0987_BinaryTreeVerticalOrderTraversal {
         return list;
     }
 
-    /**
-     * 用dfs解析tree, 存入treemap中, (x,y)值为当前root坐标
-     */
     public void dfs(TreeNode root, int x, int y,
                     TreeMap<Integer, TreeMap<Integer, PriorityQueue<Integer>>> map) {
         if (root == null) {
