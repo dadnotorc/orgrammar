@@ -2,6 +2,7 @@
 Medium
 #Backtracking, #Recursion, #String
 Amazon
+FAQ
  */
 package lintcode;
 
