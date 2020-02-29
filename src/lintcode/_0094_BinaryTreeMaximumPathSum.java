@@ -1,0 +1,107 @@
+/*
+Medium
+#Recursion, #Divide and Conquer, #DP
+Amazon, Microsoft
+FAQ
+ */
+package lintcode;
+
+import util.TreeNode;
+
+/**
+ * 94. Binary Tree Maximum Path Sum
+ *
+ * Given a binary tree, find the maximum path sum.
+ * The path may start and end at any node in the tree.
+ *
+ * Example 1:
+ * Input:  For the following binary tree（only one node）:
+ * 2
+ * Output：2
+ *
+ * Example 2:
+ * Input:  For the following binary tree:
+ *
+ *      1
+ *     / \
+ *    2   3
+ * Output: 6
+ *
+ * Example from LeetCode
+ * Input: [-10,9,20,null,null,15,7]
+ *
+ *    -10
+ *    / \
+ *   9  20
+ *     /  \
+ *    15   7
+ *
+ * Output: 42
+ */
+public class _0094_BinaryTreeMaximumPathSum {
+
+    /**
+     * 解法1
+     */
+    int ans;
+
+    public int maxPathSum(TreeNode root) {
+        // 注意:
+        // 1. ans必须是global variable, 如果在这里init, 传入dfs, 传入的是值, 而不是指针
+        // 2. 初始值必须是Integer.MIN_VALUE, 而不能是0. 例如 input: {-1}; output应该也是-1, 而不是0
+        ans = Integer.MIN_VALUE;
+        getSinglePathMaxDFS(root);
+        return ans;
+    }
+
+    // 返回从当前节点出发向下(单一子树方向), 能够组成的最大pathSum
+    private int getSinglePathMaxDFS(TreeNode node) {
+        if (node == null)
+            return 0;
+
+        // 注意: 必须取0或者dfs返回值, 因为后者可能返回负值.
+        // 这样的话, 可以选择不取子树, 而只取0
+        int maxLeft = Math.max(0, getSinglePathMaxDFS(node.left));
+        int maxRight = Math.max(0, getSinglePathMaxDFS(node.right));
+
+        // 在每个节点, 用当前节点值加上左右子树各自最大的pathSum
+        // 得到以当前节点为拐点, 最大的pathSum
+        ans = Math.max(ans, node.val + maxLeft + maxRight);
+        return node.val + Math.max(maxLeft, maxRight);
+    }
+
+
+
+    /**
+     * 解法2
+     */
+    public class ResultType{
+        int singlePath, maxPath;
+        public ResultType (int singlePath, int maxPath) {
+            this.singlePath = singlePath;
+            this.maxPath = maxPath;
+        }
+    }
+
+    public int maxPathSum_2(TreeNode root) {
+        ResultType resultType = helper(root);
+        return resultType.maxPath;
+    }
+
+    public ResultType helper(TreeNode node) {
+        if (node == null)
+            return new ResultType(0, Integer.MIN_VALUE); // 后者取MIN, 因为可能有负值node存在
+
+        ResultType left = helper(node.left);
+        ResultType right = helper(node.right);
+
+        int curSinglePath = node.val + Math.max(left.singlePath, right.singlePath);
+        curSinglePath = Math.max(0, curSinglePath); // 如果取此path得到负值, 不然不取 -> 取0
+
+        int curMaxPath = node.val + left.singlePath + right.singlePath; // 当前点加上左右子树的最大path
+        int preMaxPath = Math.max(left.maxPath, right.maxPath); // 上一层的最大值
+        curMaxPath = Math.max(curMaxPath, preMaxPath);
+
+        return new ResultType(curSinglePath, curMaxPath);
+    }
+}

@@ -7,7 +7,6 @@ FAQ+
 package lintcode;
 
 import java.util.HashMap;
-import java.util.Random;
 
 /**
  * 105. Copy List with Random Pointer

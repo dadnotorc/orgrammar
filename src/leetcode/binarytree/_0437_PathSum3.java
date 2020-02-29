@@ -72,7 +72,7 @@ public class _0437_PathSum3 {
     /* **************************** */
 
     /**
-     *
+     * 解法2 - 使用HashMap
      */
     public int pathSum_HashMap(TreeNode root, int target) {
         HashMap<Integer, Integer> preSum = new HashMap<>();
