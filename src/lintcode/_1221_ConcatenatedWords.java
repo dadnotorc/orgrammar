@@ -18,9 +18,9 @@ import java.util.*;
  *
  * Notice
  * - The number of elements of the given array will not exceed 10,000
- * -  The length sum of elements in the given array will not exceed 600,000.
- * -  All the input string will only include lower case letters.
- * -  The returned elements order does not matter.
+ * - The length sum of elements in the given array will not exceed 600,000.
+ * - All the input string will only include lower case letters.
+ * - The returned elements order does not matter.
  *
  * Example 1:
  * Input: words = ["cat","cats","catsdogcats","dog","dogcatsdog","hippopotamuses","rat","ratcatdogcat"]
@@ -40,6 +40,103 @@ import java.util.*;
  * Output: ["catdog"] - 不能包含"", 因为""不能有两个(不同的)单词组成
  */
 public class _1221_ConcatenatedWords {
+
+
+    /**
+     * 使用Trie + DFS - 48ms
+     * 1. 遍历words数组, 用trie结构记录已知单词
+     * 2. 再次遍历数组, 针对每个单词, 在trie上找寻是否可以拆分成两个已知单词
+     *
+     * 假设 input=["cat", "cats", "dog"]
+     *      root
+     *    /     \
+     *   c      d
+     *   |      |
+     *   a      o
+     *   |      |
+     *   t-end  g-end
+     *   |
+     *   s-end
+     *
+     * time:  O(n^2) - n为字符串数组里所有字符之和 - 两次遍历
+     * space: O(n)
+     */
+    class TrieNode {
+        TrieNode[] children;
+        boolean isEnd;
+        public TrieNode() {
+            children = new TrieNode[26]; // 因为全是小写
+            isEnd = false;
+        }
+    }
+
+    public List<String> findAllConcatenatedWordsInADict_5(String[] words) {
+        List<String> ans = new ArrayList<>();
+
+        if (words == null || words.length == 0)
+            return ans;
+
+        TrieNode root = new TrieNode();
+        buildTrie(words, root);
+
+        for (String s : words) {
+            if (canConstruct(s, root, 0, 0)) {
+                ans.add(s);
+            }
+        }
+
+        return ans;
+    }
+
+    private void buildTrie(String[] words, TrieNode root) {
+        for (String s : words) {
+            TrieNode ptr = root;
+            for (char c : s.toCharArray()) {
+                if (ptr.children[c - 'a'] == null) {
+                    ptr.children[c - 'a'] = new TrieNode();
+                }
+
+                ptr = ptr.children[c - 'a'];
+            }
+
+            ptr.isEnd = true;
+        }
+    }
+
+    // recursion call - 判断字符串ｓ能否由两个或更多已知单词组成
+    // 每次从root开始:
+    // 1. 如果当前字符在trie上找不到 ->　返回false
+    // 2. 如果s已读完, 仍未遇到 isEnd=true 的节点 ->　返回false
+    // 3. 如果遇到 isEnd=true 的节点
+    //    a) 假设当前单词仍未结束, 例如读到cats中的t, 则继续向后读
+    //    b) 假设当前单词已结束:
+    //       *  若s已读完, 判断是否WordCount == 2
+    //       ** 若未读完, 进入下层循环
+    private boolean canConstruct(String s, TrieNode root, int index, int wordCount) {
+        TrieNode ptr = root;
+
+        for (int i = index; i < s.length(); i++) {
+            if ((ptr.children[s.charAt(i) - 'a']) == null) // #1
+                return false;
+
+            ptr = ptr.children[s.charAt(i) - 'a'];
+
+            if (ptr.isEnd) { // #3b
+
+                // 不可以在这里使用wordCount++, 因为可能是#3a的情况, 单词仍未结束
+
+                if (i == s.length() - 1)
+                    return wordCount >= 1; // #3b*, 已遇到一个单词, 当前读取的是第二个单词
+
+                if (canConstruct(s, root, i + 1, wordCount + 1))// #3b**
+                    return true;
+            }
+        }
+
+        return false; // #2
+    }
+
+
 
     /**
      * 相较前几种写法, 此次使用DFS取代boolean[], 速度更快 - 56ms
