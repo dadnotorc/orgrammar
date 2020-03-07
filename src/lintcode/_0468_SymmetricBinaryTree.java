@@ -51,6 +51,10 @@ public class _0468_SymmetricBinaryTree {
      * c) 如两者皆不为null, 且val不同 -> 返回false
      *
      * 递归的拆解: 如两者皆不为null, 且val相同 -> 继续判断下一层递归
+     *
+     * 此解法重点:
+     * 1. 分析清楚3种应当return的情况, 加上1种应当继续递归的情况
+     * 2. 递归时, 比较node1.left vs node2.right && node1.right vs node2.left
      */
     public boolean isSymmetric_recursion(TreeNode root) {
         if (root == null)
@@ -89,6 +93,10 @@ public class _0468_SymmetricBinaryTree {
      *
      * // Unbox
      * last = queue.pollLast().orElse(null)
+     *
+     * 此解法重点:
+     *      * 1. 分析清楚3种应当return的情况, 加上1种应当继续递归的情况
+     *      * 2. 递归时, 比较node1.left vs node2.right && node1.right vs node2.left
      */
     public boolean isSymmetric(TreeNode root) {
         if (root == null)
@@ -99,7 +107,7 @@ public class _0468_SymmetricBinaryTree {
 
         while (!queue.isEmpty()) {
             int size = queue.size();
-            Deque<Optional<TreeNode>> deque = new ArrayDeque<Optional<TreeNode>>();
+            Deque<Optional<TreeNode>> deque = new ArrayDeque<>();
             for (int i = 0; i < size; i++) {
                 TreeNode node = queue.poll();
                 deque.offerLast(Optional.ofNullable(node));

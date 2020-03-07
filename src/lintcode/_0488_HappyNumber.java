@@ -1,6 +1,6 @@
 /*
 Easy
-Hash Table, Mathematics
+#Hash Table, #Mathematics
 Airbnb, Amazon, Uber, Twitter
  */
 package lintcode;
@@ -70,6 +70,8 @@ public class _0488_HappyNumber {
         }
         return sum;
     }
+
+
 
     /* 解法2 九章参考 */
     // 循环
