@@ -67,6 +67,8 @@ public class _0363_TrappingRainWater {
 
 
 
+
+
     public int trapRainWater(int[] heights) {
         if (heights == null || heights.length < 3)
             return 0;

@@ -39,7 +39,7 @@ public class _0426_RestoreIPAddresses {
      * time:  O(3^3) = O(1) 每重循环找3次, 共3重. 共检查27种组合. 前3组字符串确定后, 第4组也能确定
      * space: O(1)
      */
-    public List<String> restoreIpAddresses_Interative(String s) {
+    public List<String> restoreIpAddresses_Iterative(String s) {
         List<String> ans = new ArrayList<>();
         if (s == null || s.length() < 4 || s.length() > 12)
             return ans;
@@ -49,14 +49,14 @@ public class _0426_RestoreIPAddresses {
 
         for (int i = 1; i < 4 && i < len - 2; i++) {
             s1 = s.substring(0, i);
-            if (!isValid_Interative(s1)) continue;
+            if (!isValid_Iterative(s1)) continue;
             for (int j = i + 1; j < i + 4 && j < len - 1; j++) {
                 s2 = s.substring(i, j);
-                if (!isValid_Interative(s2)) continue;
+                if (!isValid_Iterative(s2)) continue;
                 for (int k = j + 1; k < j + 4 && k < len; k++) {
                     s3 = s.substring(j, k);
                     s4 = s.substring(k, len);
-                    if (isValid_Interative(s3) && isValid_Interative(s4)) {
+                    if (isValid_Iterative(s3) && isValid_Iterative(s4)) {
                         ans.add(s1 + "." + s2 + "." + s3 + "." +s4);
                     }
                 }
@@ -66,8 +66,8 @@ public class _0426_RestoreIPAddresses {
     }
 
 
-    private boolean isValid_Interative(String str) {
-        if (str.length() == 0 || str.length() > 3)
+    private boolean isValid_Iterative(String str) {
+        if (str.length() == 0 || str.length() > 3) // 针对最后一组substring s4
             return false;
 
         if (str.length() > 1 && str.charAt(0) == '0')
@@ -96,8 +96,8 @@ public class _0426_RestoreIPAddresses {
             return new ArrayList<>();
 
         List<String> ans = new ArrayList<>();
-//        dfs(s, ans, 0, "", 0);
-        dfs(s, ans, 0, new ArrayList<String>());
+//        dfs(s, ans, 0, "", 0); // 使用String记录每组ip地址
+        dfs(s, ans, 0, new ArrayList<String>()); // 使用List<String>记录每组ip地址
         return ans;
     }
 

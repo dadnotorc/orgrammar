@@ -43,11 +43,11 @@ public class _0121_WordLadder2 {
      * 使用 BFS 从后往前 构建所有可能的路径, 并记录路径距离
      * 使用 DFS 从前往后 寻找答案
      */
-    public List<List<String>> findLadders_1(String start, String end, Set<String> dict) {
+    public List<List<String>> findLadders(String start, String end, Set<String> dict) {
         List<List<String>> ans = new ArrayList<List<String>>();
 
         Map<String, List<String>> map = new HashMap<>(); // 记录从当前字符串变形可达的所有字符串
-        Map<String, Integer> distance = new HashMap<>(); // 记录从start开始到达当前字符串的距离
+        Map<String, Integer> distance = new HashMap<>(); // 记录从当前字到达end的距离
 
         dict.add(start);
         dict.add(end);
@@ -67,7 +67,7 @@ public class _0121_WordLadder2 {
 
         Queue<String> queue = new LinkedList<>();
         queue.offer(end);
-        distance.put(end, 0);
+        distance.put(end, 0); // 从end到end距离为0
 
         for (String s : dict)
             map.put(s, new ArrayList<>());
@@ -111,7 +111,7 @@ public class _0121_WordLadder2 {
         path.add(cur);
 
         if (cur.equals(end)) {
-            ans.add(new ArrayList<>(path));
+            ans.add(new ArrayList<>(path)); // 注意, 这里要做份copy, 不然之后path的内容会变动
         } else {
             for (String next : map.get(cur)) {
                 if (distance.containsKey(next) && distance.get(cur) == distance.get(next) + 1)
