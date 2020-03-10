@@ -90,6 +90,11 @@ public class _0426_RestoreIPAddresses {
      * 递归出口: 如果已找到4个有效数字部分(int), 且ip地址长度 = s.length() + 3, 将地址加入答案中
      * 递归拆解: 每次从index下标(int)开始, 读取长度为1/2/3的数字, 如果数字有效, 将其写入当前ip地址,
      *          并将ip地址, 新index下标, 当前有效数字部分个数, 连同原字符串, 以及答案列表, 一起传入下一层递归
+     *
+     * 易错点:
+     * 1. 递归出口中, ipAddrParts长度为4, 但是当前index未及字符串末端, 说明仍有数字未读取, 则当前地址无效
+     * 2. 递归出口中, ip地址为4组数字 + 3个".". 记得将末端多余的"."删掉
+     * 3. 低估拆解时, 注意别忘了确保endIndex不要越界 endIndex <= s.length(), endIndex为exclusive
      */
     public List<String> restoreIpAddresses_Recursion(String s) {
         if (s == null || s.length() < 4 || s.length() > 12)
@@ -127,7 +132,19 @@ public class _0426_RestoreIPAddresses {
         }
     }
 
-    /* 使用String记录每组ip地址 */
+    private boolean isValid_Recursion(String str) {
+        if (str.length() > 1 && str.charAt(0) == '0')
+            return false;
+
+        if (str.length() == 3 && Integer.parseInt(str) > 255)
+            return false;
+
+        return true;
+    }
+
+
+
+    /* 另一种写法, 使用String记录每组ip地址 */
     private void dfs(String s, List<String> ans, int index, String ipAddr, int validParts) {
 
         if (validParts == 4 && ipAddr.length() == s.length() + 3) {
@@ -145,15 +162,4 @@ public class _0426_RestoreIPAddresses {
             }
         }
     }
-
-    private boolean isValid_Recursion(String str) {
-        if (str.length() > 1 && str.charAt(0) == '0')
-            return false;
-
-        if (str.length() == 3 && Integer.parseInt(str) > 255)
-            return false;
-
-        return true;
-    }
-
 }

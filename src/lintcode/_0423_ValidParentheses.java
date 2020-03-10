@@ -1,6 +1,6 @@
 /*
 Easy
-Stack
+#Stack
 Amazon, Airbnb, Facebook, Google, Microsoft, Twitter, Uber
 FAQ++
  */
@@ -32,6 +32,12 @@ import java.util.Stack;
  */
 public class _0423_ValidParentheses {
 
+    /**
+     * 使用stack消除成对的括号
+     *
+     * 易错点:
+     * 1. 结尾时, 需判断 stack.isEmpty()
+     */
     public boolean isValidParentheses(String s) {
         if (s == null || s.length() == 0)
             return true;
@@ -55,7 +61,7 @@ public class _0423_ValidParentheses {
             }
         }
 
-        return stack.isEmpty();
+        return stack.isEmpty(); // 如果stack中仍有剩余, 说明仍有开括号未找到对应的关括号
     }
 
     @Test

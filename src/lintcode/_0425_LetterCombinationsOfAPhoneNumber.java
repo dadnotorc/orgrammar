@@ -51,12 +51,15 @@ public class _0425_LetterCombinationsOfAPhoneNumber {
      *    开始读取前 -> 队列: [""]
      *    读取2 -> 队列: ["a"+"", "b"+"", "c"+""]
      *    读取3 -> 队列: ["a"+"d", "a"+"e", "a"+"f", "b"+"d", "b"+"e", "b"+"f", "c"+"d", "c"+"e", "c"+"f"]
+     *
+     * 易错点:
+     * 1. 答案队列需要先加入""
      */
     public List<String> letterCombinations_iterative(String digits) {
-        Queue<String> ans = new LinkedList<>(); // 这就是FIFO的queue
+        LinkedList<String> ans = new LinkedList<>(); // 这就是FIFO的queue
 
         if (digits == null || digits.length() == 0)
-            return (List) ans;
+            return ans;
 
         ans.offer(""); // 这里很重要
         int curLen = 0; // 记录当前层 letter combination 的长度
@@ -76,36 +79,39 @@ public class _0425_LetterCombinationsOfAPhoneNumber {
             curLen++; // 当前层全部检查完, 开始下一层
         }
 
-        return (List) ans;
+        return ans;
     }
 
 
     /**
      * 另一种写法, 按照BFS常用写法
+     *
+     * 注意:
+     * 这里不用 while(!queue.isEmpty()), 因为queue的最后一层正是我们需要的答案
      */
     public List<String> letterCombinations_iterative_2(String digits) {
-        Queue<String> ans = new LinkedList<>(); // 这就是FIFO的queue
+        Queue<String> queue = new LinkedList<>(); // 这就是FIFO的queue
 
         if (digits == null || digits.length() == 0)
-            return (List) ans;
+            return (List) queue;
 
-        ans.offer(""); // 这里很重要
+        queue.offer(""); // 这里很重要
 
         for (char c : digits.toCharArray()) {
             int curDigit = c - '0';
             String curLetters = MAPPING[curDigit];
 
-            int size = ans.size();
+            int size = queue.size();
             for (int i = 0; i < size; i++) {
-                String pre = ans.poll();
+                String pre = queue.poll();
 
                 for (char letter : curLetters.toCharArray()) {
-                    ans.offer(pre + letter); // 组合新字母, 加入下一层
+                    queue.offer(pre + letter); // 组合新字母, 加入下一层
                 }
             }
         }
 
-        return (List) ans;
+        return (List) queue;
     }
 
 

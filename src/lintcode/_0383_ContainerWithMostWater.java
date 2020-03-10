@@ -25,8 +25,11 @@ package lintcode;
  * Selecting a1, a2, capacity is 1 * 1 = 1
  * Selecting a1, a3, capacity is 1 * 2 = 2
  * Selecting a2, a3, capacity is 2 * 1 = 2
- * Example 2:
+ *   |      |      |_
+ *  _| |   _|_|    | |
+ * |_|_|, |_|_|, |_|_|
  *
+ * Example 2:
  * Input: [1, 3, 2, 2]
  * Output: 4
  * Explanation:
@@ -43,7 +46,7 @@ public class _0383_ContainerWithMostWater {
     /**
      * 双指针, 左右指针分居数组两头, 纷纷向中间移动, 每次移动较矮的一头
      * 保留较高的一头不动的原因是, 我们希望找到左右指针之间较大的面积 = 较低一头的高度 * 距离
-     * 如果移动较高的一头, 得到的面积只会更少, 因为较低一头的高度只会不变或更低, 距离只会减少
+     * 如果移动较高的一头, 因为高度由较矮一端决定, 所以移动后的高度只会等于或者低于之前较矮的一头, 而且距离会减少
      *
      * time:  O(n)
      * space: O(1)
