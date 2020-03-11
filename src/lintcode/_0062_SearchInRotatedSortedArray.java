@@ -50,16 +50,16 @@ public class _0062_SearchInRotatedSortedArray {
             if (a[mid] == target) {
                 return mid;
             }
-            if (a[l] < a[mid]) {
-                if (a[l] <= target && target <= a[mid]) {
+            if (a[l] < a[mid]) { // l与mid同侧
+                if (a[l] <= target && target <= a[mid]) { // target在l与mid之间
                     r = mid;
-                } else {
+                } else { // target在mid与r之间
                     l = mid;
                 }
-            } else {
-                if (a[mid] <= target && target <= a[r]) {
+            } else { //l与mid异侧
+                if (a[mid] <= target && target <= a[r]) { // target在mid与r之间
                     l = mid;
-                } else {
+                } else { // // target在l与mid之间
                     r = mid;
                 }
             }

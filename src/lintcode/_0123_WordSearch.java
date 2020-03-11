@@ -35,6 +35,18 @@ package lintcode;
  */
 public class _0123_WordSearch {
 
+    class Coord {
+        int x, y;
+        public Coord(int x, int y) {
+            this.x = x;
+            this.y = y;
+        }
+    }
+
+    /**
+     * 易错点:
+     * 1. exist()中的双层for循环里, 不能直接return dfs(), 因为此时遍历可能仍未做完 (会错误地提前返回false)
+     */
     public boolean exist(char[][] board, String word) {
         if (board == null || board.length == 0 || board[0].length == 0)
             return false;
@@ -42,13 +54,13 @@ public class _0123_WordSearch {
         if (word == null || word.length() == 0)
             return true;
 
-        int height = board.length, width = board[0].length;
-        boolean[][] isVisited = new boolean[height][width];
+        int n = board.length, m = board[0].length;
+        boolean[][] isVisited = new boolean[n][m];
 
-        for (int i = 0; i < height; i++) {
-            for (int j = 0; j < width; j++) {
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < m; j++) {
                 // 不可以直接 return dfs(), 因为遍历仍未做完
-                if (dfs(board, i, j, word, 0, isVisited))
+                if (dfs(board, new Coord(i, j), word, 0, isVisited))
                     return true;
             }
         }
@@ -56,38 +68,37 @@ public class _0123_WordSearch {
         return false;
     }
 
-    int[] dX = {1, 0, 0, -1};
-    int[] dY = {0, 1, -1, 0};
+    int[][] direction = {{0, -1}, {0, 1}, {-1, 0}, {1, 0}};
 
-    private boolean dfs(char[][] board, int x, int y, String s, int index, boolean[][] isVisited) {
+    private boolean dfs(char[][] board, Coord coord, String s, int index, boolean[][] isVisited) {
 
-        if (board[x][y] != s.charAt(index)) // 当前字符不相符
+        if (board[coord.x][coord.y] != s.charAt(index)) // 当前字符不相符
             return false;
 
         if (index == s.length() - 1) // -1 是因为当前在最后一位, 且上一行判断确定了所有字符都相符
             return true;
 
-        isVisited[x][y] = true; // 注意! 递归前, 先将当前位置标记
+        isVisited[coord.x][coord.y] = true; // 注意! 递归前, 先将当前位置标记
 
         for (int i = 0; i < 4; i++) {
-            int neighborX = x + dX[i];
-            int neighborY = y + dY[i];
+            Coord neighbor = new Coord(coord.x + direction[i][0], coord.y + direction[i][1]);
 
-            if (!isValid(neighborX, neighborY, board) || isVisited[neighborX][neighborY]) // 越界 或 已访问过
+            if (!isValid(neighbor, board) || isVisited[neighbor.x][neighbor.y]) // 越界 或 已访问过
                 continue;
 
             // 不可以直接 return dfs(), 因为遍历仍未做完
-            if (dfs(board, neighborX, neighborY, s, index + 1, isVisited))
+            if (dfs(board, neighbor, s, index + 1, isVisited))
                 return true;
         }
 
-        isVisited[x][y] = false; // 注意! 递归结束后, 取消标记
+        isVisited[coord.x][coord.y] = false; // 注意! 递归结束后, 取消标记
 
         return false;
     }
 
-    private boolean isValid(int x, int y, char[][] board) {
-        return x >= 0 && x < board.length && y >= 0 && y < board[0].length;
+    private boolean isValid(Coord coord, char[][] board) {
+        return coord.x >= 0 && coord.x < board.length
+                && coord.y >= 0 && coord.y < board[0].length;
     }
 
 }

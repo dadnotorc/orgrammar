@@ -36,7 +36,7 @@ public class _0149_BestTimeToBuyAndSellStock {
      * 前缀差数组     b=[b0, b1, b2, ..., bn] where b[0] = 0, b[i] = a[i] - a[i-1] (i > 0)
      *
      * 寻找最大利润 = 寻找最大的 a[j] - a[i] (i < j)
-     * a[j] - a[i] = (a[j]-a[j-1]) + (a[j-1]-a[j-2]) + ... + (a[i+2]-a[i-1]) + (a[i+1]-a[i])
+     * a[j] - a[i] = (a[j]-a[j-1]) + (a[j-1]-a[j-2]) + ... + (a[i+2]-a[i+1]) + (a[i+1]-a[i])
      *             = b[j] + b[j-1] + ... + b[i+1] + b[i+1]
      *
      * 例如: 假设我们要计算 a[5] - a[2] = (a[5]-a[4]) + (a[4]-a[3]) + (a[3]-a[2]) = b[5] + b[4] + b[3]
@@ -51,7 +51,7 @@ public class _0149_BestTimeToBuyAndSellStock {
         if (prices == null || prices.length < 2)
             return 0;
 
-        int curProfit = 0; // prefix sum b[0] = 0
+        int curProfit = 0; // 即 a[i]-a[0] (or current minimal) = prefix sum. 初始值 b[0] = 0
         int maxProfit = 0; // ans
 
         for (int i = 1; i < prices.length; i++) {
@@ -101,8 +101,12 @@ public class _0149_BestTimeToBuyAndSellStock {
      */
 
     /**
-     * 暴力解法 - 遍历所有elements, 遇到ith element之时, 找从头到i-1的最小值
-     * n-1 + n-2 + ... + 1 = n * (n-1) / 2 = O(n^2)
+     * 暴力解法 - 遍历所有elements
+     * 1. 记录当前遇到的最低值.
+     * 2. 计算如果当天卖出所得收益
+     * 3. 比较当天收益 vs 最大获利, 并更新
+     *
+     * time:  O(n)
      */
     public int maxProfit_1(int[] prices) {
         if (prices == null || prices.length < 2)
@@ -111,14 +115,9 @@ public class _0149_BestTimeToBuyAndSellStock {
         int highestProfit = 0;
         int lowestPrice = prices[0];
 
-        for (int j = 1; j < prices.length; j++) {
-            for (int i = 0; i < j; i++) {
-                lowestPrice = Math.min(lowestPrice, prices[i]);
-            }
-            // 暴力解法中, 上面这个for循环会重复做同样的min判断很多次, 可以用memorization记住, 比如改成如下
-            // lowestPrice = Math.min(lowestPrice, prices[j]);
-
-            highestProfit = Math.max(highestProfit, prices[j] - lowestPrice);
+        for (int i = 1; i < prices.length; i++) {
+            lowestPrice = Math.min(lowestPrice, prices[i]);
+            highestProfit = Math.max(highestProfit, prices[i] - lowestPrice);
         }
 
         return highestProfit;
