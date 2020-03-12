@@ -5,7 +5,7 @@ Amazon
  */
 package lintcode;
 
-import sun.font.CoreMetrics;
+import org.junit.Test;
 
 import java.util.LinkedList;
 import java.util.Queue;
@@ -36,16 +36,18 @@ import java.util.Queue;
  */
 public class _0598_ZombieInMatrix {
 
-    private class Coordinate{
+    private class Coord {
         int x, y;
-        public Coordinate(int x, int y){
+        public Coord(int x, int y){
             this.x = x;
             this.y = y;
         }
     }
 
-    int[] xs = {-1, 1, 0, 0};
-    int[] ys = {0, 0, -1, 1};
+    /**int[] xs = {-1, 1, 0, 0};
+    int[] ys = {0, 0, -1, 1};*/
+    int[][] direction = {{0, -1}, {0, 1}, {-1, 0}, {1, 0}};
+
     enum Obj {
         HUMAN,  // 0
         ZOMBIE, // 1
@@ -69,13 +71,13 @@ public class _0598_ZombieInMatrix {
 
         // 遍历, 找出人类的数量, 并将zombie的位置(coordinate)放入queue
         int humanCount = 0, daysAfter = 0;
-        Queue<Coordinate> queue = new LinkedList<>();
+        Queue<Coord> queue = new LinkedList<>();
         for (int i = 0; i < grid.length; i++) {
             for (int j = 0; j < grid[0].length; j++) {
                 if (grid[i][j] == Obj.HUMAN.ordinal()) {
                     humanCount++;
                 } else if (grid[i][j] == Obj.ZOMBIE.ordinal()) {
-                    queue.offer(new Coordinate(i, j));
+                    queue.offer(new Coord(i, j));
                 }
             }
         }
@@ -85,8 +87,27 @@ public class _0598_ZombieInMatrix {
 
         // 每次BFS, 找出当前可感染的人类, 减少人类数量, 增加天数
         while (!queue.isEmpty()) {
-            int size = queue.size(); // 每轮为1天
+            if (humanCount == 0)
+                return daysAfter;
+
+            int size = queue.size();
             for (int i = 0; i < size; i++) {
+                Coord zombieLoc = queue.poll();
+                for (int j = 0; j < direction.length; j++) {
+                    /*Coord neighbor = new Coord(zombieLoc.x + xs[j], zombieLoc.y + ys[j]);*/
+                    Coord neighbor = new Coord(zombieLoc.x + direction[j][0], zombieLoc.y + direction[j][1]);
+                    if (isHuman(grid, neighbor)) {
+                        humanCount--;
+                        grid[neighbor.x][neighbor.y] = Obj.ZOMBIE.ordinal();
+                        queue.offer(neighbor);
+                    }
+                }
+            }
+            daysAfter++;
+
+            // 第一种写法
+            /**int size = queue.size(); // 当天zombie数量
+            for (int i = 0; i < size; i++) {  // 每一层为1天
                 Coordinate zombieLoc = queue.poll();
                 for (int j = 0; j < xs.length; j++) {
                     Coordinate neighbor = new Coordinate(zombieLoc.x + xs[j], zombieLoc.y + ys[j]);
@@ -97,22 +118,59 @@ public class _0598_ZombieInMatrix {
                     }
                 }
             }
-            daysAfter++;
+            daysAfter++;*/
         }
 
 
         // 如果BFS结束后, 人类数量为0, 返回天数 -1； 否则返回 -1
 
         // 注意! 天数-1是因为, 在倒数第二天时, 所有人类都被感染. 则在最后一天, 只是确认再无人类幸存, 所以会多加一天, 需要去掉
-        return (humanCount == 0) ? daysAfter - 1 : -1;
+        /**return (humanCount == 0) ? daysAfter - 1 : -1;*/
+
+        return -1;
     }
 
 
     // 判断当前坐标是否: 1.越界 2.是围墙 3.是人类
-    private boolean isHuman(int[][] grid, Coordinate cord) {
+    private boolean isHuman(int[][] grid, Coord cord) {
         return (cord.x >= 0 && cord.x < grid.length
                 && cord.y >= 0 && cord.y < grid[0].length
                 && grid[cord.x][cord.y] == Obj.HUMAN.ordinal());
     }
 
+
+    @Test
+    public void test1() {
+        int[][] grid = {{0,1,2,0,0}, {1,0,0,2,1}, {0,1,0,0,0}};
+        org.junit.Assert.assertEquals(2, zombie(grid));
+    }
+
+    @Test
+    public void test2() {
+        int[][] grid = {{0,0,0}, {0,0,0}, {0,0,1}};
+        org.junit.Assert.assertEquals(4, zombie(grid));
+    }
+
+    @Test
+    public void test3() {
+        int[][] grid = {{0,0,0}, {0,0,0}, {0,0,0}};
+        org.junit.Assert.assertEquals(-1, zombie(grid));
+    }
+
+    @Test
+    public void test4() {
+        int[][] grid = {{1,1,1}, {1,1,1}, {1,1,1}};
+        org.junit.Assert.assertEquals(0, zombie(grid));
+    }
+
+    @Test
+    public void test5() {
+        org.junit.Assert.assertEquals(0, zombie(null));
+    }
+
+    @Test
+    public void test6() {
+        int[][] grid = {{}};
+        org.junit.Assert.assertEquals(0, zombie(grid));
+    }
 }

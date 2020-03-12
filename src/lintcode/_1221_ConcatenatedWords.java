@@ -92,11 +92,11 @@ public class _1221_ConcatenatedWords {
         for (String s : words) {
             TrieNode ptr = root;
             for (char c : s.toCharArray()) {
-                if (ptr.children[c - 'a'] == null) {
+                if (ptr.children[c - 'a'] == null) { // 避免重复创建 , 例如 dog, dogs
                     ptr.children[c - 'a'] = new TrieNode();
                 }
 
-                ptr = ptr.children[c - 'a'];
+                ptr = ptr.children[c - 'a']; // 别忘了移动ptr
             }
 
             ptr.isEnd = true;
@@ -105,13 +105,16 @@ public class _1221_ConcatenatedWords {
 
     // recursion call - 判断字符串ｓ能否由两个或更多已知单词组成
     // 每次从root开始:
-    // 1. 如果当前字符在trie上找不到 ->　返回false
-    // 2. 如果s已读完, 仍未遇到 isEnd=true 的节点 ->　返回false
+    // 1. (字符串不存在)如果当前字符在trie上找不到 ->　返回false
+    // 2. (字符串不完整)如果s已读完, 仍未遇到 isEnd=true 的节点 ->　返回false
     // 3. 如果遇到 isEnd=true 的节点
     //    a) 假设当前单词仍未结束, 例如读到cats中的t, 则继续向后读
     //    b) 假设当前单词已结束:
-    //       *  若s已读完, 判断是否WordCount == 2
+    //       *  若s已读完, 判断是否WordCount >= 1 (用 >=1 的原因是, 已遇到一个单词, 当前读取的是第二个单词)
     //       ** 若未读完, 进入下层循环
+    //
+    // 易错点:
+    // - #3b* 判断 >=1 而不是 >=2
     private boolean canConstruct(String s, TrieNode root, int index, int wordCount) {
         TrieNode ptr = root;
 
@@ -121,15 +124,17 @@ public class _1221_ConcatenatedWords {
 
             ptr = ptr.children[s.charAt(i) - 'a'];
 
-            if (ptr.isEnd) { // #3b
+            if (ptr.isEnd) { // #3
 
                 // 不可以在这里使用wordCount++, 因为可能是#3a的情况, 单词仍未结束
 
                 if (i == s.length() - 1)
-                    return wordCount >= 1; // #3b*, 已遇到一个单词, 当前读取的是第二个单词
+                    return wordCount >= 1; // #3b*. 用 >=1 的原因是, 已遇到一个单词, 当前读取的是第二个单词
 
-                if (canConstruct(s, root, i + 1, wordCount + 1))// #3b**
+                if (canConstruct(s, root, i + 1, wordCount + 1))// #3b** 记得index从i+1开始
                     return true;
+
+                // 两个if都fail的时候, 就是#3a
             }
         }
 
@@ -140,6 +145,10 @@ public class _1221_ConcatenatedWords {
 
     /**
      * 相较前几种写法, 此次使用DFS取代boolean[], 速度更快 - 56ms
+     *
+     * 易错点:
+     * 1. DFS之前, 先将当前word从字典中移除. 完成后, 再将其加回字典
+     * 2. DFS期间, 当某个substring在字典中存在时, 则将prefix+substring也放入字典中
      */
     public List<String> findAllConcatenatedWordsInADict_4(String[] words) {
         List<String> ans = new ArrayList<>();
