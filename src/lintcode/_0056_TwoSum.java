@@ -96,7 +96,7 @@ public class _0056_TwoSum {
         });
 
         // 双指针分别指向首尾
-        int l = 0, r = nums.length - 1;d
+        int l = 0, r = nums.length - 1;
 
         while (l < r) {
             if (nums[l].val + nums[r].val == target) {
