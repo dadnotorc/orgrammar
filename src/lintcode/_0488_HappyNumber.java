@@ -7,7 +7,6 @@ package lintcode;
 
 import org.junit.Test;
 
-import java.util.HashMap;
 import java.util.HashSet;
 
 /**
@@ -22,7 +21,6 @@ import java.util.HashSet;
  * include 1. Those numbers for which this process ends in 1 are happy numbers.
  *
  * Example 1:
- *
  * Input:19
  * Output:true
  * Explanation:
@@ -42,26 +40,30 @@ import java.util.HashSet;
  */
 public class _0488_HappyNumber {
 
-    // n is positive integer, n > 0
-    // 递归
+    /**
+     * 递归
+     *
+     * 易错点:
+     * 1. 注意set.add, set.contains, 还有getNext的顺序
+     *    先判断set.contains, 再做set.add, 最后计算getNext. next的值会在下层递归里被加入set
+     */
     public boolean isHappy(int n) {
         HashSet<Integer> set = new HashSet<>();
+        // 注意这里不要将n加入set, 不然会使helper提前退出
         return helper(set, n);
     }
 
     private boolean helper(HashSet<Integer> set, int n) {
-        int sum = getSum(n); // 先计算, 后判断
-
-        if (sum == 1)
+        if (n == 1)
             return true;
-        if (set.contains(sum)) //出现loop
+        if (set.contains(n)) //出现loop
             return false;
 
-        set.add(sum);
-        return helper(set, sum);
+        set.add(n);
+        return helper(set, getNext(n));
     }
 
-    private int getSum(int num) {
+    private int getNext(int num) {
         int sum = 0, remainder = 0;
         while (num > 0) {
             remainder = num % 10;
@@ -73,8 +75,12 @@ public class _0488_HappyNumber {
 
 
 
-    /* 解法2 九章参考 */
-    // 循环
+    /**
+     * 循环
+     *
+     * 易错点:
+     * 1. 同上, 先判断set.contains, 再做set.add, 最后计算getNext. next的值会在下层循环里被加入set
+     */
     public boolean isHappy_2(int n) {
         HashSet<Integer> set = new HashSet<>();
         while (n != 1) {
@@ -95,6 +101,10 @@ public class _0488_HappyNumber {
         }
         return toReturn;
     }
+
+
+
+
 
     @Test
     public void test1() {

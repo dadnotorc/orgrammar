@@ -1,6 +1,6 @@
 /*
 Easy
-Binary Tree Traversal, Recursion
+#Binary Tree Traversal, #Divide and Conquer
 Amazon, Facebook, Google
  */
 package lintcode;
@@ -40,16 +40,23 @@ import util.TreeNode;
  */
 public class _1181_DiameterOfBinaryTree {
 
-    int maxLen = 0;
+    // 使用member variable记录最长路径 (diameter)
+    // 在递归中更新其值
+    int diameter = 0;
 
     public int diameterOfBinaryTree(TreeNode root) {
         findMaxDepthOfCurrentNode(root);
-        return maxLen;
+        return diameter;
     }
 
-    // 此函数作用有两点:
+    // 分治法 - 此函数作用有两点:
     // 1. 更新最长路径
     // 2. 找出当前节点两棵子树中最长的那一支
+    //
+    // 易错点:
+    // 1. 对比diameter时, 经过当前节点的最长路径是包含左右子树的 (left + right) VS diameter
+    // 2. 返回值是在左右子树中选较长的那条 left VS right
+    //    注意! 记得 +1 (既子树到当前节点的这一段)
     private int findMaxDepthOfCurrentNode(TreeNode root) {
         if (root == null)
             return 0;
@@ -58,8 +65,8 @@ public class _1181_DiameterOfBinaryTree {
         int left = findMaxDepthOfCurrentNode(root.left);
         int right = findMaxDepthOfCurrentNode(root.right);
 
-        // 找出从左子树,经过当前节点,到右子树的最远记录
-        maxLen = Math.max(maxLen, left + right);
+        // 找出从左子树,经过当前节点,到右子树的最远距离. 将其与已知最远距离(diameter)对比
+        diameter = Math.max(diameter, left + right);
 
         // 返回值为当前节点的左右子树中那个最长的那一支, +1为子节点到当前点的距离
         return Math.max(left, right) + 1;

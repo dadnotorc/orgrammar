@@ -58,12 +58,11 @@ public class _0193_LongestValidParentheses {
             if (s.charAt(i) == ')') {
 
                 if (s.charAt(i - 1) == '(') {
-                    curMax[i] = i - 2 >= 0 ? (curMax[i - 2] + 2) : 2;
+                    curMax[i] = 2 + (i - 2 >= 0 ? curMax[i - 2] : 0);
                 } else { // s[i-1]=')'
                     if (i - curMax[i - 1] - 1 >= 0 && s.charAt(i - curMax[i - 1] - 1) == '(') {
-                        curMax[i] = curMax[i - 1] + 2
-                                + ((i - curMax[i - 1] - 2 >= 0) ? curMax[i - curMax[i - 1] - 2] : 0);
-
+                        curMax[i] = curMax[i - 1] + 2 +
+                                ((i - curMax[i - 1] - 2 >= 0) ? curMax[i - curMax[i - 1] - 2] : 0);
                     }
                 }
 
@@ -84,6 +83,7 @@ public class _0193_LongestValidParentheses {
      *       * 当前stack为空 -> 无效')', 移动 left 指向当前位
      *       * 当前stack不空 -> 先pop, 然后
      *         ** 若此时stack为空 -> 所有'('都已找到相应')', 则substring有效长度 = i - left. 取其与ans中较大者
+     *            例如"()()()" left=-1 读到第三组()时, i = 5, 最长长度 = 5 - (-1) = 6
      *         ** 若此时stack不空 -> 仍有闲置'(', 则substring有效长度 = i - 闲置'('下标, 即stack最上层. 取其与ans较大者
      *
      * 例如"))(()())", left = -1 -> 0 -> 1.
