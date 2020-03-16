@@ -60,7 +60,14 @@ public class helper {
 //        if (set.isEmpty())
 //            System.out.println("empty");
 
-        swapXOR(5, 10);
+//        int[] array = {5, 10};
+//        swapXOR(array);
+//        System.out.println(arrayToString(array));
+        // 输出 = [10, 5]
+
+        String s = "ab";
+        String[] values = s.split(",");
+        System.out.println(values.length + ", val = " + values[0] + ".");
     }
 
     public boolean isOdd(int n) {
@@ -78,9 +85,10 @@ public class helper {
         }
     }
 
-    public static void swapXOR(int x, int y) {
-	    System.out.println("input x = " + x);
-	    System.out.println("input y = " + y);
+    // input不能是int, 因为传递的是值, 而不是地址
+    public static void swapXOR(int[] value) {
+	    int x = value[0];
+	    int y = value[1];
 
 	    /*
 	    假设 x = 5 -> 0101; y = 10 -> 1010
@@ -93,8 +101,8 @@ public class helper {
 	    x = xor ^ x;
 	    y = xor ^ y;
 
-        System.out.println("output x = " + x);
-        System.out.println("output y = " + y);
+        value[0] = x;
+        value[1] = y;
     }
 
 

@@ -1,6 +1,6 @@
 /*
 Medium
-Binary Tree
+#Binary Tree
 Amazon, Facebook, Google, LinkedIn, Microsoft, Uber
  */
 package lintcode;
@@ -20,10 +20,9 @@ import static org.junit.Assert.assertTrue;
 
  * Design an algorithm and write code to serialize and deserialize a binary tree.
  * Writing the tree to a file is called 'serialization' and reading back from
- *  the file to reconstruct the exact same binary tree is 'deserialization'.
+ * the file to reconstruct the exact same binary tree is 'deserialization'.
  *
  * Example 1:
- *
  * Input：{3,9,20,#,#,15,7}
  * Output：{3,9,20,#,#,15,7}
  * Explanation：
@@ -47,94 +46,108 @@ import static org.junit.Assert.assertTrue;
  *
  * Our data serialization use BFS traversal. This is just for when you got
  * Wrong Answer and want to debug the input.
- * You can use other method to do serializaiton and deserialization.
+ * You can use other method to do serialization and deserialization.
  */
 public class _0007_SerializeDeserializeBinaryTree {
 
-    // 用bfs, 把每一层的nodes加到queue中, 然后依次存入String
+    /**
+     * 用bfs, 把每一层的nodes加到queue中, 然后依次存入String
+     *
+     * 易错点:
+     * 1. 不管子树是否为空, 都将其加入queue中, 因为可能当前层后续nodes子树不为空
+     * 2. 别忘了加入"{" 和 "}"
+     */
     public String serialize(TreeNode root) {
         if (root == null) {
-            /**
-             * 注意: 应返回"{}", 而不是""
-             */
+            // 注意: 应返回"{}", 而不是""
             return "{}";
         }
 
-        /**
-         * Can't use Deque as it throw NP exception when adding null.
-         * Use ArrayList or LinkedList instead
-         */
-        Queue<TreeNode> queue = new LinkedList<>();
-        queue.offer(root);
+        // Can't use Deque as it throw NP exception when adding null.
+        // Use ArrayList or LinkedList instead
+        Queue<TreeNode> q = new LinkedList<>();
+        q.offer(root);
         StringBuilder sb = new StringBuilder();
         sb.append("{");
 
-        while (!queue.isEmpty()) {
-            int sz = queue.size();
+        while (!q.isEmpty()) {
+            int sz = q.size();
             for (int i = 0; i < sz; i++) {
-                TreeNode n = queue.poll();
-                if (n != null) {
-                    sb.append(n.val);
-                    queue.offer(n.left);
-                    queue.offer(n.right);
+                TreeNode node = q.poll();
+
+                if (node != null) {
+                    sb.append(node.val);
+                    /*                              3
+                    不在这里判断左右子树是否为空,       / \
+                    因为当前层后续可能仍有nodes, 例如  9  20
+  	                9的子树为空, 但是20的子树不空        /  \
+  	                                                15  7
+                     */
+                    q.offer(node.left);
+                    q.offer(node.right);
                 } else {
                     sb.append("#");
                 }
 
-                if (!queue.isEmpty()) {
-                    sb.append(",");
-                }
+                sb.append(",");
+            }
+            if (q.isEmpty()) {
+                sb.deleteCharAt(sb.length() - 1); // 删掉末尾多余的","
             }
         }
 
         String ans = sb.toString();
 
         // 删除末端的 ",#"
-        while (ans.substring(ans.length() - 2, ans.length()).equals(",#")) {
+        // 如果 input={3,9,20,#,#,15}, 这段会将20的右子树(null节点)删掉
+        while (ans.substring(ans.length() - 2).equals(",#")) {
             ans = ans.substring(0, ans.length() - 2);
         }
 
-        ans += "}";
+        ans += "}"; // 别忘了关括号
 
         return ans;
 
     }
 
 
-    // 先把String分割, 把第一个值加入root, 之后每次取两个, 加入left child, right child
+    /**
+     * 先把String分割, 把第一个值加入root, 之后每次取两个, 加入left child, right child
+     *
+     * 易错点:
+     * 1. 别忘了考虑input="{}"
+     * 2. 判断左右子树时, 记得检查index是否越界, 因为两颗子树可能为空 (values[]的index已越界)
+     */
     public TreeNode deserialize(String data) {
-        if (data == null || data.equals("{}")) {
+        if (data == null || data.isEmpty() || data.equals("{}")) {
             return null;
         }
 
-        // 先取substring, 去掉两边的 { } 字符
-        // 之后用","分割
+        // 先取substring, 去掉两边的 { } 字符. 之后用","分割
         String[] values = data.substring(1, data.length() - 1).split(",");
-        if (values == null || values.length < 1) {
-            return null;
-        }
+        // 就算 data为empty string "", values的length最小也是1
 
         TreeNode root = new TreeNode(Integer.parseInt(values[0]));
-        Queue<TreeNode> queue = new LinkedList<>();
-        queue.offer(root);
+        Queue<TreeNode> q = new LinkedList<>();
+        q.offer(root);
 
-        int i = 1; // start from 1 instead of 0 because root has been created
-        while (i < values.length) {
-            int sz = queue.size();
-            for (int j = 0; j < sz; j++) {
-                TreeNode parent = queue.poll();
+        int index = 1; // start from 1 instead of 0 because root has been created
+        while (index < values.length) { // 判断index是否越界, 而不是queue是否为空, 以免array out of index
+            int sz = q.size();
+            for (int i = 0; i < sz; i++) {
+                TreeNode parent = q.poll();
                 TreeNode left, right;
-                if (values[i] != null && !values[i].equals("#")) { // left child - i
-                    left = new TreeNode(Integer.parseInt(values[i]));
+                if (index < values.length && !values[index].equals("#")) { // left child - i
+                    left = new TreeNode(Integer.parseInt(values[index]));
                     parent.left = left;
-                    queue.offer(left);
+                    q.offer(left);
                 }
-                if (values[i+1] != null && !values[i+1].equals("#")) { // right child - i + 1
-                    right = new TreeNode(Integer.parseInt(values[i+1]));
+                if (index+1 < values.length && !values[index+1].equals("#")) { // right child - i + 1
+                    right = new TreeNode(Integer.parseInt(values[index+1]));
                     parent.right = right;
-                    queue.offer(right);
+                    q.offer(right);
                 }
-                i = i + 2;
+                index += 2;
             }
         }
 
@@ -163,6 +176,10 @@ public class _0007_SerializeDeserializeBinaryTree {
         System.out.println(deRoot.left.val);
         System.out.println(deRoot.right.val);
         assertNull(deRoot.left.left);
+        assertNull(deRoot.left.right);
+        System.out.println(deRoot.right.left.val);
+        System.out.println(deRoot.right.right.val);
+
     }
 
     @Test
@@ -176,5 +193,55 @@ public class _0007_SerializeDeserializeBinaryTree {
 
         TreeNode deRoot = new _0007_SerializeDeserializeBinaryTree().deserialize(actSe);
         assertNull(deRoot);
+    }
+
+    @Test
+    public void test3() {
+        TreeNode n0 = new TreeNode(3);
+        TreeNode n1 = new TreeNode(9);
+        TreeNode n2 = new TreeNode(20);
+        TreeNode n3 = new TreeNode(15);
+        n0.left = n1;
+        n0.right = n2;
+        n2.left = n3;
+
+        String expSe = "{3,9,20,#,#,15}";
+        String actSe = new _0007_SerializeDeserializeBinaryTree().serialize(n0);
+        System.out.println(actSe);
+        assertTrue(expSe.equals(actSe));
+
+        TreeNode deRoot = new _0007_SerializeDeserializeBinaryTree().deserialize(actSe);
+        System.out.println(deRoot.val);
+        System.out.println(deRoot.left.val);
+        System.out.println(deRoot.right.val);
+        assertNull(deRoot.left.left);
+        assertNull(deRoot.left.right);
+        System.out.println(deRoot.right.left.val);
+        assertNull(deRoot.right.right);
+    }
+
+    @Test
+    public void test4() {
+        TreeNode n0 = new TreeNode(3);
+        TreeNode n1 = new TreeNode(9);
+        TreeNode n2 = new TreeNode(20);
+        TreeNode n3 = new TreeNode(15);
+        n0.left = n1;
+        n0.right = n2;
+        n1.left = n3;
+
+        String expSe = "{3,9,20,15}";
+        String actSe = new _0007_SerializeDeserializeBinaryTree().serialize(n0);
+        System.out.println(actSe);
+        assertTrue(expSe.equals(actSe));
+
+        TreeNode deRoot = new _0007_SerializeDeserializeBinaryTree().deserialize(actSe);
+        System.out.println(deRoot.val);
+        System.out.println(deRoot.left.val);
+        System.out.println(deRoot.right.val);
+        System.out.println(deRoot.left.left.val);
+        assertNull(deRoot.left.right);
+        assertNull(deRoot.right.left);
+        assertNull(deRoot.right.right);
     }
 }
