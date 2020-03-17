@@ -1,6 +1,6 @@
 /*
 Medium
-Hash Table, Linked List
+#Hash Table, #Linked List
 Amazon, Facebook, Microsoft, Uber
 FAQ+
  */

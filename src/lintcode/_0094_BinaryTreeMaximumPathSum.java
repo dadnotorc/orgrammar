@@ -41,7 +41,10 @@ import util.TreeNode;
 public class _0094_BinaryTreeMaximumPathSum {
 
     /**
-     * 解法1
+     * 解法1 - 使用 member variable
+     *
+     * 易错点:
+     * 1. 计算左右single path max的时候, 注意pathSum可能为负值, 此时则取0 (即不取此子树)
      */
     int ans;
 
@@ -73,7 +76,11 @@ public class _0094_BinaryTreeMaximumPathSum {
 
 
     /**
-     * 解法2
+     * 解法2 - 使用ResultType
+     *
+     * 易错点:
+     * 1. 递归出口, 当node为null时, 返回ResultType(0, MIN). singlePath=0表示不取该点, maxPath=MIN_VALUE因为其他path可能有负数出现
+     * 2. 递归拆解, 计算singlePath时, 注意可能返回值为负数, 此时取0
      */
     public class ResultType{
         int singlePath, maxPath;
