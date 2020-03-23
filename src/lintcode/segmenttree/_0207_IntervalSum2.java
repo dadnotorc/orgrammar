@@ -1,6 +1,7 @@
 /*
 Hard
-Segment Tree, Binary Search
+#Segment Tree, #Binary Search
+
  */
 package lintcode.segmenttree;
 
@@ -39,4 +40,106 @@ package lintcode.segmenttree;
  * Challenge: O(logN) time for query and modify.
  */
 public class _0207_IntervalSum2 {
+
+    // 使用 member variable
+    private SegmentTree tree;
+
+    public _0207_IntervalSum2(int[] A) {
+        if (A == null || A.length == 0)
+            return;
+
+        tree = new SegmentTree(A);
+    }
+
+    public long query(int start, int end) {
+        return tree.query(start, end);
+    }
+
+    public void modify(int index, int value) {
+        tree.modify(index, value);
+    }
+}
+
+class SegmentTreeNode {
+    long sum;
+    int start, end;
+    SegmentTreeNode left, right;
+    public SegmentTreeNode (int start, int end) {
+        this.start = start;
+        this.end = end;
+        sum = 0;
+        left = right = null;
+    }
+}
+
+class SegmentTree {
+    private int size;
+    private SegmentTreeNode root;
+    public SegmentTree (int[] A) {
+        size = A.length;
+        root = buildTreeNode(0, size - 1, A);
+    }
+
+    public long query(int queryStart, int queryEnd) {
+        return query(root, queryStart, queryEnd);
+    }
+
+    public void modify(int index, int value) {
+        modify(root, index, value);
+    }
+
+    private SegmentTreeNode buildTreeNode(int start, int end, int[] A) {
+
+        SegmentTreeNode node = new SegmentTreeNode(start, end);
+
+        if (start == end) {
+            node.sum = A[start];
+            return node;
+        }
+
+        int mid = (start + end) / 2;
+        node.left = buildTreeNode(start, mid, A);
+        node.right = buildTreeNode(mid + 1, end, A);
+        node.sum = node.left.sum + node.right.sum;
+
+        return node;
+    }
+
+    private long query(SegmentTreeNode node, int queryStart, int queryEnd) {
+        if (node.start == queryStart && node.end == queryEnd) {
+            return node.sum;
+        }
+
+        int mid = (node.start + node.end) / 2;
+        long leftSum = 0, rightSum = 0;
+
+        if (queryStart <= mid) {
+            leftSum = query(node.left, queryStart, Math.min(mid, queryEnd));
+        }
+        if (queryEnd >= mid + 1) {
+            rightSum = query(node.right, Math.max(queryStart, mid + 1), queryEnd);
+        }
+
+        return leftSum + rightSum;
+    }
+
+    private void modify(SegmentTreeNode node, int index, int value) {
+        // 到达 leaf node, 且 leaf node 就是 index 所指的节点
+        // 无需判断 node.start 是否等于 index
+        if (node.start == node.end) {
+            node.sum = value;
+            return;
+        }
+
+        // 无需计算 mid, 减少一步运算
+
+        if (index <= node.left.end) { // 所需修改的节点在左子树一边
+            modify(node.left, index, value);
+        } else {
+            modify(node.right, index, value);
+        }
+
+        // 别忘了更新当前节点的 sum
+        node.sum = node.left.sum + node.right.sum;
+    }
 }

@@ -1,6 +1,7 @@
 /*
 Medium
-Segment Tree, Binary Search
+#Segment Tree, #Binary Search
+
  */
 package lintcode.segmenttree;
 
@@ -28,17 +29,98 @@ import java.util.List;
  */
 public class _0206_IntervalSum {
 
+    /**
+     * 解法2 - 使用线状树
+     * 因为此题不需要修改, 使用前缀和数组更合适 (查询的时间法度是 O(mlogn) vs O(m), m=queries.size(), n=A.length
+     * 但是需要修改时, 线状树更合适 (修改的时间法度是 O(logn) vs O(n))
+     */
     public List<Long> intervalSum_SegmentTree(int[] A, List<Interval> queries) {
-        List<Long> ans = new ArrayList<>(queries.size());
+        List<Long> ans = new ArrayList<>();
+
+        if (A == null || A.length == 0)
+            return ans;
+
+        SegmentTree tree = new SegmentTree(A);
+        for (Interval interval : queries) {
+            ans.add(tree.query(interval.start, interval.end));
+        }
 
         return ans;
     }
 
-    /* ~~~~~ */
+    class SegmentTreeNode {
+        long sum;
+        int start, end;
+        SegmentTreeNode left, right;
+        public SegmentTreeNode(int start, int end) {
+            this.start = start;
+            this.end = end;
+            sum = 0;
+            left = right = null;
+        }
+    }
 
-    // 使用前缀和数组
+    class SegmentTree {
+        private int size;
+        private SegmentTreeNode root;
+        public SegmentTree(int[] A) {
+            size = A.length;
+            root = buildTreeNode(0, size - 1, A);
+        }
+
+        public long query(int queryStart, int queryEnd) {
+            return query(root, queryStart, queryEnd);
+        }
+
+        private SegmentTreeNode buildTreeNode(int start, int end, int[] A) {
+            // 先创建当前node, 给定 start 和 end
+            SegmentTreeNode node = new SegmentTreeNode(start, end);
+
+            if (start == end) { // 到达 leaf node
+                node.sum = A[start];
+                return node;
+            }
+
+            // 创建左右子树, 并根据左右子树更新当前节点 sum 值
+            int mid = (start + end) / 2;
+            node.left = buildTreeNode(start, mid, A);
+            node.right = buildTreeNode(mid + 1, end, A);
+            node.sum = node.left.sum + node.right.sum;
+
+            return node;
+        }
+
+        // 在当前节点中, 找到能够表示 [queryStart, queryEnd] 的节点, 返回所有节点的 sum
+        private long query(SegmentTreeNode node, int queryStart, int queryEnd) {
+            if (queryStart == node.start && queryEnd == node.end) {
+                return node.sum;
+            }
+
+            int mid = (node.start + node.end) / 2;
+            long leftSum = 0;
+            long rightSum = 0;
+
+            if (queryStart <= mid) { // query的左边界在左子树内
+                // query 右边界取当前 queryEnd 和 mid 的较小值
+                leftSum = query(node.left, queryStart, Math.min(mid, queryEnd));
+            }
+
+            if (queryEnd >= mid + 1) { // query的右边界在右子树内
+                // query 右边界取当前 queryEnd 和 mid 的较小值
+                rightSum = query(node.right, Math.max(queryStart, mid + 1), queryEnd);
+            }
+
+            return leftSum + rightSum;
+        }
+    }
+
+
+
+    /**
+     * 解法1 - 使用前缀和数组
+     */
     public List<Long> intervalSum_PrefixSum(int[] A, List<Interval> queries) {
-        List<Long> ans = new ArrayList<>(queries.size());
+        List<Long> ans = new ArrayList<>();
 
         if (A == null || A.length == 0) { return ans; }
 
@@ -53,9 +135,7 @@ public class _0206_IntervalSum {
         return ans;
     }
 
-    /**
-     * time = O(n)
-     */
+    // time: O(n)
     private long[] getPrefixSums(int[] A) {
         long[] sums = new long[A.length];
         sums[0] = A[0];
@@ -65,11 +145,9 @@ public class _0206_IntervalSum {
         return sums;
     }
 
-    /**
-     * 查询[0, end] -> 直接返回前缀和数组中 end 指针处的前缀和
-     * 查询[i, j] -> 返回 j 处前缀和减去 i-1 处前缀和
-     * time = O(1)
-     */
+    // 查询[0, end] -> 直接返回前缀和数组中 end 指针处的前缀和
+    // 查询[i, j] -> 返回 j 处前缀和减去 i-1 处前缀和
+    // time: O(1)
     private long query(long[] sums, int start, int end) {
         if (start == 0) { // 从 0 到 j
             return sums[end];

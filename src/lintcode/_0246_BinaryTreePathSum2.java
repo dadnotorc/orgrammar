@@ -54,34 +54,41 @@ public class _0246_BinaryTreePathSum2 {
 
     /**
      * DFS
+     *
+     * 易错点:
+     * 1. 在每个点求path sum时, 是从当前node往root方向, 避免错过起点不是root的path
+     * 2. 找到一个答案时, 不能break循环, 因为当前path继续往后仍有答案
+     * 3. 加入ans队列时, 要做份current list的拷贝
      */
     public List<List<Integer>> binaryTreePathSum2(TreeNode root, int target) {
         // write your code here
         List<List<Integer>> ans = new ArrayList<>();
-        List<Integer> cur = new ArrayList<>();
-        dfs(root, target, ans, cur);
+        dfs(root, target, ans, new ArrayList<>());
         return ans;
     }
 
     private void dfs(TreeNode node, int tar,
-                     List<List<Integer>> list, List<Integer> cur) {
+                     List<List<Integer>> ans, List<Integer> curPath) {
         if (node == null) { return; }
 
         int sum = 0;
-        cur.add(node.val);
+        curPath.add(node.val);
 
-        for (int i = cur.size() - 1; i >= 0; i--) {
-            sum += cur.get(i);
+        // 注意, 从当前node往上求和, 而不是从root往下. 因为后者会错过起点不是root的path
+        for (int i = curPath.size() - 1; i >= 0; i--) {
+            sum += curPath.get(i);
 
             if (sum == tar) {
-                list.add(new ArrayList<>(cur.subList(i, cur.size())));
+                // 注意这里要做份current list拷贝, 存入ans中
+                ans.add(new ArrayList<>(curPath.subList(i, curPath.size())));
+                // 找到一个后, 不能停, 因为后续可能还有
             }
         }
 
-        dfs(node.left, tar, list, cur);
-        dfs(node.right, tar, list, cur);
+        dfs(node.left, tar, ans, curPath);
+        dfs(node.right, tar, ans, curPath);
 
-        cur.remove(cur.size() - 1);
+        curPath.remove(curPath.size() - 1);
     }
 
     // 这段有bug
