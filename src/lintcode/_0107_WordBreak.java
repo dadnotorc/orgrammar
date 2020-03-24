@@ -50,9 +50,9 @@ public class _0107_WordBreak {
     }
 
     private void buildTrie(Set<String> dict, TrieNode root) {
-        for (String s : dict) {
+        for (String word : dict) {
             TrieNode ptr = root;
-            for (char c : s.toCharArray()) {
+            for (char c : word.toCharArray()) {
                 int i = (int) c;
                 if (ptr.children[i] == null) {
                     ptr.children[i] = new TrieNode();
@@ -63,6 +63,9 @@ public class _0107_WordBreak {
         }
     }
 
+    /*
+    Trie + DP
+     */
     public boolean wordBreak_Trie_DP(String s, Set<String> dict) {
         if (s.equals(""))
             return true;
@@ -86,6 +89,7 @@ public class _0107_WordBreak {
 
         return canSegment[0];
     }
+
 
     /*
     Trie + Recursion
@@ -134,7 +138,8 @@ public class _0107_WordBreak {
 
 
     /**
-     * DP
+     * DP - 在两层for loop的内层里 (for int j ...)
+     *      j 从 i-1 开始递减, 更好的利用已经查好的较长的单词, 而不是每次都从头开始查
      */
     public boolean wordBreak_DP(String s, Set<String> dict) {
 
@@ -148,8 +153,8 @@ public class _0107_WordBreak {
         canSegment[0] = true;
 
         for (int i = 1; i <= s.length(); i++) { // 查当前substring(0,i)是否可以被分割
-            for (int j = 0; j < i; j++) {
-
+            //for (int j = 0; j < i; j++) {
+            for (int j = i - 1; j >= 0; j--) { // 反向查, 更好的利用已查好的较长单词
                 // 如果substring(0,j)可以被分割, 且substring(j,i)在字典中存在 -> (0,i)也可以被分割
                 if (canSegment[j] && dict.contains(s.substring(j, i))) {
                     canSegment[i] = true;

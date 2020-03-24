@@ -6,6 +6,7 @@ Medium
 package lintcode.segmenttree;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -34,17 +35,61 @@ public class _0248_CountOfSmallerNumber {
      * 线段树
      */
     public List<Integer> countOfSmallerNumber_SegmentTree(int[] A, int[] queries) {
-        // write your code here
+        List<Integer> ans = new ArrayList<>();
+        if (A == null)
+            return ans;
+    }
+
+    class SegmentTreeNode {
+
     }
 
 
     /**
      * 排序 + 二分法
+     * 易错点:
+     * 1. 仍然是如下corner case
+     *    input: array=[] queries=[1,2,3]
+     *    Output:[0,0,0]
      */
     public List<Integer> countOfSmallerNumber_SortAndBinarySearch(int[] A, int[] queries) {
-        // write your code here
+        List<Integer> ans = new ArrayList<>();
+        if (A == null)
+            return ans;
+
+        Arrays.sort(A);
+
+        for (int i : queries) {
+            ans.add(findSmallerNumber(A, i));
+        }
+
+        return ans;
     }
 
+    // 二分法 找出array中所有小于target的值, 统计数量
+    private int findSmallerNumber(int[] array, int target) {
+        if (array.length == 0)
+            return 0;
+
+        int l = 0, r = array.length - 1;
+
+        while (l + 1 < r) {
+            int mid = (l + r) / 2;
+            if (array[mid] >= target) {
+                r = mid - 1;
+            } else {
+                l = mid + 1;
+            }
+        }
+
+        if (array[l] >= target) {
+            return l;
+        }
+        if (array[r] >= target) {
+            return r;
+        }
+        return r + 1;
+    }
 
 
 
