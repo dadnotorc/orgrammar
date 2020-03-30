@@ -31,8 +31,10 @@ public class _0206_IntervalSum {
 
     /**
      * 解法2 - 使用线状树
-     * 因为此题不需要修改, 使用前缀和数组更合适 (查询的时间法度是 O(mlogn) vs O(m), m=queries.size(), n=A.length
-     * 但是需要修改时, 线状树更合适 (修改的时间法度是 O(logn) vs O(n))
+     * 因为此题不需要修改, 使用前缀和数组更合适 (每次查询的时间法度是 O(logn) vs O(1))
+     * 但是需要修改时, 线状树更合适 (每次修改的时间法度是 O(logn) vs O(n))
+     *
+     * time: O(mlogn)  m=queries.size(), n=A.length
      */
     public List<Long> intervalSum_SegmentTree(int[] A, List<Interval> queries) {
         List<Long> ans = new ArrayList<>();
@@ -118,6 +120,8 @@ public class _0206_IntervalSum {
 
     /**
      * 解法1 - 使用前缀和数组
+     *
+     * time: O(n + m)   m=queries.size(), n=A.length
      */
     public List<Long> intervalSum_PrefixSum(int[] A, List<Interval> queries) {
         List<Long> ans = new ArrayList<>();
