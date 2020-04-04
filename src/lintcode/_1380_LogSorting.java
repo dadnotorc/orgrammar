@@ -1,3 +1,8 @@
+/*
+Easy
+#Sorting, #String
+Amazon
+ */
 package lintcode;
 
 import org.junit.Test;
@@ -8,7 +13,6 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertTrue;
 
 /**
