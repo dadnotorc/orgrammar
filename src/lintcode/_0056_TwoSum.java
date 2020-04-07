@@ -1,6 +1,8 @@
 /*
 Easy
-
+#Two Pointers, #Array, #Hash Table, #Sort
+Adobe, Airbnb, Amazon, Apple, Dropbox, Facebook, LinkedIn, Microsoft, Uber
+FAQ++
  */
 package lintcode;
 

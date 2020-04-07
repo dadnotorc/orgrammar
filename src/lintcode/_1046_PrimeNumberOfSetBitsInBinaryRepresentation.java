@@ -5,6 +5,8 @@ Amazon,
  */
 package lintcode;
 
+import org.junit.Test;
+
 /**
  * 1046. Prime Number of Set Bits in Binary Representation
  *
@@ -41,6 +43,65 @@ package lintcode;
 public class _1046_PrimeNumberOfSetBitsInBinaryRepresentation {
 
     public int countPrimeSetBits(int L, int R) {
+        int ans = 0;
 
+        for (int i = L; i <= R; i++) {
+            if (isPrime(getSetBits(i))) {
+                ans++;
+            }
+        }
+
+        return ans;
     }
+
+    private int getSetBits(int i) {
+        int setBits = 0;
+        while (i != 0) {
+            i = i & (i -1);
+            setBits++;
+        }
+        return setBits;
+    }
+
+    // n最大值为10^6, 转成二进制, 长度为20 (2^19 < 10^6 < 2^20)
+    // 所以需要找出20以内的所有质数
+    private boolean isPrime(int n) {
+        if (n == 2 || n == 3 || n == 5 || n == 7 || n == 11 || n == 13 || n == 17 || n == 19)
+            return true;
+        return false;
+    }
+
+
+    /**
+     * 第二套解法
+     */
+
+    private int getSetBits_2(int i) {
+        int setBits = 0;
+        while (i != 0) {
+            setBits += i & 1;
+            i >>= 1;
+        }
+        return setBits;
+    }
+
+
+    private boolean isPrime_2(int n) {
+        if (n < 2)
+            return false;
+
+        for (int i = 2; i * i <= n; i++) {
+            if (n % i == 0) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    @Test
+    public void test1() {
+        org.junit.Assert.assertEquals(4, countPrimeSetBits(6, 10));
+    }
+
 }

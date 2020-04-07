@@ -2,6 +2,7 @@
 Easy
 #Linked List
 Amazon, Apple, LinkedIn, Microsoft
+FAQ++
  */
 package lintcode;
 
