@@ -57,14 +57,16 @@ public class _1017_SimilarRGBColor {
         int decVal = Integer.parseInt(hexVal, 16);
         int hexIndex = (decVal / 17) + (decVal % 17 > 8 ? 1 : 0);
 
-        // todo 读读 string format
+        // %02x 表示有两位hex值, 如果只有一位数字, 前一位用0补上
+        // hexIndex表示的是两个重复的hex value的其中一个, 例如AA中的A.
+        // 输出时乘以17是用于计算对应的十进制数值, 例如hexIndex=5, hex 55 = decimal 5*17
         return String.format("%02x", hexIndex * 17);
     }
 
 
 
     /**
-     * 十六位进制中类似AA,BB的数, 皆为17的倍数. 例如 hex 55 = decimal 85
+     * 十六位进制中类似AA,BB的数, 皆为17的倍数. 例如 hex 55 = decimal 85=5*17
      * 每两个字符代表一个十六位进制, 我们要找最接近该数字, 且形式类似AA,BB
      */
     public String similarRGB(String color) {

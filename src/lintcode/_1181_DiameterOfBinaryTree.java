@@ -36,6 +36,7 @@ import util.TreeNode;
  *  /
  * 1
  *
+ * 等同 leetcode 543 Diameter of Binary Tree
  * 类似 leetcode 437 PathSum3
  */
 public class _1181_DiameterOfBinaryTree {
@@ -52,6 +53,7 @@ public class _1181_DiameterOfBinaryTree {
     // 分治法 - 此函数作用有两点:
     // 1. 更新最长路径
     // 2. 找出当前节点两棵子树中最长的那一支
+    // 此函数返回值为: 从当前节点到达叶子节点最多有几个节点(包含当前节点以及叶子节点). 例如例1中, 节点2返回值为2
     //
     // 易错点:
     // 1. 对比diameter时, 经过当前节点的最长路径是包含左右子树的 (left + right) VS diameter
