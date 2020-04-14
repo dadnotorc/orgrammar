@@ -35,7 +35,7 @@ import java.util.HashSet;
  * 1 <= arr.length <= 1000
  * 0 <= arr[i] <= 1000
  */
-public class _x_CountingElements {
+public class _0000_CountingElements {
 
     /**
      * 易错点:

@@ -34,7 +34,7 @@ package lintcode;
 public class _1379_TheLongestScene {
 
     // todo
-    public int getLongestScene(String str) {
-        // Write your code here
-    }
+//    public int getLongestScene(String str) {
+//        // Write your code here
+//    }
 }
