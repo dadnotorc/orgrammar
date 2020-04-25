@@ -2,6 +2,7 @@
 Hard
 #Scanning Line
 Amazon
+Ladder
  */
 package lintcode;
 
@@ -33,7 +34,7 @@ package lintcode;
  */
 public class _1379_TheLongestScene {
 
-    // todo
+    // todo ladder vip
 //    public int getLongestScene(String str) {
 //        // Write your code here
 //    }

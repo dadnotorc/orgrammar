@@ -1,3 +1,9 @@
+/*
+Hard
+#Simulate, #Linked List
+Amazon, Facebook, Google, Microsoft, Palantir, Twitter
+FAQ++
+ */
 package lintcode;
 
 /**
@@ -16,6 +22,8 @@ package lintcode;
  * Finally, you need to return the data from each get.
  */
 public class _0134_LRUCache {
+
+    //todo
 
     /*
      * @param capacity: An integer

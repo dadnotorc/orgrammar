@@ -2,6 +2,7 @@
 Easy
 #Sorting, #String
 Amazon
+Ladder
  */
 package lintcode;
 
