@@ -95,8 +95,8 @@ public class _0146_LRUCache {
         }
 
         DoubleLinkedNode node = new DoubleLinkedNode(key, value);
-        map.put(key, node);
         moveToLast(node);
+        map.put(key, node);
     }
 
     // 移至队尾 = 插入至当前队尾 与 tail之间
