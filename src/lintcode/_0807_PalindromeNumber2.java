@@ -11,27 +11,25 @@ package lintcode;
  *
  * Determines whether a binary representation of a non-negative integer n is a palindrome
  *
- * Example
  * Example1
- *
  * Input: n = 0
  * Output: True
  * Explanation:
  * The binary representation of 0 is: 0
- * Example2
  *
+ * Example2
  * Input: n = 3
  * Output: True
  * Explanation:
  * The binary representation of 3 is: 11
- * Example3
  *
+ * Example3
  * Input: n = 4
  * Output: False
  * Explanation:
  * The binary representation of 4 is: 100
- * Example4
  *
+ * Example4
  * Input: n = 6
  * Output: False
  * Explanation:
@@ -42,8 +40,37 @@ package lintcode;
  */
 public class _0807_PalindromeNumber2 {
 
-    // todo ladder vip
-//    public boolean isPalindrome(int n) {
-//        // Write your code here
-//    }
+    /**
+     * 先将数字的二进制转成String, 然后对String使用双指针比较char
+     *
+     * 易错点:
+     * 1. 别忘了移动指针
+     */
+    public boolean isPalindrome(int n) {
+        if (n == 0)
+            return true;
+        if ((n & 1) == 0) // 偶数, 最后一位为0
+            return false;
+
+        StringBuilder sb = new StringBuilder();
+
+        while (n != 0) {
+            sb.append(n & 1);
+            n >>= 1;
+        }
+
+        return isPalindrome(sb.toString());
+    }
+
+    private boolean isPalindrome(String s) {
+        int l = 0, r = s.length() - 1;
+
+        while (l < r) {
+            if (s.charAt(l++) != s.charAt(r--)) { // 别忘了移动指针
+                return false;
+            }
+        }
+
+        return true;
+    }
 }

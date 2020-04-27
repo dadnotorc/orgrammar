@@ -2,6 +2,7 @@
 Easy
 #Binary Tree, #DFS, #Divide and Conquer
 Amazon
+Ladder
  */
 package lintcode;
 
@@ -10,8 +11,7 @@ import util.TreeNode;
 /**
  * 597. Subtree with Maximum Average
  *
- * Given a binary tree, find the subtree with maximum average.
- * Return the root of the subtree.
+ * Given a binary tree, find the subtree with maximum average. Return the root of the subtree.
  *
  * Notice
  * - LintCode will print the subtree which root is your return node.
@@ -19,9 +19,8 @@ import util.TreeNode;
  *
  * Example 1
  * Input: {1,-5,11,1,2,4,-2}
- * Output：11
+ * Output: 11
  * Explanation:
- * The tree is look like this:
  *      1
  *    /   \
  *  -5     11
@@ -30,17 +29,14 @@ import util.TreeNode;
  * The average of subtree of 11 is 4.3333, is the maximum.
  *
  * Example 2
- * Input：
- * {1,-5,11}
- * Output：11
+ * Input: {1,-5,11}
+ * Output: 11
  * Explanation:
  *      1
  *    /   \
  *  -5     11
  * The average of subtree of 1,-5,11 is 2.333,-5,11.
  * So the subtree of 11 is the maximum.
- *
- * https://www.lintcode.com/problem/subtree-with-maximum-average/description?_from=ladder&&fromId=78
  */
 public class _0597_SubtreeWithMaximumAverage {
 
@@ -66,9 +62,14 @@ public class _0597_SubtreeWithMaximumAverage {
         return maxAverageNode;
     }
 
-    // 分治法 - 此函数作用有两点:
-    // 1. 分别找出左右子节点的平均值(既ResultType), 用此二者加上当前节点 算出当前节点平均值
-    // 2. 比较并更新最大平均值及其对应节点
+    /**
+     * 分治法 - 此函数作用有两点:
+     * 1. 分别找出左右子节点的平均值(既ResultType), 用此二者加上当前节点 算出当前节点平均值
+     * 2. 比较并更新最大平均值及其对应节点
+     *
+     * 易错点:
+     * 1. 比较平均值之前, 记得判断maxAverageNode是否为空, 如果是, 直接赋值
+     */
     private ResultType helper(TreeNode node) {
         if (node == null)
             return new ResultType(0, 0);

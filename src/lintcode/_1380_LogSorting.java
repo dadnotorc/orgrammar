@@ -38,14 +38,21 @@ import static org.junit.Assert.assertTrue;
  *    Each log's ID is unique.
  */
 public class _1380_LogSorting {
+    /**
+     * 1. 使用String.indexOf(' ')找出第一个space所在的index
+     * 2. 从后往前找出所有content以数字开头的log, >= '0' && <='9', 以同样从后往前的顺序加入答案
+     *    (因为content为数字的log以他们的input order排序)
+     * 3. 将剩余content为字母的log先放入list, 最后使用Collections.sort对list排序
+     *    - 如果content相同 ->　按id排序
+     *    - 如果content不同 -> 按content排序
+     */
 	public String[] logSort(String[] logs) {
-        // Write your code here
-        if (logs == null || logs.length == 0) {
+
+	    if (logs == null || logs.length == 0)
             return new String[0];
-        }
         
         String[] ans = new String[logs.length];
-        List<String> list = new ArrayList<String>();
+        List<String> list = new ArrayList<>();
         int ansIndex = logs.length - 1;
         
         for (int i = logs.length - 1; i >= 0; i--) {
