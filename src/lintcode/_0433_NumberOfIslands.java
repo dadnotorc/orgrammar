@@ -53,9 +53,7 @@ public class _0433_NumberOfIslands {
             for (int j = 0; j < grid[0].length; j++) {
                 if (grid[i][j]) { // (i,j) is island
                     ans++;
-
                     // 注意, 不可以在这里沉海岛, 不然进去recursion时, 立马会退出
-
                     findNeighbor(grid, i, j);
                 }
             }
@@ -66,14 +64,16 @@ public class _0433_NumberOfIslands {
 
     // 将当前海岛沉下去
     public void findNeighbor(boolean[][] grid, int x, int y) {
-        if (!isValid(grid, x, y) || !grid[x][y]) // 越界 或者 当前是海面
+        // 越界 或者 当前是海面
+        if (x < 0 || x >= grid.length || y < 0 || y >= grid[0].length || !grid[x][y])
             return;
 
         grid[x][y] = false; // 沉下去
 
-        for (int i = 0; i < DIR.length; i++) {
-            findNeighbor(grid, x + DIR[i][0], y + DIR[i][1]);
-        }
+        findNeighbor(grid, x + 1, y);
+        findNeighbor(grid, x - 1, y);
+        findNeighbor(grid, x, y + 1);
+        findNeighbor(grid, x, y - 1);
     }
 
 
@@ -94,14 +94,10 @@ public class _0433_NumberOfIslands {
 
         for (int i = 0; i < n; i++) {
             for (int j = 0; j < m; j++) {
-                if (!isVisited[i][j]) {
-                    if (!grid[i][j]) {
-                        isVisited[i][j] = true;
-                    } else { // find the rest of the island and mark as visited
-                        islands++;
-                        // 注意这里不能修改isVisited, 因为会导致markVisited时, 提前退出
-                        markVisited(grid, isVisited, i, j);
-                    }
+                if (!isVisited[i][j] && grid[i][j]) { // 找到一个未访问过的岛, 将岛上其他坐标 mark as visited
+                    islands++;
+                    // 注意这里不能修改isVisited, 因为会导致markVisited时, 提前退出
+                    markVisited(grid, isVisited, i, j);
                 }
             }
         }
@@ -115,10 +111,6 @@ public class _0433_NumberOfIslands {
 
         isVisited[i][j] = true;
 
-        if (!grid[i][j]) {
-            return;
-        }
-
         // current on island, continue explain and mark the rest of the island as visited
         for (int[] dir : DIR) {
             markVisited(grid, isVisited, i + dir[0], j + dir[1]);
@@ -126,7 +118,8 @@ public class _0433_NumberOfIslands {
     }
 
     private boolean isValid(boolean[][] grid, int i, int j) {
-        return (i >= 0 && i < grid.length && j >= 0 && j < grid[0].length);
+        // 坐标未越界, 且标在海岛上
+        return (i >= 0 && i < grid.length && j >= 0 && j < grid[0].length && grid[i][j]);
     }
 
 

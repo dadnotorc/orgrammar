@@ -26,8 +26,45 @@ import util.ListNode;
  * Explanation: 513 + 295 = 808, 808 to list: 8->0->8->null
  */
 public class _0167_AddTwoNumbers {
+
     /**
+     * 简化一点
      *
+     * 易错点:
+     * 1. while结束后, 别忘了将carry加上
+     */
+    public ListNode addLists_2(ListNode l1, ListNode l2) {
+        if (l1 == null)
+            return l2;
+        if (l2 == null)
+            return l1;
+
+        int carry = 0, sum = 0;
+        ListNode dummy = new ListNode(-1);
+        ListNode head = dummy;
+
+        while (l1 != null || l2 != null) { // 注意这里用 ||  (两者有一不为null即可)
+            sum = carry + (l1 == null ? 0 : l1.val) + (l2 == null ? 0 : l2.val); // 别忘了加carry
+            head.next = new ListNode(sum % 10);
+            carry = sum / 10;
+
+            head = head.next;
+            if (l1 != null) l1 = l1.next;
+            if (l2 != null) l2 = l2.next;
+        }
+
+        // 注意! 别忘了carry
+        if (carry != 0) {
+            head.next = new ListNode(carry);
+        }
+
+        return dummy.next;
+    }
+
+
+
+
+    /**
      * 易错点:
      * 1. 第一个while结束后, 别忘了将carry加上
      * 2. 第二个while结束后, 仍然别忘了还有carry!!!
@@ -42,8 +79,8 @@ public class _0167_AddTwoNumbers {
         ListNode dummy = new ListNode(-1);
         ListNode head = dummy;
 
-        while (l1 != null && l2 != null) {
-            sum = l1.val + l2.val + carry;
+        while (l1 != null && l2 != null) { // 注意这里用&& 两者皆不可为null
+            sum = l1.val + l2.val + carry; // 别忘了加carry
             head.next = new ListNode(sum % 10);
             carry = sum / 10;
 
