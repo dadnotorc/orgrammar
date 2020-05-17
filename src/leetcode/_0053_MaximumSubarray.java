@@ -21,6 +21,23 @@ package leetcode;
 public class _0053_MaximumSubarray {
 
     /**
+     * 每遇到一个数字, 考虑到当前数字为止 (必须包括当前值), 最大的subarry之和,
+     * 如果curMax + i < i, 则 curMax = i
+     * 同时更新maxSum
+     */
+    public int maxSubArray_3(int[] nums) {
+        int curMax = 0, maxSum = Integer.MIN_VALUE;
+
+        for (int i : nums) {
+            curMax = Math.max(curMax + i, i);
+            maxSum = Math.max(maxSum, curMax);
+        }
+
+        return maxSum;
+    }
+
+
+    /**
      * min记录前缀和中最小的那一位
      * 1. prefixSum - min = 到当前位为止的最大区间和, 将其与maxSum比较取较大值
      * 2. 如果当前位的prefixSum < min, 则更新min
