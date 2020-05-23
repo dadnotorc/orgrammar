@@ -64,6 +64,8 @@ public class _0423_ValidParentheses {
         return stack.isEmpty(); // 如果stack中仍有剩余, 说明仍有开括号未找到对应的关括号
     }
 
+
+
     @Test
     public void test1() {
         String s = "([)]";

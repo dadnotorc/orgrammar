@@ -35,6 +35,48 @@ import java.util.*;
 public class _0451_SortCharactersByFrequency {
 
     /**
+     * 也是bucket sort, 但是不需要使用Map记录字符及其出现次数, 用int[]代替即可
+     *
+     * time: O(n + 256 + n) = O(n)
+     */
+    public String frequencySort_2(String s) {
+        if (s == null || s.length() < 2)
+            return s;
+
+        int[] count = new int[256];
+
+        for (int i = 0; i < s.length(); i++) {
+            count[s.charAt(i)]++;
+        }
+
+        List<Character>[] bucket = new List[s.length() + 1]; // 下标为字符出现次数, 最大值为 s.length. 所以数组从0到s.length, 需要+1
+        for (int i = 0; i < 256; i++) { // i 对应256个字符
+            if (count[i] != 0) {
+                if (bucket[count[i]] == null) {
+                    bucket[count[i]] = new ArrayList<>();
+                }
+                bucket[count[i]].add((char) i);
+            }
+        }
+
+        StringBuilder sb = new StringBuilder();
+        for (int freq = bucket.length - 1; freq > 0 ; freq--) {
+            if (bucket[freq] != null) {
+                for (char c : bucket[freq]) {
+                    for (int i = 0; i < freq; i++) {
+                        sb.append(c);
+                    }
+                }
+            }
+        }
+
+        return sb.toString();
+    }
+
+
+
+
+    /**
      * 使用ResultType记录字符与其出现次数
      * 1. 针对256个字符, 每个字符创建一个RT
      * 2. 读取字符串s,获得每个字符出现次数
@@ -43,8 +85,9 @@ public class _0451_SortCharactersByFrequency {
      *
      * 易错点:
      * 1. 开始读字符串之前, 需要对256个字符每个创建个数为0的RT
+     *
+     * 需要使用ResultType的原因是, Arrays.sort之后 作为找到对应字符的下标顺序被打乱, 无法找回原字符, 所以使用RT关联两者
      */
-
     class ResultType {
         char c;
         int count;
@@ -83,34 +126,6 @@ public class _0451_SortCharactersByFrequency {
                 for (int i = 0; i < rt.count; i++) {
                     sb.append(rt.c);
                 }
-            }
-        }
-
-        return sb.toString();
-    }
-
-
-    /**
-     * Priority Queue
-     */
-    public String frequencySort_PQ(String s) {
-        if (s == null || s.length() < 2)
-            return s;
-
-        Map<Character, Integer> map = new HashMap<>();
-        for (char c : s.toCharArray()) {
-            map.put(c, map.getOrDefault(c, 0) + 1);
-        }
-
-        PriorityQueue<Map.Entry<Character, Integer>> pq =
-                new PriorityQueue<>((a, b) -> b.getValue() - a.getValue());
-        pq.addAll(map.entrySet());
-
-        StringBuilder sb = new StringBuilder();
-        while (!pq.isEmpty()) {
-            Map.Entry e = pq.poll();
-            for (int i = 0; i < (int) e.getValue(); i++) {
-                sb.append((char) e.getKey());
             }
         }
 
@@ -162,5 +177,30 @@ public class _0451_SortCharactersByFrequency {
 
 
 
+    /**
+     * Priority Queue
+     */
+    public String frequencySort_PQ(String s) {
+        if (s == null || s.length() < 2)
+            return s;
 
+        Map<Character, Integer> map = new HashMap<>();
+        for (char c : s.toCharArray()) {
+            map.put(c, map.getOrDefault(c, 0) + 1);
+        }
+
+        PriorityQueue<Map.Entry<Character, Integer>> pq =
+                new PriorityQueue<>((a, b) -> b.getValue() - a.getValue());
+        pq.addAll(map.entrySet());
+
+        StringBuilder sb = new StringBuilder();
+        while (!pq.isEmpty()) {
+            Map.Entry e = pq.poll();
+            for (int i = 0; i < (int) e.getValue(); i++) {
+                sb.append((char) e.getKey());
+            }
+        }
+
+        return sb.toString();
+    }
 }
