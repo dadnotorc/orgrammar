@@ -1,3 +1,8 @@
+/*
+Easy
+#Array, #Sorted Array, #Interval, #Two Pointers
+Uber
+ */
 package lintcode;
 
 import org.junit.Test;
@@ -36,7 +41,6 @@ import static org.junit.Assert.assertEquals;
  * (6,7) --> (6,7)
  */
 public class _0839_MergeSortedIntervalLists {
-
 
 
     public List<Interval> mergeTwoInterval(List<Interval> list1, List<Interval> list2) {
@@ -94,6 +98,8 @@ public class _0839_MergeSortedIntervalLists {
             return cur;
         }
     }
+
+
 
     @Test
     public void test1() {

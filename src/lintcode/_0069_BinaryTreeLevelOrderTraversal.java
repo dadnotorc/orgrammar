@@ -6,6 +6,7 @@ FAQ
  */
 package lintcode;
 
+import sun.reflect.generics.tree.Tree;
 import util.TreeNode;
 
 import java.util.ArrayList;
@@ -82,8 +83,42 @@ public class _0069_BinaryTreeLevelOrderTraversal {
 
     /**
      * DFS - 每次DFS都从root开始向下寻找目标层, 当把目标层所有节点加完后, 目标层向下移, 重新开始DFS
-     * 出口: 如果current node为空或者当前层超过目标层, 则返回; 如果当前层即为目标层, 将current node的值加入队列
-     *       遍历完整棵树后, 将队列加入答案中. 然后重置DFS, 从root开始, 目标层下移
+     * 出口: 如果current node为空, 则返回;
+     *      如果当前层即为目标层, 将current node的值加入队列
+     *      遍历完整棵树后, 将队列加入答案中. 然后重置DFS, 从root开始, 目标层下移
      * 拆解: 分别向current node的左子树和右子树递归
      */
+    public List<List<Integer>> levelOrder_DFS(TreeNode root) {
+        List<List<Integer>> res = new ArrayList<>();
+
+        if (root == null) { return res; }
+
+        int targetLvl = 0;
+
+        while (true) {
+            List<Integer> list = new ArrayList<>();
+            dfs(root, list, 0, targetLvl);
+            if (list.size() == 0) {
+                break;
+            }
+            res.add(list);
+            targetLvl++;
+        }
+
+        return res;
+    }
+
+    private void dfs (TreeNode node, List<Integer> list, int curLvl, int targetLvl) {
+        if (node == null) {
+            return;
+        }
+
+        if (curLvl == targetLvl) {
+            list.add(node.val);
+            return; // 注意 别忘了返回
+        }
+
+        dfs(node.left, list, curLvl + 1, targetLvl);
+        dfs(node.right, list, curLvl + 1, targetLvl);
+    }
 }

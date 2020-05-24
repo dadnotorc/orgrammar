@@ -63,7 +63,10 @@ public class _0920_MeetingRooms {
         return true;
     }
 
-    // note the difference here is that the input is an array instead of a list
+
+    /**
+     * note the difference here is that the input is an array instead of a list
+     */
     public boolean canAttendMeetings(Interval[] intervals) {
         // Write your code here
         if (intervals == null || intervals.length == 0) {
@@ -92,8 +95,11 @@ public class _0920_MeetingRooms {
     }
 
 
-    // this will fail if there are lots of data to be put in the hashset
-    public static boolean canAttendMeetings2(List<Interval> intervals) {
+
+    /**
+     * this will fail if there are lots of data to be put in the hashset
+     */
+    public static boolean canAttendMeetings_TLE(List<Interval> intervals) {
         // Write your code here
         HashSet<Integer> set = new HashSet<>();
 
