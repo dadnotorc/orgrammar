@@ -2,7 +2,7 @@
 Hard
 DFS, BFS
  */
-package leetcode.stack;
+package leetcode;
 
 import java.util.List;
 

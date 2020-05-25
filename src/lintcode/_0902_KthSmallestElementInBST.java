@@ -1,6 +1,6 @@
 /*
 Medium
-#Binary Search Tree (BST)
+#BST
 Google, Uber
 FAQ++
  */
@@ -11,7 +11,7 @@ import util.TreeNode;
 import java.util.Stack;
 
 /**
- * 902. Kth Smallest Element in a BST
+ * 902. Kth Smallest Element in a Binary Search Tree (BST)
  *
  * Given a binary search tree, write a function to find the kth smallest element in it.
  *

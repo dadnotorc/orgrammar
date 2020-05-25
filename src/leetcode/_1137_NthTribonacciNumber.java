@@ -2,7 +2,7 @@
 Easy
 Recursion
  */
-package leetcode.recursion;
+package leetcode;
 
 import org.junit.Test;
 

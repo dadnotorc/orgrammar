@@ -1,4 +1,4 @@
-package leetcode.binarysearch;
+package leetcode;
 
 /**
  * 162. Find Peak Element

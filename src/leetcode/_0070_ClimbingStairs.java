@@ -2,7 +2,7 @@
 Easy
 #DP
  */
-package leetcode.dp;
+package leetcode;
 
 import org.junit.Test;
 

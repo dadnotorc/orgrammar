@@ -2,7 +2,7 @@
 Medium
 Amazon
  */
-package leetcode.binarytree;
+package leetcode;
 
 import util.TreeNode;
 

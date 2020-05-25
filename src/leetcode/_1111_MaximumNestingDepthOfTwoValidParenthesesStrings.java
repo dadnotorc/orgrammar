@@ -1,11 +1,10 @@
-package leetcode.stack;
+/*
+Medium
+#Binary Search, #Greedy
+ */
+package leetcode;
 
 import org.junit.Test;
-
-import java.util.ArrayDeque;
-import java.util.Deque;
-
-import static org.junit.Assert.assertArrayEquals;
 
 /**
  * 1111. Maximum Nesting Depth of Two Valid Parentheses Strings
@@ -47,43 +46,36 @@ import static org.junit.Assert.assertArrayEquals;
  *   1 <= seq.size <= 10000
  *
  */
-public class _1111 {
+public class _1111_MaximumNestingDepthOfTwoValidParenthesesStrings {
 
+    /**
+     * 统计 group A 和 group B 的开括号数量, 保持平均
+     */
     public int[] maxDepthAfterSplit(String seq) {
-        if (seq == null || seq.length() == 0) {
-            return new int[0];
-        }
 
-        int[] ans = new int[seq.length()];
+        int[] res = new int[seq.length()];
         int a = 0, b = 0;
-        Deque<Character> stack = new ArrayDeque<>();
+
         for (int i = 0; i < seq.length(); i++) {
             char c = seq.charAt(i);
+
             if (c == '(') {
-                ans[i] = stack.size();
-                stack.push(c);
+                if (a <= b) {
+                    a++;
+                } else {
+                    b++;
+                    res[i] = 1;
+                }
             } else { // c == ')'
-                stack.pop();
-                ans[i] = stack.size();
+                if (a > b) {
+                    a--;
+                } else {
+                    b--;
+                    res[i] = 1;
+                }
             }
         }
 
-        return ans;
-    }
-
-    @Test
-    public void test1() {
-        String seq = "(()())";
-        int[] expected = {0,1,1,1,1,0};
-        int[] actual = new _1111().maxDepthAfterSplit(seq);
-        assertArrayEquals(expected, actual);
-    }
-
-    @Test
-    public void test2() {
-        String seq = "()(())()";
-        int[] expected = {0,0,0,1,1,0,1,1};
-        int[] actual = new _1111().maxDepthAfterSplit(seq);
-        assertArrayEquals(expected, actual);
+        return res;
     }
 }

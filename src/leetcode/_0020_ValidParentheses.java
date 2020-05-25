@@ -2,7 +2,7 @@
 Easy
 String, Stack
  */
-package leetcode.stack;
+package leetcode;
 
 import org.junit.Test;
 

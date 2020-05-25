@@ -57,23 +57,27 @@ public class _0411_GrayCode {
      * 1. 开始时, 队列只加0, 因为n=0时, 只有队列里只能有0
      */
     public List<Integer> grayCode_DP(int n) {
-        List<Integer> ans = new ArrayList<>();
+        List<Integer> res = new ArrayList<>();
 
-        ans.add(0); // 这里只加0, 不加1: 因为n可能为0, 0个bits, 答案只有0.
+        res.add(0); // 这里只加0, 不加1: 因为n可能为0, 0个bits, 答案只有0.
 
-        for (int i = 0; i < n; i++) { // 从最右边第二位开始, 向左移
-            int size = ans.size();
+        for (int i = 0; i < n; i++) { // 注意 这里从0开始到n-1
+            int size = res.size(); // 先取size, 因为之后会加入新数值
             for (int j = size - 1; j >= 0; j--) { // 从后往前的原因是为了反转
-                ans.add(ans.get(j) | 1 << i);
+                res.add(res.get(j) | 1 << i); // 用 bit OR 将1加入首位
             }
         }
 
-        return ans;
+        return res;
     }
 
 
     /**
      * gray code: G(i) = i ^ (i / 2) = i ^ (i >> 1)
+     *
+     * 一个数字对应的格雷编码的计算方式是:
+     * 将其二进制第一位(从高位数)与0异或, 得到的结果为格雷码的第一位
+     * 之后依次将原数的第i位与生成的格雷码第i-1位做异或运算, 即可得到格雷码的第i位.
      */
     public List<Integer> grayCode(int n) {
         List<Integer> ans = new ArrayList<>();

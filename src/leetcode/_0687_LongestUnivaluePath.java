@@ -2,7 +2,7 @@
 Easy
 Tree, Recursion
  */
-package leetcode.recursion;
+package leetcode;
 
 import org.junit.Test;
 import util.TreeNode;

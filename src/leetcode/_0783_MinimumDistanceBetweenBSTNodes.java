@@ -1,8 +1,8 @@
 /*
 Medium
-Tree, Recursion
+#Tree, #Recursion, #BST
  */
-package leetcode.recursion;
+package leetcode;
 
 import util.TreeNode;
 

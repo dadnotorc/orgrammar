@@ -1,17 +1,16 @@
 /*
 Medium
-Divide and Conquer, Binary Search Tree (BST), Binary Tree, Recursion
+#Divide and Conquer, #BST, #Binary Tree, #Recursion
 Amazon, Facebook, Microsoft
  */
 package lintcode;
 
-import sun.util.resources.ga.LocaleNames_ga;
 import util.TreeNode;
 
 import java.util.Stack;
 
 /**
- * 95. Validate Binary Search Tree
+ * 95. Validate Binary Search Tree (BST)
  *
  * Given a binary tree, determine if it is a valid binary search tree (BST).
  *
