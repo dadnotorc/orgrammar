@@ -1,11 +1,16 @@
 package util;
 
+import com.sun.corba.se.impl.logging.InterceptorsSystemException;
 import lintcode._0165_MergeSortedLists;
 
 import java.util.*;
 
 public class helper {
 	public static void main(String[] args) {
+	    char[] chars = new char[5];
+	    Arrays.fill(chars, ' ');
+        System.out.println("[" + String.valueOf(chars) + "]");
+
 //        String str = "//a/b/c/    /d";
 //        String newStr = str.replaceAll("\\s+", "");
 //        String[] subs = newStr.split("/");
@@ -65,9 +70,9 @@ public class helper {
 //        System.out.println(arrayToString(array));
         // 输出 = [10, 5]
 
-        String s = "ab";
-        String[] values = s.split(",");
-        System.out.println(values.length + ", val = " + values[0] + ".");
+//        String s = "ab";
+//        String[] values = s.split(",");
+//        System.out.println(values.length + ", val = " + values[0] + ".");
     }
 
     public boolean isOdd(int n) {

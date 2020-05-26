@@ -7,8 +7,6 @@ package leetcode;
 import org.junit.Test;
 import util.TreeNode;
 
-import java.util.spi.LocaleNameProvider;
-
 /**
  * 687. Longest Univalue Path
  *

@@ -33,8 +33,7 @@ public class _0200_LongestPalindromicSubstring {
 
     /**
      * 中心枚举法
-     * time:  O(n^2)
-     * space: O(1)
+     * time: O(n^2); space: O(1)
      *
      * 易错点:
      * 1. 遍历字符串时, 针对每个字符, 需要做两次findPalindrome计算, 因为字符串可能为偶数或者奇数长度
@@ -86,6 +85,8 @@ public class _0200_LongestPalindromicSubstring {
      * 如果从i到j的字符串是palindrome, 需要满足首尾字符相同 s.charAt(i) == s.charAt(j), 以及以下两个条件其中之一
      * - 字符串长度最长为3
      * - 字符串长度大于3, 且各自前一位字符也相同 dp[i+1][j-1] == true
+     *
+     * time: O(n^2); space: O(n^2)
      */
     public String longestPalindrome_DP(String s) {
         if (s == null || s.length() == 0)

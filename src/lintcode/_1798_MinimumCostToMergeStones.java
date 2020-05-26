@@ -2,6 +2,7 @@
 Hard
 DP
 Amazon
+Ladder
  */
 package lintcode;
 
@@ -43,4 +44,6 @@ public class _1798_MinimumCostToMergeStones {
     public int mergeStones(int[] stones, int K) {
         return 0;
     }
+
+    // https://www.jiuzhang.com/solution/minimum-cost-to-merge-stones/
 }

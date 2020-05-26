@@ -64,7 +64,7 @@ public class _0107_WordBreak {
     }
 
     /*
-    Trie + DP
+    1. Trie + DP
      */
     public boolean wordBreak_Trie_DP(String s, Set<String> dict) {
         if (s.equals(""))
@@ -92,7 +92,7 @@ public class _0107_WordBreak {
 
 
     /*
-    Trie + Recursion
+    2. Trie + Recursion
      */
     public boolean wordBreak_Trie_Recursion(String s, Set<String> dict) {
         if (s.equals(""))

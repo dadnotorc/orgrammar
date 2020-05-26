@@ -1,7 +1,7 @@
 /*
 Medium
 #Two Pointers,
-Amazon1
+Amazon
  */
 package lintcode;
 
