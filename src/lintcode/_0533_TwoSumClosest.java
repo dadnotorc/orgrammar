@@ -1,4 +1,4 @@
-package lintcode.twosum;
+package lintcode;
 
 import org.junit.Test;
 

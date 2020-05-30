@@ -3,7 +3,7 @@ Medium
 Sort, Quick Sort, Array
 Google, Salesforce
  */
-package lintcode.sort;
+package lintcode;
 
 import org.junit.Test;
 

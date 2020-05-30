@@ -3,7 +3,7 @@ Medium
 Quick Sort, Sort
 Facebook, Google
  */
-package lintcode.sort;
+package lintcode;
 
 /**
  * 5. Kth Largest Element

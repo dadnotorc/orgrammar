@@ -1,4 +1,8 @@
-package lintcode.topological;
+/*
+Medium
+#BFS, #DFS, #Topological Sort
+ */
+package lintcode;
 
 import java.util.*;
 
