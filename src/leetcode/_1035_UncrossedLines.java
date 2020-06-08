@@ -54,7 +54,7 @@ public class _1035_UncrossedLines {
 
 
     /**
-     * bottom up 2D DP
+     * DP解法 - bottom up 2D DP
      * dp[i][j] denote the longest common subsequence between the first i elements of A and the first j elements of B
      * time: O(m * n); space: O(m * n)
      *
@@ -68,7 +68,7 @@ public class _1035_UncrossedLines {
      *  2 | 0  0 1 2 2 2 3
      *  5 | 0  0 1 2 2 3 3
      */
-    public int maxUncrossedLines_bottomUp_DP(int[] A, int[] B) {
+    public int maxUncrossedLines_DP_bottom_up(int[] A, int[] B) {
         int m = A.length, n = B.length;
         int[][] dp = new int[m + 1][n + 1];
 
@@ -87,11 +87,11 @@ public class _1035_UncrossedLines {
 
 
     /**
-     * top down with memorization
+     * DP解法 - top down with memorization
      *
      * time: O(m * n); space: O(m * n)
      */
-    public int maxUncrossedLines_topDown_DP(int[] A, int[] B) {
+    public int maxUncrossedLines_DP_top_down(int[] A, int[] B) {
         int[][] dp = new int[A.length][B.length];
         for (int[] row : dp) {
             Arrays.fill(row, -1);

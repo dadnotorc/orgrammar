@@ -44,7 +44,7 @@ public class _0072_EditDistance {
      *
      * time: O(n * m); space (n * m); n为word1长度, m为word2长度
      */
-    public int minDistance_2(String word1, String word2) {
+    public int minDistance_DP_bottom_up(String word1, String word2) {
         if (word1 == null || word1.length() == 0) {
             return word2 == null ? 0 : word2.length();
         }
@@ -89,7 +89,7 @@ public class _0072_EditDistance {
      *
      * time: O(n * m); space (n * m); n为word1长度, m为word2长度
      */
-    public int minDistance_1(String word1, String word2) {
+    public int minDistance_DP_top_down(String word1, String word2) {
         if (word1 == null || word1.length() == 0) {
             return word2 == null ? 0 : word2.length();
         }
