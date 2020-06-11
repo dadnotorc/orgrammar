@@ -63,16 +63,15 @@ public class _1143_LongestCommonSubsequence {
     }
 
 
-        /**
-         *     a b c d e
-         *   0 0 0 0 0 0
-         * a 0 1 1 1 1 1
-         * c 0 1 1 2 2 2
-         * e 0 1 1 2 2 3
-         *
-         * time, space: O(m x n)
-         */
-
+    /**
+     *     a b c d e
+     *   0 0 0 0 0 0
+     * a 0 1 1 1 1 1
+     * c 0 1 1 2 2 2
+     * e 0 1 1 2 2 3
+     *
+     * time, space: O(m x n)
+     */
     public int longestCommonSubsequence(String text1, String text2) {
         int l1 = text1.length(), l2 = text2.length();
         int[][] dp = new int[l1 + 1][l2 + 1];

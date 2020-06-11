@@ -88,6 +88,7 @@ public class _1035_UncrossedLines {
 
     /**
      * DP解法 - top down with memorization
+     * dp[i][j] 当A指针指向i, B指针指向j时, 能获得的最大值
      *
      * time: O(m * n); space: O(m * n)
      */
