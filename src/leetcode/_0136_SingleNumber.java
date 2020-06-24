@@ -39,6 +39,7 @@ public class _0136_SingleNumber {
     }
 
     /**
+     * 使用HashSet记录遇到的数字, 如果已存在于HS中, 将其移除. 最后仅剩最后一个
      * runtime ~ 5ms
      */
     public int singleNumber_2(int[] nums) {

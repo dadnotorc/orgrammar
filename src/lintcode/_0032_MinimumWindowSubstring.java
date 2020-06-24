@@ -1,3 +1,8 @@
+/*
+Medium
+#Hash Table, #Two Pointers
+LinkedIn, Snapchat, Facebook, Uber
+ */
 package lintcode;
 
 import org.junit.Test;
@@ -10,16 +15,12 @@ import static org.junit.Assert.assertTrue;
 
 /**
  * 32. Minimum Window Substring
- * Medium
- * LinkedIn, Snapchat, Facebook, Uber
  *
- * Given two strings source and target.  Return the minimum
- *  substring of source which contains each char of target.
+ * Given two strings source and target.  Return the minimum substring of source which contains each char of target.
  *
  * 1. If there is no answer, return "".
  * 2. You are guaranteed that the answer is unique.
- * 3. target may contain duplicate char, while the answer need to
- *     contain at least the same number of that char.
+ * 3. target may contain duplicate char, while the answer need to contain at least the same number of that char.
  *
  * Example 1:
  * Input: source = "abc", target = "ac"
@@ -102,6 +103,8 @@ public class _0032_MinimumWindowSubstring {
 
         return subStr;
     }
+
+
 
     /**
      * 使用Hashtable, 速度比使用array较慢
