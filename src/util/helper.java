@@ -7,9 +7,13 @@ import java.util.*;
 
 public class helper {
 	public static void main(String[] args) {
-	    char[] chars = new char[5];
-	    Arrays.fill(chars, ' ');
-        System.out.println("[" + String.valueOf(chars) + "]");
+	    int[] a = {1,2,3,4,5};
+	    int[] b = a;
+	    System.out.println(arrayToString(b));
+
+//	    char[] chars = new char[5];
+//	    Arrays.fill(chars, ' ');
+//        System.out.println("[" + String.valueOf(chars) + "]");
 
 //        String str = "//a/b/c/    /d";
 //        String newStr = str.replaceAll("\\s+", "");

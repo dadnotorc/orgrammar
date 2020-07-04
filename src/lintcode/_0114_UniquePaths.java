@@ -39,6 +39,8 @@ import java.util.Queue;
  * 	4) RRDD
  * 	5) RDRD
  * 	6) RDDR
+ *
+ * 此题类似 leetcode 62. Unique Paths
  */
 public class _0114_UniquePaths {
 
