@@ -2,14 +2,23 @@ package util;
 
 import com.sun.corba.se.impl.logging.InterceptorsSystemException;
 import lintcode._0165_MergeSortedLists;
+import org.omg.PortableInterceptor.SYSTEM_EXCEPTION;
 
 import java.util.*;
 
 public class helper {
 	public static void main(String[] args) {
-	    int[] a = {1,2,3,4,5};
-	    int[] b = a;
-	    System.out.println(arrayToString(b));
+        boolean x = 3 > 2;
+
+//	    int[] a = {1,2,3,4,5};
+//	    int[] b = a;
+//        b[0] = 6;
+//        System.out.println(arrayToString(a));
+//
+//        int[] c = new int[a.length];
+//        System.arraycopy(a, 0, c, 0, a.length);
+//        c[1] = 7;
+//        System.out.println(arrayToString(a));
 
 //	    char[] chars = new char[5];
 //	    Arrays.fill(chars, ' ');
@@ -23,16 +32,6 @@ public class helper {
 //        }
         // 输出 = -abc-
 
-//        int[][] d = {{1,2}, {3,4}, {5,6}, {7,8}};
-//        System.out.println(d[0][0]);
-//        System.out.println(d[0][1]);
-//        System.out.println(d[1][0]);
-//        System.out.println(d[1][1]);
-//
-//        int[] d0 = d[0];
-//        System.out.println(d0[0]);
-//        System.out.println(d0[1]);
-        // 输出 = 1 2 3 4 1 2
 
 //        System.out.println(-13 % 10);
         // 输出 = -3
@@ -50,16 +49,13 @@ public class helper {
 //        System.out.println((14 >> 3) + " : " + ((14 >> 3) & 1)); // 1 = 1
         // 输出 = 14 : 0  7 : 1   3 : 1    1 : 1
 
-//        String[] names = {"Alice", "Bob", "Charlie", "Bob", "Alice"};
-//        Set<String> set = new HashSet<String>(Arrays.asList(names));
-////        for (String s : set)
-////            System.out.println(s);
-//        Iterator<String> it = set.iterator();
-//        while (it.hasNext())
-//            System.out.println(it.next());
+       /* String[] names = {"Alice", "Bob", "Charlie", "Bob", "Alice"};
+        Set<String> set = new HashSet<String>(Arrays.asList(names));
+//        for (String s : set) { System.out.println(s); }
+        Iterator<String> it = set.iterator();
+        while (it.hasNext()) { System.out.println(it.next()); }*/
         // 输出 = Bob Alice Charlie
 
-//        boolean x = 3 > 2;
 
 //        String s = "abc".substring(3);
 //        System.out.println("\"" + s + "\"");
