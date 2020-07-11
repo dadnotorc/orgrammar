@@ -7,6 +7,7 @@ package leetcode;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
 
 /**
@@ -29,6 +30,8 @@ import java.util.List;
  * - S will consist of lowercase English letters ('a' to 'z') only.
  *
  * 此题类似 lintcode 1045. Partition Labels
+ *
+ * Amazon OA - break video shots into scenes
  */
 public class _0763_PartitionLabels {
 
