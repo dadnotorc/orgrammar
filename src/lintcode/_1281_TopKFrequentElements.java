@@ -5,8 +5,6 @@ Amazon, Yelp
  */
 package lintcode;
 
-import org.junit.Test;
-
 import java.util.*;
 
 /**
@@ -35,6 +33,7 @@ import java.util.*;
  *
  * update: 题目中说 1 ≤ k ≤ number of unique elements. 可能表达的意思是每个数字出现的频率都不同
  *
+ * 此题类似 leetcode 347. Top K Frequent Elements
  */
 public class _1281_TopKFrequentElements {
 
@@ -69,6 +68,7 @@ public class _1281_TopKFrequentElements {
         Map<Integer, Integer> frequencyMap = new HashMap<>();
 
         // +1的原因是, 对n个数, 出现频率最大值为n, 所以bucket的下标需要从0到n, 即n+1个数
+        // 注意 这里不能用 new List<Integer>[size], 而是 new List[size]
         List<Integer>[] bucket = new List[nums.length + 1];
 
         for (int i : nums) {
@@ -84,9 +84,10 @@ public class _1281_TopKFrequentElements {
             bucket[frequency].add(key);
         }
 
-        // 这里假设每个数字(key)的出现频率(value)都唯一
+        // 这里假设 the answer is unique, 换言之 the set of the top k frequent elements is unique.
         // 如果此假设不成立, 这里就需要修改, 不能用addAll(), 而是将bucket[i]这个list中的每个数字key单独加入
         // 而且每加一个key的时候需要判断ans.size是否仍 <k
+        // 例如: input: nums = [1,2,3], k = 2. 这里3个数字出现次数都为1
         for (int i = bucket.length - 1; i >= 1 && ans.size() < k; i--) {
             if (bucket[i] != null) {
                 ans.addAll(bucket[i]);
