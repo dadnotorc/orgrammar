@@ -64,11 +64,12 @@ public class _0471_TopKFrequentWords {
 
         Map<String, Integer> map = new HashMap<>();
         for (String s: words) {
-            if (map.containsKey(s)) {
-                map.put(s, map.get(s) + 1);
-            } else {
-                map.put(s, 1);
-            }
+//            if (map.containsKey(s)) {
+//                map.put(s, map.get(s) + 1);
+//            } else {
+//                map.put(s, 1);
+//            }
+            map.put(s, map.getOrDefault(s, 0) + 1);
         }
 
         // 因为用的是min-heap, 要找的是freq高+alphabet较小 (value大, key小)

@@ -30,12 +30,16 @@ import java.util.PriorityQueue;
  * Input:
  *  [1,8,3,5]
  * Output: 30
- * 1+3=4, 4+5=9, 9+8=17. So 4+9+17=3-
+ * 1+3=4, 4+5=9, 9+8=17. So 4+9+17=30n
+ *
+ * 此题类似 leetcode 1167. Minimum Cost to Connect Sticks
  */
 public class _1872_MinimumCostToConnectSticks {
 
     /**
-     * 每次取最短的两根
+     * 使用PQ排列, 每次取最短的两根, 将两者之和加入res中, 并放回PQ中
+     *
+     * 注意, 当PQ只剩一根时, 退出循环, 因为最后这根已经加入过res中, 所以不要重复加入了
      */
     public int MinimumCost(List<Integer> sticks) {
         if (sticks.size() == 1)
@@ -54,7 +58,7 @@ public class _1872_MinimumCostToConnectSticks {
             pq.offer(val);
         }
 
-        res += pq.poll();
+        // 注意 这里 别要再加pq中最后一个元素了, 因为res中已经加过了
 
         return res;
     }

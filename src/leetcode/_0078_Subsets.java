@@ -4,6 +4,8 @@ Medium
  */
 package leetcode;
 
+import org.junit.Test;
+
 import java.lang.reflect.Array;
 import java.util.*;
 
@@ -38,14 +40,16 @@ public class _0078_Subsets {
      * 使用bit manipulation
      *
      * 数组有n个数组, 所以子集的总数为 2^n, 等于 1 << n
-     *         例如 [1,2,3] -> 共有2^3 = 8个子集
-     *         每个子集对应[0, 2^n - 1]中一个数字的二进制, 例如
-     *         []  --> 0 0 0 --> 0
-     *         [1] --> 0 0 1 --> 1
-     *         [2] --> 0 1 0 --> 2
-     *         [3] --> 1 0 0 --> 4
-     *         ...
-     *         [1,2,3] --> 1 1 1 --> 7 = 2 ^ 3 - 1 = 1<<3 - 1
+     * 例如 [1,2,3] -> 共有2^3 = 8个子集
+     * 每个子集对应[0, 2^n - 1]中一个数字的二进制, 例如
+     * []      --> 0 0 0 --> 0
+     * [1]     --> 0 0 1 --> 1
+     * [2]     --> 0 1 0 --> 2
+     * [3]     --> 1 0 0 --> 4
+     * [1,2]   --> 0 1 1 --> 3
+     * [1,3]   --> 1 0 1 --> 5
+     * [2,3]   --> 1 1 0 --> 6
+     * [1,2,3] --> 1 1 1 --> 7 = 2 ^ 3 - 1 = 1<<3 - 1
      *
      * 1<<n 是指位运算中, 1向左移动n位, e.g 1<<4 等于二进制10000 即十进制2^4=16
      *
@@ -61,7 +65,7 @@ public class _0078_Subsets {
      *  i=7, j=1, 7 & (2^1) = 111 & 10 = 10 = 2
      *  i=7, j=2, 7 & (2^2) = 111 & 100 = 100 = 4
      */
-    public List<List<Integer>> subsets(int[] nums) {
+    public List<List<Integer>> subsets_bit(int[] nums) {
         List<List<Integer>> res = new ArrayList<>();
         if (nums == null) { return res; }
 
@@ -77,6 +81,31 @@ public class _0078_Subsets {
 
         return res;
     }
+
+
+    /**
+     * 另一种bit manipulation写法, 效率不如前一个
+     */
+    public List<List<Integer>> subsets_bits_2(int[] nums) {
+        List<List<Integer>> res = new ArrayList<>();
+        if (nums == null) { return res; }
+
+        for (int i = 0; i < (1<<nums.length); i++) {
+            List<Integer> cur = new ArrayList<>();
+            int index = 0, tmp = i;
+            while (tmp != 0) {
+                if ((tmp & 1) != 0) {
+                    cur.add(nums[index]);
+                }
+                index++;
+                tmp >>= 1;
+            }
+            res.add(cur);
+        }
+
+        return res;
+    }
+
 
 
 

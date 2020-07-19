@@ -7,6 +7,8 @@ Ladder
 package lintcode;
 
 /**
+ * 1798. Minimum Cost to Merge Stones
+ *
  * There are N piles of stones arranged in a row. The i-th pile has
  * stones[i] stones.
  *
@@ -37,6 +39,8 @@ package lintcode;
  * Explanation:
  * After any merge operation, there are 2 piles left,
  * and we can't merge anymore.  So the task is impossible.
+ *
+ * 此题与leetcode 1000. Minimum Cost to Merge Stones 类似
  */
 public class _1798_MinimumCostToMergeStones {
 

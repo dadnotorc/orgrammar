@@ -36,6 +36,8 @@ import static org.junit.Assert.assertTrue;
  *    The total number of logs will not exceed 5000
  *    The length of each log will now exceed 100
  *    Each log's ID is unique.
+ *
+ * 此题类似 leetcode 937. Reorder Data in Log Files
  */
 public class _1380_LogSorting {
     /**

@@ -92,6 +92,71 @@ public class _0207_CourseSchedule {
     }
 
 
+
+
+    /**
+     * DFS - 3ms
+     */
+    class Course{
+        int num;
+        boolean visited; // 课程是否有修过
+        boolean tested; // 是否检查过包含当前课程的cyclic (检查过无cyclic->true, 还未检查过->false)
+        List<Course> preq = new ArrayList<Course>();
+
+        public Course(int num) {
+            this.num = num;
+        }
+
+        public void addPreq(Course course) {
+            preq.add(course);
+        }
+    }
+
+    public boolean canFinish_4(int numCourses, int[][] prerequisites) {
+        int[] res = new int[numCourses];
+
+        Course[] courses = new Course[numCourses];
+        for (int i = 0; i < numCourses; i++) {
+            courses[i] = new Course(i);
+        }
+        for (int[] preq : prerequisites) {
+            courses[preq[0]].addPreq(courses[preq[1]]); // 这里注意addPreq的参数是course, 所以不能简单的传入preq[1]
+        }
+
+        for (int i = 0; i < numCourses; i++) {
+            if (isCyclic(courses[i])) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    // 这个helper func的作用是如果找到cyclic, 返回false, 否则将要拿的课程加入res, 并返回true
+    private boolean isCyclic(Course course) {
+        if (course.tested) { // 课程已修完, 无需继续
+            return false;
+        }
+        if (course.visited) { // 找到了cyclic
+            return true;
+        }
+
+        course.visited = true;
+        for (Course c : course.preq) {
+            if (isCyclic(c)) {
+                return true;
+            }
+        }
+        course.tested = true;
+        return false;
+    }
+
+
+
+
+
+
+
     /**
      * DFS - 105ms
      * 判断是否有环, 重复访问已学过的课程
