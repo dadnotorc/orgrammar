@@ -82,6 +82,7 @@ public class _0007_SerializeDeserializeBinaryTree {
                     因为当前层后续可能仍有nodes, 例如  9  20
   	                9的子树为空, 但是20的子树不空        /  \
   	                                                15  7
+  	                所以第三层
                      */
                     q.offer(node.left);
                     q.offer(node.right);

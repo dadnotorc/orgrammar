@@ -25,10 +25,10 @@ package leetcode;
 public class _0238_ProductOfArrayExceptSelf {
 
     /**
-     * 1 |     2 x 3 x 4
-     * 2 | 1 x     3 x 4
-     * 3 | 1 x 2 x     4
-     * 4 | 1 x 2 x 3
+     * 1 | _ x 2 x 3 x 4
+     * 2 | 1 x _ x 3 x 4
+     * 3 | 1 x 2 x _ x 4
+     * 4 | 1 x 2 x 3 x _
      *
      * 将空格处当做1. 先从上向下做阶乘, 再从下向上.
      *
@@ -39,13 +39,16 @@ public class _0238_ProductOfArrayExceptSelf {
         int[] ans = new int[len];
         ans[0] = 1;
 
-        for (int i = 1; i < nums.length; i++) {
+        // 先做左下三角部分， 后做右上三角部分
+
+        for (int i = 1; i < nums.length; i++) { // 从第二位开始到末尾
             ans[i] = ans[i - 1] * nums[i - 1];
         }
 
         int tmp = 1; // 注意, 从下向上时, 使用tmp记录 (右上部分每层的乘积)
 
-        for (int j = nums.length - 2; j >= 0; j--) { // 从倒数第二层开始, 而不是第一层
+        for (int j = nums.length - 2; j >= 0; j--) { // 从倒数第二层开始, 而不是倒数第一层， 因为最后一层已经算好了
+            // 这里tmp部分记录右端的乘积， ans[j]记录左端的乘积, 两者相乘得到当前的值
             tmp *= nums[j + 1];
             ans[j] *= tmp;
         }
