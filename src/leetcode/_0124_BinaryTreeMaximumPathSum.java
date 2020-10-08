@@ -1,6 +1,6 @@
 /*
 Hard
-#Tree, #DFS
+#Tree, #DFS, #postorder
  */
 package leetcode;
 
@@ -37,12 +37,12 @@ public class _0124_BinaryTreeMaximumPathSum {
 
     public int maxPathSum(TreeNode root) {
         maxSum = Integer.MIN_VALUE;
-        helper(root);
+        oneSideMax(root);
         return maxSum;
     }
 
     /**
-     * helper的作用
+     * helper - 后序遍历
      * 1. 考虑以当前节点为root, subtree的最大sum, 即左子树最大值 + 右子树最大值 + 当前节点值
      *    注意, 如果左右子树最大值为负值, 可选择不取此子树 (将其最大值定为0)
      * 2. 比较当前最大值与全局最大值
@@ -53,17 +53,17 @@ public class _0124_BinaryTreeMaximumPathSum {
      *
      * 观察#1和#3后, 发现如果左右子树为负, 两者都会将其值定为0, 所以获得子树最大和之时即可比较, 之后即无需多次比较
      */
-    private int helper(TreeNode node) {
+    private int oneSideMax(TreeNode node) {
         if (node == null)
             return 0;
-        int left = Math.max(helper(node.left), 0);
-        int right = Math.max(helper(node.right), 0);
-        int curMax = left + right + node.val;
+        int left = Math.max(oneSideMax(node.left), 0); // 获得左子树中的最大值, 若小于0, 则取0
+        int right = Math.max(oneSideMax(node.right), 0); // 获得右子树中的最大值, 若小于0, 则取0
+        int curMax = left + right + node.val; // 以当前node为root, curMax为其下最大的path sum
 
         if (curMax > maxSum)
             maxSum = curMax;
 
-        return Math.max(left, right) + node.val;
+        return Math.max(left, right) + node.val; // 只取左右子树中的较大者与当前节点组合
 
 
         // 将左右子树值与0的比较提出来, 无需多次比较
