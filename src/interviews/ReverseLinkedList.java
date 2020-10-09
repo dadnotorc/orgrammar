@@ -7,18 +7,16 @@ import util.helper;
 import java.util.ArrayDeque;
 import java.util.Deque;
 
+/**
+ * Given a singly-linked list, reverse the list. This can be done iteratively or recursively.
+ *
+ * Example:
+ * Input: 4 -> 3 -> 2 -> 1 -> 0 -> NULL
+ * Output: 0 -> 1 -> 2 -> 3 -> 4 -> NULL
+ *
+ * Google
+ */
 public class ReverseLinkedList {
-
-    /**
-     * Given a singly-linked list, reverse the list.
-     * This can be done iteratively or recursively.
-     *
-     * Example:
-     * Input: 4 -> 3 -> 2 -> 1 -> 0 -> NULL
-     * Output: 0 -> 1 -> 2 -> 3 -> 4 -> NULL
-     *
-     * Google
-     */
 
     /* Method 1 - Iteratively with stack */
 

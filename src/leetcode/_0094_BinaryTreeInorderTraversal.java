@@ -68,31 +68,31 @@ public class _0094_BinaryTreeInorderTraversal {
      * 这个解法多加一个指针, 比下面的inorderTraversal_Stack更简单易读
      */
     public List<Integer> inorderTraversal_Stack_s(TreeNode root) {
-        List<Integer> list = new ArrayList<>();
+        List<Integer> ans = new ArrayList<>();
         TreeNode cur = root;
         Deque<TreeNode> stack = new ArrayDeque<>();
 
         while (cur != null || !stack.isEmpty()) {
             while (cur != null) {
-                stack.push(cur);
+                stack.push(cur); // 此处不将cur加入ans队列
                 cur = cur.left;
             }
 
-            TreeNode n = stack.pop();
-            list.add(n.val);
-            cur = n.right;
+            TreeNode node = stack.pop();
+            ans.add(node.val); // 左节点访问完， 加入ans队列
+            cur = node.right;
         }
 
-        return list;
+        return ans;
     }
 
     /**
      * Stack 堆
      */
     public List<Integer> inorderTraversal_Stack(TreeNode root) {
-        List<Integer> list = new ArrayList<>();
+        List<Integer> ans = new ArrayList<>();
         if (root == null) {
-            return list;
+            return ans;
         }
 
         /**
@@ -108,14 +108,14 @@ public class _0094_BinaryTreeInorderTraversal {
                 stack.push(n.left);
             } else {
                 stack.pop(); // pop the null stack
-                if (!stack.isEmpty()) {
+                if (!stack.isEmpty()) { // 注意！必须判断stack此时是否已空
                     n = stack.pop(); // pop the parent node
-                    list.add(n.val);
+                    ans.add(n.val);
                     stack.push(n.right);
                 }
             }
         }
 
-        return list;
+        return ans;
     }
 }

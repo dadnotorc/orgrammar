@@ -40,6 +40,8 @@ import java.util.Stack;
  *
  * Challenge
  * - Can you do it without recursion?
+ *
+ * 等同 leetcode 144. Binary Tree Preorder Traversal
  */
 public class _0066_BinaryTreePreorderTraversal {
 
@@ -64,7 +66,7 @@ public class _0066_BinaryTreePreorderTraversal {
         return res;
     }
 
-    /** 
+    /**
      * DFS - 先递归进左节点, 后进右节点 - 较快
      */
     public List<Integer> preorderTraversal_recursive(TreeNode root) {
@@ -81,6 +83,35 @@ public class _0066_BinaryTreePreorderTraversal {
         dfs(node.left, res);
         dfs(node.right, res);
     }
+
+
+
+    /**
+     * 也是stack解法， 加入cur node指针
+     */
+    public List<Integer> preorderTraversal_iterative_2(TreeNode root) {
+        List<Integer> ans = new ArrayList<>();
+        Stack<TreeNode> stack = new Stack<>();
+
+        TreeNode cur = root;
+
+        while (!stack.isEmpty() || cur != null) {
+            while (cur != null) {
+                ans.add(cur.val); // 访问子节点之前, 先将父节点加入ans队列
+                stack.push(cur);
+                cur = cur.left;
+            }
+
+            TreeNode node = stack.pop(); // 此node已被加入ans队列中
+            cur = node.right;
+        }
+
+        return ans;
+    }
+
+
+
+
 
     /**
      * 使用stack反向保存节点 - 最快

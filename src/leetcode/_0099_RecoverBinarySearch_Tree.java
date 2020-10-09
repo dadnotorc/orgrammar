@@ -95,6 +95,7 @@ public class _0099_RecoverBinarySearch_Tree {
 
         // in-order 处理当前node
 
+        // 注意! 不能把nodeToSwap2放入else, 因为:
         // 如果被调换的两个数字是consecutive, 例如 123 54 6, 此if会出现一次, 此时将5计入nodeToSwap1, 4计入nodeToSwap2
         // 如果两个数字不是consecutive, 例如 12 6453, 此if会出现两次, 第一次记录6, 第二次记录3(同时覆盖掉之前记录的4)
         if (prevNode.val > node.val) {
@@ -109,8 +110,6 @@ public class _0099_RecoverBinarySearch_Tree {
         // in-order 后进right
         traverse(node.right);
     }
-
-
 
     /**
      * Morris Traversal
