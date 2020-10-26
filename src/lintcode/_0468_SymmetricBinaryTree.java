@@ -12,8 +12,7 @@ import java.util.*;
 /**
  * 468. Symmetric Binary Tree
  *
- * Given a binary tree, check whether it is a mirror of itself
- * (i.e., symmetric around its center).
+ * Given a binary tree, check whether it is a mirror of itself (i.e., symmetric around its center).
  *
  * Example 1:
  * Input: {1,2,2,3,4,4,3}
@@ -39,6 +38,8 @@ import java.util.*;
  *
  * Challenge
  * - Can you solve it both recursively and iteratively?
+ *
+ * 等同 leetcode 101. Symmetric Tree
  */
 public class _0468_SymmetricBinaryTree {
 
@@ -58,25 +59,67 @@ public class _0468_SymmetricBinaryTree {
      */
     public boolean isSymmetric_recursion(TreeNode root) {
         if (root == null)
-            return true;
+            return true; // 注意! root为空时, 也是对称的
 
-        return check(root.left, root.right);
+        return isCurLevelSymmetric(root.left, root.right);
     }
 
-    private boolean check(TreeNode node1, TreeNode node2) {
-        if (node1 == null && node2 == null)
-            return true;
+    private boolean isCurLevelSymmetric(TreeNode n1, TreeNode n2) {
+        if (n1 == null || n2 == null) {
+            return n1 == n2; // 有一者为null时, 另一者必须也为null, 否则返回false
+        }
 
-        if (node1 == null || node2 == null)
-            return false;
+        return (n1.val == n2.val) && isCurLevelSymmetric(n1.left, n2.right) && isCurLevelSymmetric(n1.right, n2.left);
 
-        if (node1.val != node2.val)
-            return false;
-
-        return check(node1.left, node2.right) && check(node1.right, node2.left);
+//        if (n1 == null && n2 == null)
+//            return true;
+//
+//        if (n1 == null || n2 == null || n1.val != n2.val)
+//            return false;
+//
+//        return helper(n1.left, n2.right) && helper(n1.right, n2.left);
     }
+
 
     /**
+     * BFS + Stack / Queue (LinkedList)
+     *
+     * 注意Queue本身是不支持 null element的. 但是LinkedList可以
+     */
+    public boolean isSymmetric(TreeNode root) {
+        if (root == null) {
+            return true;
+        }
+        Queue<TreeNode> queue = new LinkedList<>();
+        queue.offer(root.left);
+        queue.offer(root.right);
+
+        while (!queue.isEmpty()) {
+            TreeNode n1 = queue.poll();
+            TreeNode n2 = queue.poll();
+
+            if (n1 == null && n2 == null) {
+                continue; // 注意! 这里不能 return null, 因为还有别的node没比较呢
+            }
+
+            if (n1 == null || n2 == null || n1.val != n2.val) {
+                return false;
+            }
+
+            queue.offer(n1.left);
+            queue.offer(n2.right);
+            queue.offer(n1.right);
+            queue.offer(n2.left);
+        }
+
+        return true; // 别忘了最后这个return
+    }
+
+
+
+    /**
+     * 解法太复杂了...
+     *
      * BFS - 将每一层节点取出, 判断当前层是否对称
      *
      * ArrayDeque 本身不支持null elements
@@ -93,12 +136,8 @@ public class _0468_SymmetricBinaryTree {
      *
      * // Unbox
      * last = queue.pollLast().orElse(null)
-     *
-     * 此解法重点:
-     *      * 1. 分析清楚3种应当return的情况, 加上1种应当继续递归的情况
-     *      * 2. 递归时, 比较node1.left vs node2.right && node1.right vs node2.left
      */
-    public boolean isSymmetric(TreeNode root) {
+    public boolean isSymmetric_2(TreeNode root) {
         if (root == null)
             return true;
 
@@ -117,14 +156,14 @@ public class _0468_SymmetricBinaryTree {
                 }
             }
 
-            if (!check(deque)) // 当前层不对称 -> 返回false； 对称 -> 继续下一层的判断
+            if (!isCurLevelSymmetric(deque)) // 当前层不对称 -> 返回false； 对称 -> 继续下一层的判断
                 return false;
 
         }
         return true;
     }
 
-    private boolean check(Deque<Optional<TreeNode>> deque) {
+    private boolean isCurLevelSymmetric(Deque<Optional<TreeNode>> deque) {
         while (deque.size() >= 2) {
             TreeNode firstNode = deque.pollFirst().orElse(null);
             TreeNode lastNode = deque.pollLast().orElse(null);

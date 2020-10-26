@@ -6,7 +6,6 @@ FAQ
  */
 package lintcode;
 
-import sun.reflect.generics.tree.Tree;
 import util.TreeNode;
 
 import java.util.ArrayList;
@@ -48,6 +47,8 @@ import java.util.Queue;
  * Challenge
  * 1: Using only 1 queue to implement it.
  * 2: Use BFS algorithm to do it.
+ *
+ * 等同 leetcode 102. Binary Tree Level Order Traversal
  */
 public class _0069_BinaryTreeLevelOrderTraversal {
 
@@ -71,6 +72,8 @@ public class _0069_BinaryTreeLevelOrderTraversal {
                 TreeNode node = queue.poll();
                 curLvl.add(node.val);
 
+                // 添加node之前判断是否为空, 而不是连null一起加入queue. 理由是:
+                // 后者会在ans中末尾添加一个空的list (因为最后一层加入的node为空)
                 if (node.left != null) { queue.offer(node.left); }
                 if (node.right != null) { queue.offer(node.right); }
             }
@@ -98,8 +101,8 @@ public class _0069_BinaryTreeLevelOrderTraversal {
         while (true) {
             List<Integer> list = new ArrayList<>();
             dfs(root, list, 0, targetLvl);
-            if (list.size() == 0) {
-                break;
+            if (list.size() == 0) { // 注意! 是size为0, 为不是list为空
+                break; // 当前层已无node可加, 即已访问所有nodes
             }
             res.add(list);
             targetLvl++;
@@ -108,6 +111,7 @@ public class _0069_BinaryTreeLevelOrderTraversal {
         return res;
     }
 
+    // preorder traversal 前序遍历
     private void dfs (TreeNode node, List<Integer> list, int curLvl, int targetLvl) {
         if (node == null) {
             return;
@@ -115,7 +119,7 @@ public class _0069_BinaryTreeLevelOrderTraversal {
 
         if (curLvl == targetLvl) {
             list.add(node.val);
-            return; // 注意 别忘了返回
+            return; // 注意 别忘了返回. 虽然不return也不会错, 但是会递归进不需要的层, 浪费资源
         }
 
         dfs(node.left, list, curLvl + 1, targetLvl);

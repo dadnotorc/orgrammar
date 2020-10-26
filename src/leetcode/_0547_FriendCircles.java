@@ -4,8 +4,6 @@ Medium
  */
 package leetcode;
 
-import com.sun.xml.internal.bind.v2.schemagen.xmlschema.Union;
-
 /**
  * 547. Friend Circles
  *

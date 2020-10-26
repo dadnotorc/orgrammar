@@ -6,8 +6,6 @@ FAQ
  */
 package lintcode;
 
-import sun.management.GcInfoBuilder;
-
 import java.util.*;
 
 /**

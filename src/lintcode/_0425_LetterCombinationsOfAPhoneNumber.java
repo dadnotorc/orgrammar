@@ -7,7 +7,6 @@ FAQ+
 package lintcode;
 
 import org.junit.Test;
-import sun.security.acl.WorldGroupImpl;
 
 import java.util.ArrayList;
 import java.util.LinkedList;

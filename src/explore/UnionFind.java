@@ -1,7 +1,5 @@
 package explore;
 
-import com.sun.xml.internal.bind.v2.schemagen.xmlschema.Union;
-
 /**
  * 并查集 Union Find
  *
