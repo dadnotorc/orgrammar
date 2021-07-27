@@ -36,7 +36,12 @@ import java.util.Map;
 public class _1457_SearchSubarray {
 
     /*
-    使用HashMap记录<前缀和,下标>.
+    使用HashMap记录<前缀和,下标>. 通过在hashmap中查找当前prefix sum与目标值之间的差值, 计算出subarray长度.
+    因为题目中要求starting position最小, 所以找到相同前缀和时, 不能覆盖掉已存入的值.
+    但如何要求subarray长度最短, 应该是可以覆盖掉.
+
+    时间复杂度: O(n)
+    空间复杂度: O(n)
      */
     public int searchSubarray(int[] arr, int k) {
         if (arr == null || arr.length == 0) {

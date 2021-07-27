@@ -9,7 +9,7 @@ public class SelectionSort {
 
     时间复杂度: O(n ^ 2)
     空间复杂度: O(1)
-    不稳定的排序算法 - 大小相同的元素, 位置可能会有变化
+    不稳定的排序算法 - 大小相同的元素, 位置可能会有变化. 例如[5,8,5,2,9], 第一次将首位的5和倒数第二位的2互换, 5的先后顺序就改变了.
      */
     public void sort(int[] array) {
         if (array == null || array.length < 2) {
@@ -29,7 +29,7 @@ public class SelectionSort {
 
     public int findMinIndex(int[] array, int i) {
         int minIndex = i;
-        for (int j = i; j < array.length; j++) {
+        for (int j = i + 1; j < array.length; j++) {
             if (array[minIndex] > array[j]) {
                 minIndex = j;
             }
