@@ -37,20 +37,22 @@ public class _0567_PermutationInString {
         }
 
         while (r < s2.length()) {
-            if (map[s2.charAt(r) - 'a'] > 0) {
+            int r_val = s2.charAt(r) - 'a';
+            if (map[r_val] > 0) {
                 matchSize--;
             }
-            map[s2.charAt(r) - 'a']--;
+            map[r_val]--;
 
             if (r - l + 1 == s1.length()) { // 到达 window size
                 if (matchSize == 0) {
                     return true;
                 }
 
-                if (map[s2.charAt(l) - 'a'] >= 0) {
+                int l_val = s2.charAt(l) - 'a';
+                if (map[l_val] >= 0) {
                     matchSize++;
                 }
-                map[s2.charAt(l) - 'a']++;
+                map[l_val]++;
 
                 l++;
             }

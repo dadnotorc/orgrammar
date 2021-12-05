@@ -4,6 +4,12 @@ Medium
  */
 package leetcode;
 
+import org.hamcrest.Condition;
+import org.junit.Test;
+
+import java.io.CharConversionException;
+import java.util.Stack;
+
 /**
  * 402. Remove K Digits
  *
@@ -68,5 +74,60 @@ public class _0402_RemoveKDigits {
             return "0";
 
         return new String(arr, index, digitsLeft - index);
+    }
+
+
+    // 使用 stack
+    // LC 显示比用 array 的速度慢
+    public String removeKdigits_stack(String num, int k) {
+        if (num.length() == k) {
+            return "0";
+        }
+
+        Stack<Character> stack = new Stack<>();
+        for (int i = 0; i < num.length(); i++) {
+            char c = num.charAt(i);
+
+            while (!stack.isEmpty() && (stack.peek() > c) && (k > 0)) {
+                stack.pop();
+                k--;
+            }
+
+            stack.push(c);
+        }
+
+        // 去掉多余的
+        while (!stack.isEmpty() && k > 0) {
+            stack.pop();
+            k--;
+        }
+
+        StringBuilder sb = new StringBuilder();
+        while (!stack.isEmpty()) {
+            sb.append(stack.pop());
+        }
+        sb.reverse(); // 记得要反转
+
+        // 去掉开头的 "0"
+        while (sb.length() > 1 && sb.charAt(0) == '0') {
+            sb.deleteCharAt(0);
+        }
+
+        return sb.toString();
+
+        // 不可以通过计算int数值,再转换的方式, 因为数值本身可能超级大
+//        int size = stack.size();
+//        int val = 0;
+//        for (int i = 0; i < size; i++) {
+//            val += Math.pow(10, i) * (stack.pop() - '0');
+//        }
+//        return String.valueOf(val);
+    }
+
+
+    @Test
+    public void test1() {
+//        org.junit.Assert.assertEquals("12", removeKdigits("3129", 2));
+        org.junit.Assert.assertEquals("200", removeKdigits_stack("10200", 1));
     }
 }
