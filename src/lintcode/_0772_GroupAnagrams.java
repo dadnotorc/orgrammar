@@ -28,5 +28,5 @@ package lintcode;
  *
  * 跟 LeetCode 49 Group Anagrams 是同样的题目
  */
-public class _772_GroupAnagrams {
+public class _0772_GroupAnagrams {
 }

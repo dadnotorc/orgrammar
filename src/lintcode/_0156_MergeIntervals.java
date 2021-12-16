@@ -1,3 +1,8 @@
+/*
+Easy
+#Sort, #Sweep Line
+LinkedIn, Google, Facebook, Microsoft, Twitter
+ */
 package lintcode;
 
 import org.junit.Test;
@@ -12,8 +17,6 @@ import static org.junit.Assert.assertEquals;
 
 /**
  * 156. Merge Intervals
- * Easy
- * LinkedIn, Google, Facebook, Microsoft, Twitter
  *
  * Given a collection of intervals, merge all overlapping intervals.
  *
@@ -33,12 +36,12 @@ import static org.junit.Assert.assertEquals;
 public class _0156_MergeIntervals {
 
     public List<Interval> merge(List<Interval> intervals) {
-        // write your code here
         List<Interval> ans = new ArrayList<>();
         if (intervals == null || intervals.size() == 0) {
             return ans;
         }
 
+        // start较早点的排在前面
         Collections.sort(intervals, new Comparator<Interval>(){
             @Override
             public int compare(Interval it1, Interval it2) {
@@ -50,13 +53,17 @@ public class _0156_MergeIntervals {
         int ansIndex = 0;
 
         for (int i = 1; i < intervals.size(); i++) {
-            if (intervals.get(i).start <= ans.get(ansIndex).end) {
-                /**
-                 * 这里要特别小心, 一定要选两者最大值
-                 */
-                ans.get(ansIndex).end =
-                        Math.max(intervals.get(i).end, ans.get(ansIndex).end);
+            // 看清楚了, new是intervals上的. cur是ans上的
+            Interval newUnmerged = intervals.get(i);
+            Interval curMerged = ans.get(ansIndex);
+
+            // 如果当前 i 的开头早于 ans end 指针, 表示有overlap -> ans 中 start 不用修改, end 取两者的较大者 (较晚结束者)
+            if (newUnmerged.start <= curMerged.end) {
+                // 这里要特别小心, 一定要选两者最大值
+                curMerged.end = Math.max(newUnmerged.end, curMerged.end);
+                // 这里不能递增 ansIndex
             } else {
+                // 没有 overlap, 直接插入
                 ans.add(intervals.get(i));
                 ansIndex++;
             }

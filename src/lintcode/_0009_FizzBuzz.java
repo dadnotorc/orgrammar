@@ -65,10 +65,12 @@ public class _0009_FizzBuzz {
         List<String> ans = new LinkedList<>();
 
         for (int i = 1; i <= n; i++) {
+            // 注意 3者的顺序, 还有 15 的那个空格
             String s = helper(i, 3, "fizz")
                     + helper(i, 15, " ")
                     + helper(i, 5, "buzz");
-            ans.add(s.isEmpty() ? String.valueOf(i) : s);
+//            ans.add(s.isEmpty() ? String.valueOf(i) : s);
+            ans.add(s.equals("") ? String.valueOf(i) : s);
         }
 
         return ans;
