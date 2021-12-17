@@ -40,13 +40,35 @@ package lintcode;
  */
 public class _0807_PalindromeNumber2 {
 
+
+    public boolean isPalindrome_array(int n) {
+        int[] array = new int[32]; // 0 <= n <= 2^32 - 1, 32位interger
+        int index = 0;
+        while (n > 0) {
+            array[index++] = n & 1;
+            n = n >>> 1; // 右移
+        }
+
+        // 注意 这里 index已经++过, 所以下面的 for 循环中, 不能使用 i <= index / 2, 而必须用 <
+
+        for (int i = 0; i < index / 2; i++) { //对半检查
+            if (array[i] != array[index - 1 - i]) { // 别忘了 - 1
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+
+
     /**
      * 先将数字的二进制转成String, 然后对String使用双指针比较char
      *
      * 易错点:
      * 1. 别忘了移动指针
      */
-    public boolean isPalindrome(int n) {
+    public boolean isPalindrome_(int n) {
         if (n == 0)
             return true;
         if ((n & 1) == 0) // 偶数, 最后一位为0

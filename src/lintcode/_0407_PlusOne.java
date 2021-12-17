@@ -6,6 +6,8 @@ FAQ++
  */
 package lintcode;
 
+import java.util.Arrays;
+
 /**
  * 407. Plus One
  *
