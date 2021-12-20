@@ -1,3 +1,8 @@
+/*
+Easy
+#Math
+Uber
+ */
 package lintcode;
 
 import org.junit.Test;
@@ -10,12 +15,9 @@ import static org.junit.Assert.assertTrue;
 
 /**
  * 235. Prime Factorization
- * Easy
- * Uber OA
  *
  * Prime factorize a given integer.
- *
- * You should sort the factors in ascending order.
+ * - You should sort the factors in ascending order.
  *
  * Example 1:
  * Input: 10
@@ -27,9 +29,16 @@ import static org.junit.Assert.assertTrue;
  */
 public class _0235_PrimeFactorization {
 
+    /**
+     * - 从小到大遍历[2,up]，若num能够被i整除则循环除以i直到不能被整除，
+     *   每次除以i都向答案值数组增加一个i，因为是从小到大遍历，则必定只有质数能被取为因数
+     * - up一般设定为sqrt(num)，因为一个数大于其根号的质因数最多只有一个，
+     *   那么遍历其根号内的数可以将时间复杂度减小至根号n，若遍历完prime后该数不为1，则其值为最后一个质因数
+     *
+     * 时间 O(sqrt(n))
+     * 空间 O(1)
+     */
     public static List<Integer> primeFactorization(int num) {
-        // write your code here
-
         List<Integer> ans = new ArrayList<>();
 
         for (int i = 2; i * i <= num; i++) {

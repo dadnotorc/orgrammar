@@ -33,6 +33,8 @@ import java.util.List;
  *
  * Follow up:
  * - For C programmers, try to solve it in-place in O(1) extra space.
+ *
+ * 相同 lintcode 53 · Reverse Words in a String
  */
 public class _0151_ReverseWordsInAString {
 
@@ -102,7 +104,7 @@ public class _0151_ReverseWordsInAString {
                 continue;
             }
 
-            if (i != words.length - 1) {
+            if (i != words.length - 1) { // 先加空格, 之后再加单词. 理由是, 如果最后一个字是空, 就会多出来一个空格. 解决方法就是对 s.trim()
                 sb.append(" ");
             }
 

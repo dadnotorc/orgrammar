@@ -21,6 +21,8 @@ package leetcode;
  * Follow up:
  * Could you solve it with constant space complexity?
  * (The output array does not count as extra space for the purpose of space complexity analysis.)
+ *
+ * 相同 lintcode 50 Product of Array Exclude Itself
  */
 public class _0238_ProductOfArrayExceptSelf {
 
