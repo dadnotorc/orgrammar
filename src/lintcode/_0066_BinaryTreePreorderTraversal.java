@@ -1,6 +1,6 @@
 /*
 Easy
-#Binary Tree, #Traversal, #Recursion, #Non recursion, #DFS
+#Binary Tree, #Traversal, #Recursion, #Non recursion, #DFS, #Divide and Conquer
  */
 package lintcode;
 
@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Stack;
 
 /**
- * 66. Binary Tree Preorder Traversal
+ * 66. Binary Tree Preorder Traversal - 前序 - 上 左 右
  *
  * Given a binary tree, return the preorder traversal of its nodes' values.
  *
@@ -40,6 +40,15 @@ import java.util.Stack;
  *
  * Challenge
  * - Can you do it without recursion?
+ *
+ *
+ * input =  {1,2,3,4,5,6,7}
+ *      1
+ *     / \
+ *    2   3
+ *   / \ / \
+ *  4  5 6 7
+ * output = {1,2,4,5,3,6,7}
  *
  * 等同 leetcode 144. Binary Tree Preorder Traversal
  */
@@ -102,8 +111,8 @@ public class _0066_BinaryTreePreorderTraversal {
                 cur = cur.left;
             }
 
-            TreeNode node = stack.pop(); // 此node已被加入ans队列中
-            cur = node.right;
+            cur = stack.pop(); // 此node已被加入ans队列中
+            cur = cur.right;
         }
 
         return ans;
@@ -121,16 +130,14 @@ public class _0066_BinaryTreePreorderTraversal {
      * 1. 用stack, 而不是用queue
      */
     public List<Integer> preorderTraversal_iterative(TreeNode root) {
-        List<Integer> res = new ArrayList<>();
+        List<Integer> ans = new ArrayList<>();
+        if (root == null) { return ans; }
+
         Stack<TreeNode> stack = new Stack<>();
-
-        if (root == null)
-            return res;
-
         stack.push(root);
         while (!stack.isEmpty()) { // stack里的所有节点都不为空
             TreeNode node = stack.pop();
-            res.add(node.val);
+            ans.add(node.val);
 
             if (node.right != null) {
                 stack.push(node.right);
@@ -140,7 +147,7 @@ public class _0066_BinaryTreePreorderTraversal {
             }
         }
 
-        return res;
+        return ans;
     }
 
     class TreeNode {

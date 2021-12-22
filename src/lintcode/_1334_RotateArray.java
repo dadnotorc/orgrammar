@@ -31,7 +31,7 @@ package lintcode;
  *
  * 类似 lintcode 8 · Rotate String
  */
-public class _01334_RotateArray {
+public class _1334_RotateArray {
 
     // 要注意:
     // 1: k < n
