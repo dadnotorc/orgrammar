@@ -25,7 +25,7 @@ import java.util.HashSet;
  * Challenge
  * - Can you solve it without using extra space?
  */
-public class _0102LinkedListCycle {
+public class _0102_LinkedListCycle {
 
     /**
      * 使用快慢指针
@@ -51,7 +51,7 @@ public class _0102LinkedListCycle {
 
 
     /**
-     * HashSet
+     * HashSet - 有使用 O(n) 的 extra space
      */
     public boolean hasCycle(ListNode head) {
         HashSet<ListNode> set = new HashSet<>();

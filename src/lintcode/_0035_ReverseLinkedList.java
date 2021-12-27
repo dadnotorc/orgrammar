@@ -50,6 +50,12 @@ public class _0035_ReverseLinkedList {
 
         ListNode pre = null;
         ListNode next;
+
+        /*
+        1. 确定 next 节点
+        2. head.next 指针转向, 指向 pre
+        3. 将 pre 与 head 指针向下一位移动
+         */
         while (head != null) {
             next = head.next;
             head.next = pre;
