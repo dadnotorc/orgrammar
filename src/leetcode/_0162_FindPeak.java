@@ -30,6 +30,8 @@ package leetcode;
  * - Your solution should be in logarithmic complexity.
  *
  * 对数 -> O(log n) -> 二分法 binary search
+ *
+ * lintcode 75 · Find Peak Element
  */
 public class _0162_FindPeak {
 

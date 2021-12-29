@@ -32,6 +32,35 @@ package lintcode;
 public class _0028_Search2DMatrix {
 
     /**
+     * 类似九章算法 写法稍有不同
+     */
+    public boolean searchMatrix_1(int[][] matrix, int target) {
+        if (matrix == null || matrix.length == 0 || matrix[0].length == 0) {
+            return false;
+        }
+
+        int m = matrix.length;
+        int n = matrix[0].length;
+
+        int l = 0, r = m * n - 1;
+
+        while (l < r) {
+            int mid = l + (r - l) / 2;
+            int value = matrix[mid / n][mid % n];
+
+            if (value == target) {
+                return true;
+            } else if (value < target) {
+                l = mid + 1;
+            } else {
+                r = mid - 1;
+            }
+        }
+
+        return matrix[l / n][l % n] == target;
+    }
+
+    /**
      * 解法3: 九章参考, binary search - 只搜索一次
      * 可以看作是一个有序数组被分成了n段，每段就是一行。因此依然可以二分求解。
      * 对每个数字，根据其下标i，j进行编号. Matrix中共有n*m个数字, 编号为0～n*m-1
@@ -57,10 +86,7 @@ public class _0028_Search2DMatrix {
                 r = mid - 1;
         }
 
-        if (matrix[l / m][l % m] == target || matrix[r / m][r % m] == target)
-            return true;
-        else
-            return false;
+        return matrix[l / m][l % m] == target || matrix[r / m][r % m] == target;
     }
 
 

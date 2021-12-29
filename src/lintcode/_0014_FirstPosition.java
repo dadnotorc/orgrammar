@@ -1,6 +1,6 @@
 /*
 Easy
-Array, Binary Search
+#Array, #Binary Search
 Salesforce
  */
 package lintcode;
@@ -52,7 +52,10 @@ public class _0014_FirstPosition {
     	return -1;
     }
 
-    // 解法2 与第一种解法类似
+
+	/**
+	 * 解法2 与第一种解法类似
+	 */
     public int binarySearch_two(int[] nums, int target) {
     	if (nums == null || nums.length == 0)
     		return -1;
