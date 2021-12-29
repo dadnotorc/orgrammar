@@ -7,7 +7,7 @@ package lintcode;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.LinkedList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -32,6 +32,12 @@ import java.util.List;
  */
 public class _0057_3Sum {
 
+    /**
+     * 双指针
+     * 1. 排序
+     * 2. 遍历数组 - 从 首位 到 倒数第三位, [0] ~ [n - 3], 以保证最后有两位数字
+     *
+     */
     public List<List<Integer>> threeSum(int[] numbers) {
         if (numbers == null || numbers.length < 3)
             return new ArrayList<>();
@@ -43,28 +49,29 @@ public class _0057_3Sum {
 
         for (int i = 0; i < numbers.length - 2; i++) { // 从0到倒数第三位 (保证i之后还有两位数字)
 
-            // 无需做此判断, 除非test data中, 有很多>0的数字
-//            if (numbers[i] > 0) { // 当前最小值已大于0, 之后不可能找到三个数之和等于0的情况
-//                break;
-//            }
+            // 可省略此判断, 除非test data中, 有很多>0的数字
+            // if (numbers[i] > 0) { // 因为数组已排序, 当前值 > 0, 之后所有值均 > 0, 不可能找到三个数之和等于0的情况
+            //     break;
+            // }
 
             if (i > 0 && numbers[i] == numbers[i-1]) { // 如果当前值与前一位相等, 无需重复计算
                 continue;
             }
 
             int second = i + 1, third = numbers.length - 1;
-            int target = -numbers[i];
+            int target = -numbers[i]; // 取负值
 
             while (second < third) {
                 if (numbers[second] + numbers[third] == target) {
 
                     // 较慢
-//                    ans.add(Arrays.asList(numbers[i], numbers[second], numbers[third]));
+                    // ans.add(Arrays.asList(numbers[i], numbers[second], numbers[third]));
 
                     List<Integer> curList = new ArrayList<>();
-                    curList.add(numbers[i]);
-                    curList.add(numbers[second]);
-                    curList.add(numbers[third]);
+                    Collections.addAll(curList, numbers[i], numbers[second], numbers[third]);
+                    // curList.add(numbers[i]);
+                    // curList.add(numbers[second]);
+                    // curList.add(numbers[third]);
                     ans.add(curList);
 
                     second++;

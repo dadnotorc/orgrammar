@@ -47,7 +47,8 @@ public class _0056_TwoSum {
      */
     public int[] twoSum(int[] numbers, int target) {
         if (numbers == null || numbers.length < 2) {
-            return new int[0];
+            // return new int[0];
+            return new int[] {-1, -1};
         }
 
         HashMap<Integer, Integer> map = new HashMap<>();
@@ -92,7 +93,7 @@ public class _0056_TwoSum {
         Arrays.sort(nums, new Comparator<ResultType>() {
             @Override
             public int compare(ResultType num1, ResultType num2) {
-                return num1.val - num2.val;
+                return num1.val - num2.val; // val 较小者靠前
             }
         });
 
