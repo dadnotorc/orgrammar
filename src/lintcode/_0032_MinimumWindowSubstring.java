@@ -45,7 +45,7 @@ public class _0032_MinimumWindowSubstring {
     /**
      * 使用array, 速度较快
      * 使用array记录target中每个字符出现次数,
-     * 右指针遍历时, 更新array中所有出现字符的次数 (都-1)
+     * 右指针遍历 source 时, 更新array中所有出现字符的次数 (都-1)
      * 当target中所有字符都找齐 (validCharLen >= target.length()), 开始挪动左指针
      * 左指针跳过所有无效字符, 直到最短字符串找到时结束, 每次左指针跳动, 更新答案长度
      */
