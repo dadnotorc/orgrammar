@@ -29,7 +29,8 @@ import java.util.List;
  * - S will have length in range [1, 500].
  * - S will consist of lowercase English letters ('a' to 'z') only.
  *
- * 此题类似 lintcode 1045. Partition Labels
+ * 类似 lintcode 328 · String Partition
+ * 类似 lintcode 1045. Partition Labels
  *
  * Amazon OA - break video shots into scenes
  */

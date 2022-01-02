@@ -1,3 +1,8 @@
+/*
+Easy
+#Two Pointers, #Hash Table
+Facebook, Uber
+ */
 package lintcode;
 
 import org.junit.Test;
@@ -10,8 +15,6 @@ import static org.junit.Assert.assertArrayEquals;
 
 /**
  * 547. Intersection of Two Arrays
- * Easy
- * Facebook, Uber
  *
  * Given two arrays, write a function to compute their intersection.
  *
@@ -27,13 +30,24 @@ import static org.junit.Assert.assertArrayEquals;
  * Output: [2].
  *
  * Challenge
- * Can you implement it in three different algorithms?
+ * - Can you implement it in three different algorithms?
  */
 public class _0547_IntersectionOfTwoArrays {
 
-    // sort and binary search
-    // time complexity:  O(nlogn) + O(n) + O(n), sorting + 1st loop + 2nd loop
-    // space complexity: O(n), n = Math.min(nums1.length, nums2.length)
+    /**
+     * 不能简单地把两个数组中的数字都丢进 HashSet 中, 因为这样没有检查是否有交集
+     *
+     * 不过可以用两个 HashSet, 参照 intersection_3
+     */
+
+
+    /**
+     * 1. sort nums1 - 为了完成 binary search
+     * 2. binary search - 确定 nums2 中的数字是否存在于 nums1 中
+     *
+     * 时间: O(nlogn) + O(n) + O(n), sorting + 1st loop + 2nd loop
+     * 空间: O(n), n = Math.min(nums1.length, nums2.length)
+     */
     public int[] intersection(int[] nums1, int[] nums2) {
         if (nums1 == null || nums1.length == 0 ||
                 nums2 == null || nums2.length == 0) {
@@ -42,7 +56,7 @@ public class _0547_IntersectionOfTwoArrays {
 
         Arrays.sort(nums1);
 
-        HashSet<Integer> set = new HashSet<>();
+        HashSet<Integer> set = new HashSet<>(); // set 中的数字 就是两个数组的交集
 
         for (int b : nums2) {
             if (!set.contains(b)) {
@@ -61,32 +75,29 @@ public class _0547_IntersectionOfTwoArrays {
         return ans;
     }
 
+    // check if b exists in arr[]
     public boolean binarySearch(int[] arr, int b) {
         int l = 0, r = arr.length - 1;
 
-        while (l + 1 < r) {
+        while (l < r) {
             int mid = l + (r - l) / 2;
             if (arr[mid] == b) {
                 return true;
             } else if (arr[mid] < b) {
-                l = mid;
+                l = mid + 1;
             } else {
-                r = mid;
+                r = mid - 1;
             }
         }
 
-        if (arr[l] == b) {
-            return true;
-        }
-        if (arr[r] == b) {
-            return true;
-        }
-
-        return false;
+        return arr[l] == b;
     }
 
-    // sort and merge - 1
-    public int[] intersection1(int[] nums1, int[] nums2) {
+
+    /**
+     * sort both arrays, then merge numbers that exist in both arrays
+     */
+    public int[] intersection_1(int[] nums1, int[] nums2) {
         // write your code here
         if (nums1 == null || nums1.length == 0 ||
                 nums2 == null || nums2.length == 0) {
@@ -100,9 +111,7 @@ public class _0547_IntersectionOfTwoArrays {
         HashSet<Integer> set = new HashSet<>(); // avoid duplicate
         while (i < nums1.length && j < nums2.length) {
             if (nums1[i] == nums2[j]) {
-                if (!set.contains(nums1[i])) {
-                    set.add(nums1[i]);
-                }
+                set.add(nums1[i]);
                 i++;
                 j++;
             } else if (nums1[i] < nums2[j]) {
@@ -122,8 +131,11 @@ public class _0547_IntersectionOfTwoArrays {
         return ans;
     }
 
-    // sort and merge - 2
-    public int[] intersection2(int[] nums1, int[] nums2) {
+
+    /**
+     * sort and merge - 2
+     */
+    public int[] intersection_2(int[] nums1, int[] nums2) {
         if (nums1 == null || nums1.length == 0 ||
                 nums2 == null || nums2.length == 0) {
             return new int[0];
@@ -157,8 +169,11 @@ public class _0547_IntersectionOfTwoArrays {
         return ans;
     }
 
-    // hash map
-    public int[] intersection3(int[] nums1, int[] nums2) {
+
+    /**
+     * hash map
+     */
+    public int[] intersection_3(int[] nums1, int[] nums2) {
         if (nums1 == null || nums1.length == 0 ||
                 nums2 == null || nums2.length == 0) {
             return new int[0];
@@ -166,14 +181,12 @@ public class _0547_IntersectionOfTwoArrays {
 
         HashSet<Integer> set1 = new HashSet<>();
         for (int a : nums1) {
-            if (!set1.contains(a)) {
-                set1.add(a);
-            }
+            set1.add(a);
         }
 
         HashSet<Integer> set2 = new HashSet<>();
         for (int b : nums2) {
-            if (set1.contains(b) && !set2.contains(b)) {
+            if (set1.contains(b)) { // nums2 中的数字也存在于 nums1
                 set2.add(b);
             }
         }
@@ -193,9 +206,9 @@ public class _0547_IntersectionOfTwoArrays {
         int[] b = {2,2};
         int[] expected = {2};
         int[] actual = new _0547_IntersectionOfTwoArrays().intersection(a, b);
-        int[] actual1 = new _0547_IntersectionOfTwoArrays().intersection1(a, b);
-        int[] actual2 = new _0547_IntersectionOfTwoArrays().intersection2(a, b);
-        int[] actual3 = new _0547_IntersectionOfTwoArrays().intersection3(a, b);
+        int[] actual1 = new _0547_IntersectionOfTwoArrays().intersection_1(a, b);
+        int[] actual2 = new _0547_IntersectionOfTwoArrays().intersection_2(a, b);
+        int[] actual3 = new _0547_IntersectionOfTwoArrays().intersection_3(a, b);
         assertArrayEquals(expected, actual);
         assertArrayEquals(expected, actual1);
         assertArrayEquals(expected, actual2);
@@ -208,9 +221,9 @@ public class _0547_IntersectionOfTwoArrays {
         int[] b = {2};
         int[] expected = {2};
         int[] actual = new _0547_IntersectionOfTwoArrays().intersection(a, b);
-        int[] actual1 = new _0547_IntersectionOfTwoArrays().intersection1(a, b);
-        int[] actual2 = new _0547_IntersectionOfTwoArrays().intersection2(a, b);
-        int[] actual3 = new _0547_IntersectionOfTwoArrays().intersection3(a, b);
+        int[] actual1 = new _0547_IntersectionOfTwoArrays().intersection_1(a, b);
+        int[] actual2 = new _0547_IntersectionOfTwoArrays().intersection_2(a, b);
+        int[] actual3 = new _0547_IntersectionOfTwoArrays().intersection_3(a, b);
         assertArrayEquals(expected, actual);
         assertArrayEquals(expected, actual1);
         assertArrayEquals(expected, actual2);
@@ -223,9 +236,9 @@ public class _0547_IntersectionOfTwoArrays {
         int[] b = {5,3,5,8};
         int[] expected = {3,5};
         int[] actual = new _0547_IntersectionOfTwoArrays().intersection(a, b);
-        int[] actual1 = new _0547_IntersectionOfTwoArrays().intersection1(a, b);
-        int[] actual2 = new _0547_IntersectionOfTwoArrays().intersection2(a, b);
-        int[] actual3 = new _0547_IntersectionOfTwoArrays().intersection3(a, b);
+        int[] actual1 = new _0547_IntersectionOfTwoArrays().intersection_1(a, b);
+        int[] actual2 = new _0547_IntersectionOfTwoArrays().intersection_2(a, b);
+        int[] actual3 = new _0547_IntersectionOfTwoArrays().intersection_3(a, b);
         assertArrayEquals(expected, actual);
         assertArrayEquals(expected, actual1);
         assertArrayEquals(expected, actual2);

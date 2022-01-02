@@ -39,8 +39,80 @@ import static org.junit.Assert.assertTrue;
  *
  * Challenge
  * - O(n) time
+ *
+ * 例题2 说明 -前后顺序没有关系-, 只要包含即可
  */
 public class _0032_MinimumWindowSubstring {
+
+    /**
+     * 双指针 - 九章解法
+     * 1. 读取 target 中的字符
+     *    - unique character 的数量, 例如 "abcabc" 中, unique = 3 (a / b / c)
+     *    - 每个 characters 的出现次数, 上例中, 每个字符出现 2 次
+     * 2. 遍历 source 中的字符
+     *    - 左右指针都从 0 位开始右移, 双指针之间 为 window
+     *    - 记录 window 的字符数量, 与 target 的相比, 若数量相等, 说明该字符已足够
+     *    - 如所有 unique 字符数量都满足, 说明此 window 有效, 记录最小值
+     *    - 当左指针右移时, 会有字符出 window, 记得更新字符数量
+     */
+    public String minWindow_9z(String source , String target) {
+        if (source == null || target == null) { return ""; }
+
+        char[] chars_source = source.toCharArray();
+        char[] chars_target = target.toCharArray();
+
+        // 记录 target 中不用字符的数量
+        int unique = 0;
+
+        // 记录 target 所有字符出现的次数. 注意: 取 256 (ascii) 而不是 26 个小写字母
+        int[] counts_source = new int[256];
+        int[] counts_target = new int[256];
+
+        for (char c : chars_target) {
+            counts_target[c]++;
+            if (counts_target[c] == 1) {
+                unique++;
+            }
+        }
+
+
+        int met = 0; // 记录 source 中遇见过的不同字符的数量. 对应 target 中 unique. 两者相等时说明所有字符都找到
+
+        int ans_l = -1, ans_r = -1; // 记录答案的 左右指针, 从 -1 开始 表示没找到任何有效子串
+        int l = 0, r = 0;
+        for (; l < source.length(); l++) {
+            // r 指针的字符 入 window
+            while (r < source.length() && met < unique) {
+                char rc = chars_source[r];
+                counts_source[rc]++;
+                if (counts_source[rc] == counts_target[rc]) { // 只有当两者字符数相同时, 才增加 met
+                    met++;
+                }
+                r++; // 别忘了移动指针!!!
+            }
+
+            if (met == unique) { // 说明此 window 有效, 取较小者
+                if (ans_l == -1 || r - l < ans_r - ans_l) {
+                    ans_l = l;
+                    ans_r = r;
+                }
+            }
+
+            // l  指针的字符 出 window
+            char lc = chars_source[l];
+            counts_source[lc]--;
+            if (counts_source[lc] == counts_target[lc] - 1) { // 出 window 后, 字符数量不满足, 则减少 met
+                met--;
+            }
+        }
+
+        if (ans_l == -1) {
+            return "";
+        }
+
+        return source.substring(ans_l, ans_r);
+    }
+
 
     /**
      * 使用array, 速度较快
