@@ -33,11 +33,33 @@ import java.util.Arrays;
  */
 public class _0366_Fibonacci {
 
+    /**
+     * 用 2 个 temp variables, 每次轮流更新
+     *
+     * 注意更新时的顺序, 先更新 a, 后更新 b
+     */
+    public int fibonacci(int n) {
+        if (n < 3) {
+            return n - 1;
+        }
+
+        int a = 0, b = 1, cur = 0;
+        for (int i = 3; i <= n; i++) {
+            cur = a + b;
+
+            // 注意这里更新的顺序, 必须先更新 a, 后更新 b
+            a = b;
+            b = cur;
+        }
+
+        return cur;
+    }
+
 
     /**
      * 减少 dp 数组的空间到 3 位
      */
-    public int fibonacci(int n) {
+    public int fibonacci_dp_2(int n) {
         if (n <= 2) { return n - 1; }
 
         int[] dp = new int[3];
