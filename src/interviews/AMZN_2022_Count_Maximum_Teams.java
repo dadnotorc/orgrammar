@@ -40,7 +40,7 @@ public class AMZN_2022_Count_Maximum_Teams {
 
         int i = 0;
         while (i <= n - teamSize) {
-            if (people[i + teamSize - 1] - people[i] <= 2) {
+            if (people[i + teamSize - 1] - people[i] <= maxDiff) { // 考察 teamSize 个队员中, 能力差的最大值 是否满足 maxDiff
                 ans++;
                 i = i + teamSize;
             } else {
@@ -66,23 +66,14 @@ public class AMZN_2022_Count_Maximum_Teams {
     public void test1() {
         List<Integer> skill = new ArrayList<>(Arrays.asList(3,4,3,1,6,5));
         org.junit.Assert.assertEquals(2, countMaximumTeams(skill, 3, 2));
-    }
 
-    @Test
-    public void test2() {
-        List<Integer> skill = new ArrayList<>(Arrays.asList(1,3));
+        skill = new ArrayList<>(Arrays.asList(1,3));
         org.junit.Assert.assertEquals(0, countMaximumTeams(skill, 3, 2));
-    }
 
-    @Test
-    public void test3() {
-        List<Integer> skill = new ArrayList<>(Arrays.asList(3,4,3,1,5,5));
+        skill = new ArrayList<>(Arrays.asList(3,4,3,1,5,5));
         org.junit.Assert.assertEquals(2, countMaximumTeams(skill, 3, 2));
-    }
 
-    @Test
-    public void test4() {
-        List<Integer> skill = new ArrayList<>(Arrays.asList(3,4,3,1,5,7));
+        skill = new ArrayList<>(Arrays.asList(3,4,3,1,5,7));
         org.junit.Assert.assertEquals(1, countMaximumTeams(skill, 3, 2));
     }
 }

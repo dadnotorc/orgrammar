@@ -7,6 +7,8 @@ package leetcode;
 import util.ListNode;
 
 /**
+ * 876. Middle of the Linked List
+ *
  * Given a non-empty, singly linked list with head node head, return a middle node of linked list.
  * If there are two middle nodes, return the second middle node.
  *
@@ -27,7 +29,9 @@ import util.ListNode;
  */
 public class _0876_MiddleOfTheLinkedList {
 
-    // 第一种解法, 偶数时mid进一步, 基数时mid原地不动
+    /**
+     * 偶数时mid进一步, 基数时mid原地不动
+     */
     public ListNode middleNode_Even(ListNode head) {
         int length = 1;
         ListNode cur = head, mid = head;
@@ -42,8 +46,16 @@ public class _0876_MiddleOfTheLinkedList {
         return mid;
     }
 
-    // 第二种解法 (参考评论)
-    // 一个快指针每次走两布, 一个慢指针每次走一步
+    /**
+     * 快指针每次走两布, 慢指针每次走一步
+     *
+     * 当 list 是偶数个的时候, 例如 1 -> 2 -> 3 -> 4
+     * - 如果要返回中间靠前的节点, 例如 2, 需要把 slow 指向 head, fast 指向 head.next
+     * - 如果要返回中间靠后的节点, 例如 3, 需要把 快慢指针 都指向 head
+     * 当 list 是奇数个的时候, 两者都可以
+     *
+     * 记得 while 循环要检查 fast != null && fast.next != null
+     */
     public ListNode middleNode(ListNode head) {
         ListNode fast = head, slow = head;
 

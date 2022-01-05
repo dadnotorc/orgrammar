@@ -14,15 +14,51 @@ package leetcode;
  * Input: 1->2->3->4->5->NULL
  * Output: 5->4->3->2->1->NULL
  *
+ *         1 -> 2 -> 3 -> 4 -> 5 -> NULL
+ * NULL <- 1 <- 2 <- 3 <- 4 <- 5
+ *
  * Follow up:
  * A linked list can be reversed either iteratively or recursively. Could you implement both?
  */
 public class _0206_ReverseLinkedList {
 
-    // todo
-//    public ListNode reverseList(ListNode head) {
-//
-//    }
+    /**
+     * iterative
+     */
+    public ListNode reverseList_iterative(ListNode head) {
+        ListNode pre = null, cur = head, next = null;
+        while (cur != null) {
+            next = cur.next;
+            cur.next = pre;
+            pre = cur;
+            cur = next;
+        }
+
+        // 循环结束时, cur 指去了 NULl, 所以要返回 pre
+        return pre;
+    }
+
+
+    /**
+     * recursive
+     */
+    public ListNode reverseList_recursive(ListNode head) {
+        return helper(head, null);
+    }
+
+    public ListNode helper(ListNode cur, ListNode pre) {
+        if (cur == null) {
+            return pre;
+        }
+
+        ListNode next = cur.next;
+        cur.next = pre;
+
+        return helper(next, cur);
+    }
+
+
+
 
     // Definition for singly-linked list.
     public class ListNode {
