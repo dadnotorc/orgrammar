@@ -38,22 +38,27 @@ import java.util.HashMap;
  */
 public class _0548_IntersectionOfTwoArrays2 {
 
-    // 解法1 - 使用 HashMap
+    /**
+     * 使用 HashMap
+     * 1. 将 nums1 中的数字 即出现次数 加入 hashmap
+     */
     public int[] intersection(int[] nums1, int[] nums2) {
         if (nums1 == null || nums1.length == 0
                 || nums2 == null || nums2.length == 0)
             return new int[0];
 
+        // 读取 num1 中所有数字及其出现次数
         HashMap<Integer, Integer> map = new HashMap<>();
         for (int i : nums1) {
             if (map.containsKey(i))
                 map.put(i, map.get(i) + 1);
             else
                 map.put(i, 1);
+            // 可缩写成 map.put(i, map.getOrDefault(i, 0) + 1);
         }
 
+        // 读取 nums2 中的数字, 如果在 hashmap 中存在, 将其在 hashmap 中的出现次数 - 1, 直到为 0
         ArrayList<Integer> list = new ArrayList<>();
-
         for (int j : nums2) {
             if (map.containsKey(j) && map.get(j) > 0) {
                 list.add(j);
