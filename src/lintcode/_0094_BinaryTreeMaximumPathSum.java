@@ -1,7 +1,7 @@
 /*
 Medium
 #Recursion, #Divide and Conquer, #DP
-Amazon, Microsoft
+Amazon, FB Meta, Microsoft
 FAQ
  */
 package lintcode;
@@ -37,6 +37,8 @@ import util.TreeNode;
  *    15   7
  *
  * Output: 42
+ *
+ * leetcode 124. Binary Tree Maximum Path Sum
  */
 public class _0094_BinaryTreeMaximumPathSum {
 
@@ -76,7 +78,7 @@ public class _0094_BinaryTreeMaximumPathSum {
 
 
     /**
-     * 解法2 - 使用ResultType
+     * 解法2 - 使用 post order traversal (左右上) + ResultType
      *
      * 易错点:
      * 1. 递归出口, 当node为null时, 返回ResultType(0, MIN). singlePath=0表示不取该点, maxPath=MIN_VALUE因为其他path可能有负数出现

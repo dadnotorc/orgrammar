@@ -1,6 +1,7 @@
 /*
 Hard
-#Tree, #DFS, #postorder
+#Binary Tree, #DFS, #postorder, #DP
+FB Meta
  */
 package leetcode;
 
@@ -9,11 +10,13 @@ import util.TreeNode;
 /**
  * 124. Binary Tree Maximum Path Sum
  *
- * Given a non-empty binary tree, find the maximum path sum.
+ * A path in a binary tree is a sequence of nodes where each pair of adjacent nodes in the sequence
+ * has an edge connecting them. A node can only appear in the sequence at most once.
+ * Note that the path does not need to pass through the root.
  *
- * For this problem, a path is defined as any sequence of nodes from some starting node
- * to any node in the tree along the parent-child connections. The path must contain
- * at least one node and does not need to go through the root.
+ * The path sum of a path is the sum of the node's values in the path.
+ *
+ * Given the root of a binary tree, return the maximum path sum of any non-empty path.
  *
  * Example 1:
  * Input: [1,2,3]
@@ -21,6 +24,7 @@ import util.TreeNode;
  *       / \
  *      2   3
  * Output: 6
+ * Explanation: The optimal path is 2 -> 1 -> 3 with a path sum of 2 + 1 + 3 = 6.
  *
  * Example 2:
  * Input: [-10,9,20,null,null,15,7]
@@ -30,6 +34,13 @@ import util.TreeNode;
  *     /  \
  *    15   7
  * Output: 42
+ * Explanation: The optimal path is 15 -> 20 -> 7 with a path sum of 15 + 20 + 7 = 42.
+ *
+ * Constraints:
+ * The number of nodes in the tree is in the range [1, 3 * 10^4].
+ * -1000 <= Node.val <= 1000
+ *
+ * lintcode 94. Binary Tree Maximum Path Sum
  */
 public class _0124_BinaryTreeMaximumPathSum {
 
@@ -66,7 +77,7 @@ public class _0124_BinaryTreeMaximumPathSum {
         return Math.max(left, right) + node.val; // 只取左右子树中的较大者与当前节点组合
 
 
-        // 将左右子树值与0的比较提出来, 无需多次比较
+        // 以下解法也对, 但是需要将左右子树值与 0 重复比较, 不如上面的解法, 将比较提出来, 减少比较次数
 
 //        int left = helper(node.left);
 //        int right = helper(node.right);
