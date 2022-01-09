@@ -4,7 +4,14 @@ import java.util.*;
 
 public class helper {
 	public static void main(String[] args) {
-        boolean x = 3 > 2;
+        char a = 'a';
+        int k = 1;
+        char b = (char) ((a + k) % 26);
+        char c = (char) ('a' + (a - 'a' + k) % 26);
+        System.out.println("-0-:"  + b);
+        System.out.println("-0-:"  + c);
+
+//        boolean x = 3 > 2;
 
 //	    int[] a = {1,2,3,4,5};
 //	    int[] b = a;

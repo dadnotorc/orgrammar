@@ -85,7 +85,7 @@ public class AMZN_2021_Maxium_Pages {
     public void reverse(SinglyLinkedListNode middle) {
 
         // 这里 pre 不能定为 middle, pre 一开始必须是 null, 才能将 reversed 后的队尾连上 null
-        SinglyLinkedListNode pre = null, cur = middle.next, next = null;
+        SinglyLinkedListNode pre = null, cur = middle.next, next;
 
         while (cur != null) {
             next = cur.next;

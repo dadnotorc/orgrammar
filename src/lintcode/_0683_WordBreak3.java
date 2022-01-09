@@ -33,6 +33,8 @@ import java.util.Set;
 public class _0683_WordBreak3 {
 
     /**
+     * DP 解法 - ct[i]: 表示从当前字符到字符串末端, 能有多少中划分方式
+     *
      * 1. 将s和dict全部变成小写
      * 2. 创建int[], 长度为s.length()+1, 每个entry记录从当前下标位字符开始到字符串末端, 有多少种划分方式
      * s="catmat", int[]长度=7
@@ -41,6 +43,9 @@ public class _0683_WordBreak3 {
      * "catm|at", 两种情况:
      * - sub="a" -> 如字典中含"a", ct[4]+=ct[5] (ct[5]即sub="t")
      * - sub="at" -> 如字典中含"at", ct[4]+=ct[6] (ct[6]即sub="")
+     *
+     * 先改小写的原因是, 因为有如下的 test case
+     * input: "aaaaaaaa", ["aaaa","Aa","aaa"]
      */
     public int wordBreak3(String s, Set<String> dict) {
         if (s == null || s.length() == 0 || dict.isEmpty())
@@ -51,7 +56,7 @@ public class _0683_WordBreak3 {
 
         int len = s.length();
         int[] ct = new int[len+1];
-        ct[len] = 1; // sub="", 什么都不取
+        ct[len] = 1; // 从后往前, sub string = "", 什么都不取
 
         for (int i = len - 1; i >= 0; i--) { // sub = s.sub(i, j); i为inclusive, j为exclusive
             for (int j = i + 1; j <= len; j++) {

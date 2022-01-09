@@ -39,7 +39,7 @@ package lintcode;
 public class _0038_Search2DMatrix2 {
 
     /**
-     * 解法2 - 从左下往右上寻找
+     * 解法2 - 从左下角开始, 往右/上寻找
      *
      * [[1,2,3,4,5],
      *  [2,3,4,5,6],

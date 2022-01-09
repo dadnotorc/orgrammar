@@ -17,7 +17,7 @@ import org.junit.Test;
  *
  * Notice
  * - The value k is a non-negative integer and will always be smaller than
- *    the length of the sorted array.
+ *    the length of the sorted array. 就是说 0 <= k < nums.length
  * - Length of the given array is positive and will not exceed 10^4
  * - Absolute value of elements in the array will not exceed 10^4
  *
@@ -42,20 +42,22 @@ public class _0460_FindKClosestElements {
         if (k == 0) // 注意 k 只是 non negative
             return new int[0];
 
-        int[] ans = new int[k];
+        int[] ans = new int[k]; // k 个最接近的, 所以答案要 k 个
 
+        // 二分找最接近的
         int closestIndex = findClosest(nums, target);
+
         ans[0] = nums[closestIndex];
 
-        int l = closestIndex - 1;
+        int l = closestIndex - 1; // 从中心向两边扩
         int r = closestIndex + 1;
-        for (int i = 1; i < k; i++) {
-            if (l < 0)
+        for (int i = 1; i < k; i++) { // 从 1 开始, 因为 ans[0] 已经确定了
+            if (l < 0) // 先考虑左边
                 ans[i] = nums[r++];
             else if (r >= nums.length)
                 ans[i] = nums[l--];
             else
-                ans[i] = (target - nums[l]) <= (nums[r] - target) ? nums[l--] : nums[r++];
+                ans[i] = (target - nums[l]) <= (nums[r] - target) ? nums[l--] : nums[r++]; // 谁间距小取谁, 用 <= 是因为 当等于时, 先加数字较小
         }
 
         return ans;
@@ -64,7 +66,7 @@ public class _0460_FindKClosestElements {
     // return the index of the closest number to target - binary search
     private int findClosest(int[] nums, int target) {
         int toReturn = nums.length;
-        int min = Integer.MAX_VALUE;
+        int min = Integer.MAX_VALUE; // 确定距离 target 最小的差距
         int l = 0, r = nums.length - 1;
         while (l <= r) {
             int mid = (l + r) / 2;
@@ -75,7 +77,7 @@ public class _0460_FindKClosestElements {
                     min = target - nums[mid];
                     toReturn = mid;
                 } else if (target - nums[mid] == min) {
-                    toReturn = Math.min(toReturn, mid);
+                    toReturn = Math.min(toReturn, mid);  // 取较小者, 是按照原数组从小到大顺序排列的缘故
                 }
                 l = mid + 1;
             } else { // A[mid] > target
@@ -91,6 +93,9 @@ public class _0460_FindKClosestElements {
 
         return toReturn;
     }
+
+
+
 
     @Test
     public void test0() {
