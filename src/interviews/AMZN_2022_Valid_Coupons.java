@@ -11,12 +11,14 @@ import java.util.Stack;
  *
  * Three rules for a valid string:
  * 1. An empty string is valid
- * 2. You can add same character to a valid string X, and create another valid string yXy
+ * 2. You can add same character to both side of a valid string X, and create another valid string yXy
  * 3. You can concatenate two valid strings X and Y, so XY will also be valid.
+ *
+ * Consists of only lowercase English characters.
  *
  * Ex: vv, xbbx, bbccdd, xyffyxdd are all valid.
  */
-public class AMZN_2022_Valid_String {
+public class AMZN_2022_Valid_Coupons {
 
     /**
      * stack的解法适用于成对出现的字符, 例如aa, 或者 {}. 但是无法处理 aba 之类的, 那就得双指针了, 但是双指针无法处理 abbaxyyx 的情况
@@ -39,7 +41,7 @@ public class AMZN_2022_Valid_String {
             char c = s.charAt(i);
             if (stack.isEmpty() || stack.peek() != c) {
                 stack.push(c);
-            } else if (stack.peek() == c) {
+            } else {
                 stack.pop();
             }
         }

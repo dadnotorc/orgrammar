@@ -3,12 +3,18 @@ package interviews;
 import org.junit.Test;
 
 /**
- * A scenario about student badges (或者学生选课)
+ * A scenario about student badges (学习 AWS courses and earn electronic learning badge). Before signing up for courses,
+ * a student assigns each badge a value based on interest:
+ * 1 means interested
+ * -1 means not intersted
+ *  *
+ * Given an array of -1 or 1, such as [-1,-1,1,-1]. Find a subarray of maximum length such that the product of all
+ * the elements in the array is 1 ( 乘积为正 )
  *
- * Given an array of -1 or 1, such as [-1,-1,1,-1]. Return the maximum subarray length with a product of 1 (positive)
- *
- * 2 <= nums.length
+ * Constraints
+ * 2 <= nums.length <= 10^5
  * nums[i] can only be -1 or 1
+ * Guarantee at least 1 non-empty subarray in the answer
  *
  * Example
  * nums = [-1,-1,1,1,-1], return 4, since index 0 to 3 have the max length with product equal to 1
@@ -19,7 +25,7 @@ import org.junit.Test;
  */
 public class AMZN_2022_Max_Length_Subarray_Positive_Product {
 
-    /**
+    /**  13 /15 passed
      * 1. 遍历数组
      *    - 记录 第一个 和 最后一个 -1 的下标
      *    - 统计 -1 的个数
@@ -30,11 +36,16 @@ public class AMZN_2022_Max_Length_Subarray_Positive_Product {
      *       - 最后一个 -1 即之后的
      */
     public int getMaxLen(int[] nums) {
+        if (nums == null || nums.length == 0) {
+            return 0;
+        }
 
         int first = -1; // 第一个 -1 的下标
         int last = -1; // 最后一个 -1 的下标
         int count = 0; // -1 的个数
         int n = nums.length;
+
+        System.out.println("size = " + n);
 
         for (int i = 0; i < n; i++) {
             if (nums[i] == -1) {
@@ -48,9 +59,16 @@ public class AMZN_2022_Max_Length_Subarray_Positive_Product {
             }
         }
 
+        System.out.println("first = " + first);
+        System.out.println("last = " + last);
+
         if ((count & 1) == 0) { // 注意 & 操作需要一层自己的括号
             // 偶数
             return n;
+        }
+
+        if (count == 1) { // 特殊情况, 只有一个 -1, 那就返回 -1 之前的长度
+            return first;
         }
 
         // 奇数
@@ -70,6 +88,8 @@ public class AMZN_2022_Max_Length_Subarray_Positive_Product {
 
         nums = new int[] {-1,-1,1,1,-1};
         org.junit.Assert.assertEquals(4, getMaxLen(nums));
-    }
 
+        nums = new int[] {1,1,-1,1};
+        org.junit.Assert.assertEquals(2, getMaxLen(nums));
+    }
 }
