@@ -1,6 +1,7 @@
 /*
 Medium
 #Tree, #Recursion, #BST
+Amazon
  */
 package leetcode;
 
@@ -32,31 +33,40 @@ import java.util.TreeSet;
  * Note:
  * The size of the BST will be between 2 and 100.
  * The BST is always valid, each node's value is an integer, and each node's value is different.
+ *
+ * lintcode 1746 · Minimum Distance Between BST Nodes
  */
 public class _0783_MinimumDistanceBetweenBSTNodes {
 
-    Integer min = Integer.MAX_VALUE, prev = null;
-
     /**
-     * 使用 inorder traverse 遍历
-     * 因为是 BST 树, inorder traverse 保证 values are sorted
+     * 使用 inorder traverse 遍历 - 左中右
+     * 因为是 BST 树, inorder traverse 保证 values are sorted 递增序列
      *
      * time:  O(n)
      * space: O(h)  h - max depth of the tree, worst case h = n (extremely unbalanced)
      */
+    Integer min = Integer.MAX_VALUE;
+    TreeNode pre = null;
+
     public int minDiffInBST(TreeNode root) {
-        if (root.left != null)
-            minDiffInBST(root.left);
-
-        if (prev != null)
-            min = Math.min(min, root.val - prev);
-
-        prev = root.val;
-
-        if (root.right != null)
-            minDiffInBST(root.right);
-
+        dfs(root);
         return min;
+    }
+
+    public void dfs(TreeNode node) {
+        if (node.left != null) {
+            dfs(node.left);
+        }
+
+        if (pre != null) {
+            min = Math.min(min, node.val - pre.val);
+        }
+
+        pre = node;
+
+        if (node.right != null) {
+            dfs(node.right);
+        }
     }
 
     /**
@@ -71,6 +81,10 @@ public class _0783_MinimumDistanceBetweenBSTNodes {
     TreeSet<Integer> ts = new TreeSet<>();
 
     public int minDiffInTree(TreeNode root) {
+        if (root == null) {
+            return minimum;
+        }
+
         if (!ts.isEmpty()) {
             if (ts.floor(root.val) != null)
                 minimum = Math.min(minimum, root.val - ts.floor(root.val));
