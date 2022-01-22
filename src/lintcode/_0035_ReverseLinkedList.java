@@ -52,7 +52,7 @@ public class _0035_ReverseLinkedList {
         ListNode next;
 
         /*
-        1. 确定 next 节点
+        1. 先确定 next 节点
         2. head.next 指针转向, 指向 pre
         3. 将 pre 与 head 指针向下一位移动
          */
@@ -63,6 +63,7 @@ public class _0035_ReverseLinkedList {
             head = next;
         }
 
+        // 这里return pre, 是因为 head 已经挪到 null 去了
         return pre;
     }
 }

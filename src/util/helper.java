@@ -4,12 +4,11 @@ import java.util.*;
 
 public class helper {
 	public static void main(String[] args) {
-        char a = 'a';
-        int k = 1;
-        char b = (char) ((a + k) % 26);
-        char c = (char) ('a' + (a - 'a' + k) % 26);
+        char a = '9';
+        int k = 18;
+        k %= 10;
+        char b = (char) ('0' + (a - '0' + k) % 9);
         System.out.println("-0-:"  + b);
-        System.out.println("-0-:"  + c);
 
 //        boolean x = 3 > 2;
 
