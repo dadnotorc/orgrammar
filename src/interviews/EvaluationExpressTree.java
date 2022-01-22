@@ -39,6 +39,9 @@ public class EvaluationExpressTree {
      * 1. 如果当前节点为空, 返回 0
      * 2. 如果当前节点为数字 operand, 返回该数字
      * 3. 如果不是, 说明是运算符号 operator, 递归进下一层, 返回后进行计算
+     *
+     * 时间 O(n) - 所有数字相加
+     * 空间 O(logn) - height of the tree , 用于 recursive call (memory stack)
      */
     public int evaTree(Node root) {
         if (root == null) {
@@ -49,6 +52,7 @@ public class EvaluationExpressTree {
         // 也可以简单的判断 root 是否有左右 子节点
         if (isNumber(root.val)) {
             return toInt(root.val);
+            // 或者调用 Integer.valueOf(root.val)
         }
 
         int left = evaTree(root.left);

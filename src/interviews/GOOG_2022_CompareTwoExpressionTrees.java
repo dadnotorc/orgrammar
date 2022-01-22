@@ -1,5 +1,6 @@
 package interviews;
 
+import org.junit.Assert;
 import org.junit.Test;
 
 import java.util.Arrays;
@@ -72,6 +73,8 @@ public class GOOG_2022_CompareTwoExpressionTrees {
     }
 
     // 可以用 Queue 做层级遍历 / 或者 递归 pre-order traversal
+
+    // 这里用递归 - pre-order
     public void helper(Node node, int[] count) {
         if (node == null) {
             return;
@@ -79,19 +82,13 @@ public class GOOG_2022_CompareTwoExpressionTrees {
 
         if (node.val >= 'a' && node.val <= 'z') {
             count[node.val - 'a']++;
-        }
-
-        if (node.val == '+') {
+        } else if (node.val == '+') {
             helper(node.left, count);
             helper(node.right, count);
         } else {
             System.out.println("invalid val:" + node.val);
         }
     }
-
-
-
-
 
 
 
@@ -104,6 +101,42 @@ public class GOOG_2022_CompareTwoExpressionTrees {
             this.val = _val;
             this.left = this.right = null;
         }
+    }
+
+
+
+    @Test
+    public void test1() {
+        Node root1 = new Node('+');
+        root1.left = new Node('a');
+        root1.right = new Node('+');
+        root1.right.left = new Node('b');
+        root1.right.right = new Node('c');
+
+        Node root2 = new Node('+');
+        root2.left = new Node('+');
+        root2.left.left = new Node('b');
+        root2.left.right = new Node('c');
+        root2.right = new Node('a');
+
+        Assert.assertTrue(checkEquivalence(root1, root2));
+    }
+
+    @Test
+    public void test2() {
+        Node root1 = new Node('+');
+        root1.left = new Node('a');
+        root1.right = new Node('+');
+        root1.right.left = new Node('b');
+        root1.right.right = new Node('c');
+
+        Node root2 = new Node('+');
+        root2.left = new Node('+');
+        root2.left.left = new Node('b');
+        root2.left.right = new Node('d');
+        root2.right = new Node('a');
+
+        Assert.assertFalse(checkEquivalence(root1, root2));
     }
 }
 
