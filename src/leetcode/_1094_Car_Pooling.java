@@ -1,8 +1,3 @@
-/*
-Medium
-#Array, #Sorting, #Heap, #Prefix SUm
-Microsoft
- */
 package leetcode;
 
 import org.junit.Test;
@@ -15,6 +10,8 @@ import static org.junit.Assert.assertTrue;
 /**
  * 1094. Car Pooling
  * Medium
+ * #Array, #Sorting, #Heap, #Simulation, #Prefix SUm
+ * Microsoft
  *
  * You are driving a vehicle that has capacity empty seats initially available
  *  for passengers.  The vehicle only drives east
@@ -37,7 +34,40 @@ import static org.junit.Assert.assertTrue;
  * 4. 0 <= trips[i][1] < trips[i][2] <= 1000
  * 5. 1 <= capacity <= 100000
  */
-public class _1094_1001Stations {
+public class _1094_Car_Pooling {
+
+    /**
+     * 如果题目没有确定有多少站, 即无法得知是 1001 站, 无法使用 array, 则用 map 替代
+     *
+     * 使用 TreeMap 而不是常用的 HashMap, 理由是,
+     * - HashMap does not preserve the iteration order,
+     * - TreeMap preserve the order by using the compareTo() method or a comparator set in the TreeMap's constructor.
+     *
+     * 时间 O(n * logn) - n: trips.length; logn: 因为用了 TreeMap, sorted
+     * 空间 O(n) - treemap
+     */
+    public boolean carPooling_2(int[][] trips, int capacity) {
+        Map<Integer, Integer> map = new TreeMap<>();
+
+        for (int[] trip : trips) {
+            map.put(trip[1], map.getOrDefault(trip[1], 0) + trip[0]);
+            map.put(trip[2], map.getOrDefault(trip[2], 0) - trip[0]);
+        }
+
+        int curPassengers = 0;
+        // 直接取得 value set, 无需通过 key set 再得到 value
+        for (int value : map.values()) {
+            curPassengers += value;
+
+            if (curPassengers > capacity) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+
 
     /**
      * 获得一个新trip的时候, 记录上站乘客人数和下站乘客人数, 最后遍历所有站, 当某站人数超过总容量时返回false
@@ -65,37 +95,7 @@ public class _1094_1001Stations {
         return true;
     }
 
-    /**
-     * 如果题目没有确定有多少站, 即无法得知是 1001 站, 无法使用 array, 则用 map 替代
-     *
-     * 使用 TreeMap 而不是常用的 HashMap, 理由是,
-     * - HashMap does not preserve the iteration order,
-     * - TreeMap preserve the order by using the compareTo() method or a comparator set in the TreeMap's constructor.
-     *
-     * 时间 O(n * logn)
-     * 空间 O(n)
-     */
-    public boolean carPooling_2(int[][] trips, int capacity) {
-        // 这里使用 TreeMap 的原因是, 它默认情况下就是按照key的大小来进行排序的（升序）
-        Map<Integer, Integer> map = new TreeMap<>();
 
-        for (int[] trip : trips) {
-            map.put(trip[1], map.getOrDefault(trip[1], 0) + trip[0]);
-            map.put(trip[2], map.getOrDefault(trip[2], 0) - trip[0]);
-        }
-
-        int curPassengers = 0;
-        // 直接取得 value set, 无需通过 key set 再得到 value
-        for (int value : map.values()) {
-            curPassengers += value;
-
-            if (curPassengers > capacity) {
-                return false;
-            }
-        }
-
-        return true;
-    }
 
 
     /**
@@ -106,7 +106,7 @@ public class _1094_1001Stations {
      * 易错点
      * 计算下车人数的时, 要用 while , 而不是 if, 要讲所有下车的人都去掉
      *
-     * 时间 O(n * logn)
+     * 时间 O(n * logn) - n: trips.length; logn: PQ insertion
      * 空间 O(n)
      */
     public boolean carPooling_3(int[][] trips, int capacity) {
@@ -145,6 +145,12 @@ public class _1094_1001Stations {
 
         return true;
     }
+
+
+
+
+
+
 
     @Test
     public void test1() {

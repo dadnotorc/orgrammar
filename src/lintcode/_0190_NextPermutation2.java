@@ -1,12 +1,10 @@
-/*
-Medium
-#Permutation, #Array
-Facebook
- */
 package lintcode;
 
 /**
  * 190. Next Permutation II
+ * Medium
+ * #Permutation, #Array
+ * Facebook
  *
  * Implement next permutation, which rearranges numbers into the
  * lexicographically next greater permutation of numbers.
@@ -30,6 +28,9 @@ package lintcode;
  * - The replacement must be in-place, do not allocate extra memory.
  *
  *
+ * leetcode 31. Next Permutation
+ *
+ *
  * 字典序的定义：
  * 在数学中，字典或词典顺序（也称为词汇顺序，字典顺序，字母顺序或词典顺序）是基于字母顺序排列的单词按字母顺序排列的方法。
  *
@@ -40,13 +41,14 @@ package lintcode;
  * 3）对换pj，pk
  * 4）再将pj+1......pk-1pkpk+1......pn倒转得到排列p'=p1p2.....pj-1pjpn.....pk+1pkpk-1.....pj+1，这就是排列p的下一个排列。
  *
- * [5,9,8,4] => [8,9,5,4] => [8,4,5,9]
+ * [5,9,8,4] => [8,9,5,4] - (5 与 8 互换)
+ *           => [8,4,5,9] - (9,5,4 反转成 4,5,9)
  */
 public class _0190_NextPermutation2 {
 
     /**
-     * 1. 从右往左, 找到第一个递减的值j, s.t nums[j] < nums[j+1]
-     * 2. 如果找到j (j >= 0), 则从右往左, 找到第一个大于j的值k, nums[j] < nums[k], 两者互换
+     * 1. 从倒数第二位开始 往左, 找到第一个递减的值j, i.e nums[j] < nums[j+1]
+     * 2. 如果找到j (j >= 0), 则从倒数第一位开始 往左, 找到第一个大于j的值k, nums[j] < nums[k], 两者互换
      * 3. 反转从j+1开始到末端的数组, 并返回
      * 4. 如果2不成立, 即数组是单调递减(j < 0), 直接反转整个数组并结束
      */
@@ -74,7 +76,7 @@ public class _0190_NextPermutation2 {
             swap(nums, j, k);
         }
 
-        // 如果原数组为单调递减, j == -1, 上述if语句不成立, 则无需swap, 并反转整个数组
+        // 如果原数组为单调递减, while 循环结束时 j = -1, 上述if语句不成立, 则无需swap, 并反转整个数组
 
         // 反转时, 从 j+1 位开始到数组末端, 进行反转 [8,9,5,4] => [8,4,5,9]
 

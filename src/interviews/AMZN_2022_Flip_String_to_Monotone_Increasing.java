@@ -10,6 +10,8 @@ package interviews;
  *
  * Return the minimum number of flips ot make s monotone increasing
  *
+ * 注意 这题不是两两 swap, 而是将当前 的 0 或者 1 flip 成 1 或者 0
+ *
  * Example 1:
  * input: "00110"
  * output: 1
@@ -39,6 +41,9 @@ public class AMZN_2022_Flip_String_to_Monotone_Increasing {
      * - 全是 1
      * - 前半段是0，后半段是 1
      * 因此在计算过程中只需要考虑，到当前位置为止，以上三种转化方式最小的一种即可。
+     *
+     * 时间 O(n)
+     * 空间 O(1)
      */
     public int getLength(String s) {
         if (s == null || s.length() == 0) {
@@ -70,6 +75,9 @@ public class AMZN_2022_Flip_String_to_Monotone_Increasing {
      * 2. 记录 1 的出现次数 - prefix_1
      * 3. 遇到 1 以后, 之后遇到的所有 0 也是 potential candidate, 要记录出现次数 - suffix_0
      * 4. 遍历完, 比较 prefix_1 与 suffix_0, 并返回较少者
+     *
+     * 时间 O(n)
+     * 空间 O(1)
      */
     public int getLength_2(String s) {
         if (s == null || s.length() == 0) {
@@ -103,6 +111,9 @@ public class AMZN_2022_Flip_String_to_Monotone_Increasing {
      * 1. Count of '1' -> '0' flips going left to right, and store it in f0.
      *    Count of '0' -> '1' flips going right to left, and store it in f1.
      * 2. Find the smallest f0[i] + f1[i].
+     *
+     * 时间 O(n)
+     * 空间 O(n * 2)
      */
     public int getLength_dp(String s) {
         if (s == null || s.length() == 0) {

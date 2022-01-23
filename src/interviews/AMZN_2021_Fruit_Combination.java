@@ -8,7 +8,7 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
- * Promotion for purchasing a secret combination of fruits.
+ * Promotion for purchasing a secret combination of fruits - fresh promotion
  *
  * Promotion changes daily, need to use a code list for easy combination change. The code list contains groups of fruits.
  * Both the order of the groups within the code list and the order of the fruits within the groups matter.
@@ -106,7 +106,8 @@ public class AMZN_2021_Fruit_Combination {
 
     private boolean checkGroup(String[] shoppingCart, int cartIdx, String[] group) {
         for (String code : group) {
-            if (cartIdx < shoppingCart.length && (code.equals("anything") || shoppingCart[cartIdx].equals(code))) {
+            if (cartIdx < shoppingCart.length &&
+                    (code.equals("anything") || shoppingCart[cartIdx].equals(code))) {
                 cartIdx++;
             } else {
                 return false;
