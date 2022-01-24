@@ -19,14 +19,14 @@ public class Calculator {
         OP_PRIORITY = Collections.unmodifiableMap(opMap);
     }
 
-    public static Double calculate (Deque<String> equation) {
-        List<String> postfixEquation = infixToPostfix(equation);
+//    public static Double calculate (Deque<String> equation) {
+//        List<String> postfixEquation = infixToPostfix(equation);
+//
+//        if ()
+//    }
 
-        if ()
-    }
 
-
-    private static List<String> infixToPostfix(Deque<String> equation) {
-
-    }
+//    private static List<String> infixToPostfix(Deque<String> equation) {
+//
+//    }
 }
