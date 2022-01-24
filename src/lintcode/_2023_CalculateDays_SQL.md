@@ -6,13 +6,13 @@ named date diff.
 
 Table definition: courses (course table)
 
-| Column Name | Type | Comments |
-| ----------- | ---- | -------- |
-| id | int unsigned | primary key
-| name | varchar |course name
-| student count | int | number of students
-| created at | date | course creation time
-| teacher id | int | teacher id
+| Column Name   | Type          | Comments             |
+|---------------|---------------|----------------------|
+| id            | int unsigned  | primary key          |
+| name          | varchar       | course name          |
+| student_count | int           | number of students   |
+| created_at    | date          | course creation time |
+| teacher_id    | int           | teacher id           |
 
 - If the course creation time is earlier than 13/01/2018,
 the number of days returned by the calculation is negative

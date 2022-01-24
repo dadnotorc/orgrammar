@@ -49,15 +49,15 @@ public class _1334_RotateArray {
         }
 
         int n = nums.length;
-        k = k % n; // 别忘了这里也要 %. 第一次错误就是漏了这里
+        k = k % n; // 别忘了这里要 %. 第一次错误就是漏了这里
 
         int[] ans = new int[n];
         for (int i = 0; i < n; i++) {
-            int index = (n - k + i) % n;
+            int index = (n - k + i) % n; // 别忘了 这里也要 % n
             ans[i] = nums[index];
 
             // 也可以写成
-            // ans[(i + K) % n] = nums[i];
+            // ans[(i + k) % n] = nums[i];
 
             // i - index: 0 - 4, 1 - 5, 2 - 6, 3 - 0, 4 - 1, 5 - 2, 6 - 3
             // System.out.println("i = " + i + "; index = " + index);
@@ -66,6 +66,7 @@ public class _1334_RotateArray {
     }
 
     /**
+     * 针对这种题的特殊解法, 分割 反转 再反转
      * [1,2,3,4,5,6,7], k = 3
      * 先划分成    [1,2,3,4] [5,6,7]
      * 反转成      [4,3,2,1] [7,6,5]
