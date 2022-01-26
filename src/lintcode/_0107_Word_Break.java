@@ -1,9 +1,3 @@
-/*
-Medium
-#DP, #String, #Trie
-Amazon, Facebook, Google, Uber
-FAQ++
- */
 package lintcode;
 
 import org.junit.Test;
@@ -13,6 +7,10 @@ import java.util.Set;
 
 /**
  * 107. Word Break
+ * Medium
+ * #DP, #String, #Trie
+ * Amazon, Facebook, Google, Uber
+ * FAQ++
  *
  * Given a string s and a dictionary of words dict, determine if s can be
  * broken into a space-separated sequence of one or more dictionary words.
@@ -25,7 +23,7 @@ import java.util.Set;
  * Input: "a", ["a"]
  * Output:  true
  */
-public class _0107_WordBreak {
+public class _0107_Word_Break {
 
     /*
     非DP解法 - 查看s是否可以可以用字典中的字完整的组成
@@ -137,23 +135,29 @@ public class _0107_WordBreak {
 
 
     /**
-     * DP - 在两层for loop的内层里 (for int j ...)
-     *      j 从 i-1 开始递减, 更好的利用已经查好的较长的单词, 而不是每次都从头开始查
+     * DP - 字符串有 length + 1 个分割点, 例如 _l_i_n_t_
+     *      canSegment[i] 表示 substring(0,i) 在字典中存在, 所以能分割
+     *      例如, "lintcode", ["lint", "code"]
+     *      canSegment = {T, F, F, F, T, F, F, F, T}
+     *
+     *
+     *
+     * 时间 - O(n ^ 2)
+     * 空间 - O(n)
      */
     public boolean wordBreak_DP(String s, Set<String> dict) {
 
-        // 字符串有length+1个分割点, 例如 _l_i_n_t_
-        // canSegment[i]表示substring(0,i)在字典中存在, 所以能分割
-        // 例如, "lintcode", ["lint", "code"]
-        // canSegment = {T, F, F, F, T, F, F, F, T}
         boolean[] canSegment = new boolean[s.length() + 1];
 
         // 因为substring(0,0)是empty string, 可以被分割出来, 所以等于true
         canSegment[0] = true;
 
+        // 在两层 for loop 的内层里 (for int j ...)
+        // j 从 i-1 开始递减, 更好的利用已经查好的较长的单词, 而不是每次都从头开始查
         for (int i = 1; i <= s.length(); i++) { // 查当前substring(0,i)是否可以被分割
-            //for (int j = 0; j < i; j++) {
-            for (int j = i - 1; j >= 0; j--) { // 反向查, 更好的利用已查好的较长单词
+
+            for (int j = i - 1; j >= 0; j--) { // 反向查, 而不是从 0 到 i - 1, 更好的利用已查好的较长单词
+
                 // 如果substring(0,j)可以被分割, 且substring(j,i)在字典中存在 -> (0,i)也可以被分割
                 if (canSegment[j] && dict.contains(s.substring(j, i))) {
                     canSegment[i] = true;
@@ -176,6 +180,18 @@ public class _0107_WordBreak {
      * 易错点:
      * 1. corner case: Input: "", [""]; Output: True
      * 2. 递归时, 如果下一层返回值是false, 不能直接返回, 因为递归此时可能仍未完成
+     *
+     * 时间 - O(2 ^ (n-2))  ~  约为 O(2 ^ n)  -  exponential
+     *
+     * T(n) = T(n-1) + T(n-2) +.....T(1);
+     * T(1) = T(2) = 1
+     *
+     * T(1) = T(2) = 1
+     * T(3) = T(1) + T(2) = 1+1 =2; // 2^1
+     * T(4) = T(1)+ T(2) + T(3) = 1+1+2 =4; //2^2
+     * T(5) = T(1) + T(2) +T(3) +T(4) = 1+1+2+4 =8; //2^3
+     *
+     * 空间 - O(n)
      */
     public boolean wordBreak_recursion(String s, Set<String> dict) {
         if (s.equals("") || dict.contains(s))

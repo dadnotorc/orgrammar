@@ -4,8 +4,6 @@ Medium
  */
 package leetcode;
 
-import lintcode._0107_WordBreak;
-
 /**
  * 208. Implement Trie (Prefix Tree)
  *

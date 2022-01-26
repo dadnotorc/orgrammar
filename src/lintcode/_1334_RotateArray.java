@@ -1,12 +1,10 @@
-/*
-Easy
-#Array
-Bloomberg, Microsoft, Amazon
- */
 package lintcode;
 
 /**
  * 1334 · Rotate Array
+ * Easy
+ * #Array
+ * Bloomberg, Microsoft, Amazon
  *
  * Given an array, rotate the array to the right by k steps, where k is non-negative.
  *
@@ -30,6 +28,7 @@ package lintcode;
  * 2.Could you do it in-place with O(1) extra space?
  *
  * 类似 lintcode 8 · Rotate String
+ * 区别是 后者要求是 in-place
  */
 public class _1334_RotateArray {
 
@@ -39,12 +38,51 @@ public class _1334_RotateArray {
     // 3. k = 0 或者 k = n
 
     /**
+     * in-place rotate 使用 两个指针 与 两个临时参数
+     *
+     * 时间 O(n) - 如果是 void func, 会快些. 但是此题是返回 int[], 相比之前 下一个解答, 用赋值的方法更快, 无需借助 tmp 变量 或者 指针
+     * 空间 O(1)
+     */
+    public int[] rotate_1(int[] nums, int k) {
+        if (nums == null || nums.length < 2 || k % nums.length == 0) {
+            return nums;
+        }
+
+        int n = nums.length;
+        k %= n;
+
+        int curTmp;
+        int nextTmp = nums[0];
+
+        int curIndex = 0, prevIndex = 0;
+
+        for (int i = 0; i < n; i++) {
+            curTmp = nextTmp;
+            curIndex = (curIndex + k) % n;
+
+            if (curIndex != prevIndex) {
+                nextTmp = nums[curIndex];
+                nums[curIndex] = curTmp;
+            } else {
+                nums[curIndex] = curTmp;
+
+                curIndex++;
+                prevIndex++;
+                nextTmp = nums[curIndex];
+            }
+        }
+
+        return nums;
+    }
+
+
+    /**
      * 使用两个数组, 计算 rotate 之后. 原有元素的新位置, 将原有元素拷入新数组中
      * 时间 O(n)
      * 空间 O(1)
      */
     public int[] rotate(int[] nums, int k) {
-        if (nums == null || nums.length == 0 || k == 0 || k == nums.length) {
+        if (nums == null || nums.length == 0 || k % nums.length == 0) {
             return nums;
         }
 
@@ -66,7 +104,7 @@ public class _1334_RotateArray {
     }
 
     /**
-     * 针对这种题的特殊解法, 分割 反转 再反转
+     * 针对这种题的特殊解法, 分割 反转 再反转 - 可以做到 in-place
      * [1,2,3,4,5,6,7], k = 3
      * 先划分成    [1,2,3,4] [5,6,7]
      * 反转成      [4,3,2,1] [7,6,5]
@@ -76,7 +114,7 @@ public class _1334_RotateArray {
      * 空间 O(1)
      */
     public int[] rotate_2(int[] nums, int k) {
-        if (nums == null || nums.length == 0 || k == 0 || k == nums.length) {
+        if (nums == null || nums.length == 0 || k % nums.length == 0) {
             return nums;
         }
 
