@@ -1,8 +1,3 @@
-/*
-Easy
-
-
- */
 package lintcode;
 
 import java.util.ArrayList;
@@ -10,6 +5,7 @@ import java.util.List;
 
 /**
  * 768 · Yang Hui Triangle
+ * Easy
  *
  * Given an integer n, return the first n-line Yang Hui triangle.
  *
@@ -33,17 +29,17 @@ public class _0768_YangHuiTriangle {
         if (n < 1) { return ans; }
 
         for (int i = 0; i < n; i++) {
-            List<Integer> cur = new ArrayList<>();
-            cur.add(1);
+            List<Integer> curRow = new ArrayList<>();
+            curRow.add(1);
             for (int j = 1; j < i; j++) { // 这题关键在 j 的取值
-                cur.add(ans.get(i - 1).get(j - 1) + ans.get(i - 1).get(j));
+                curRow.add(ans.get(i - 1).get(j - 1) + ans.get(i - 1).get(j));
             }
 
             if (i > 0) {
-                cur.add(1);
+                curRow.add(1);
             }
 
-            ans.add(cur);
+            ans.add(curRow);
         }
 
         return ans;
