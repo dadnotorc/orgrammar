@@ -24,11 +24,16 @@ import java.util.*;
 public class _0255_Multi_string_Search {
 
     /*
-    办法 1 - 一个一个的去比较
+    解法 1 - 一个一个的去比较. 把 targetStrings 中所有字符串 放入 hashtable. 然后从 sourceString中
+    创建出所有可能的 substring, 一一去 hashtable 中找寻.
+    时间 - O(w) + O(n ^ 2); w 是 targetStrings 中字符串的个数; n 是 sourceString 的长度
+    前者是创建 hashtable, 后者是对比 sourceString 的所有 substring
 
-    办法 2 - 使用 Map 记录 sourceString 中每个字符出现的位置, 避免去检查那些不可能的位置
+    解法 2 - 使用 Map 记录 sourceString 中每个字符出现的位置, 避免去检查那些不可能的位置
+    时间 O(n) + O(w * l) - n 遍历 sourceString, 创建 map; w targetStrings 中字符串个数, l 是这个字符串的平均长度
 
-    办法 3 - trie node
+    解法 3 - 使用 Trie nodes 记录 targetStrings 中的所有字符串
+    时间 O(w * l) + O(n ^2) 前者是 build trie, 后者是遍历 sourceString, 找寻匹配 - 效率不如 解法 2
      */
 
 

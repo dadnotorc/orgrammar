@@ -2,7 +2,9 @@ package lintcode;
 
 import org.junit.Test;
 
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -26,16 +28,59 @@ import java.util.Set;
 public class _0107_Word_Break {
 
     /*
-    非DP解法 - 查看s是否可以可以用字典中的字完整的组成
+    解法 1 - 暴力解法 - 查看s是否可以可以用字典中的字完整的组成
     先看s是否以某个字开头, 如果是去s后半部分的substring, 继续遍寻字典
+    时间 - O(2 ^ (n-2))  ~  约为 O(2 ^ n)  -  exponential
+    空间 - O(n)
+
+    解法 2 - DP - 字符串有 n + 1 个分割点, 例如 _l_i_n_t_
+    canSegment[i] 表示 substring(0,i) 在字典中存在, 所以能分割
+    例如, "lintcode", ["lint", "code"]
+    canSegment = {T, F, F, F, T, F, F, F, T}
+    时间 - O(n ^ 3) - 两层循环 O(n), 因为会使用substring O(n)
+    空间 - O(n)
+
+    解法 3 - Trie + DP - canSegment[i] 表示 substring(i, n) 在字典中存在, 所以能分割
+    更新 canSegment 时, 从后往前查后缀是否存在, 从短到长的检查
+    遇到 cur char 时, canSegment 应当查 cur char 的下一个 index 位
+    时间 O(w * l) + O(n ^ 2) - 前者是 build trie, 后者是遍历 s, 比对所有 substring;
+
      */
+
+
+    /**
+     * DP - DFS + memo
+     */
+    public boolean wordBreak(String s, Set<String> dict) {
+        HashMap<String, Boolean> memo = new HashMap<>();
+        return dfs(s, dict, 0, memo);
+    }
+
+    public boolean dfs(String s, Set<String> dict, int index, HashMap<String, Boolean> memo) {
+        if (index == s.length()) {
+            return true;
+        }
+
+        if (memo.containsKey(s.substring(index))) {
+            return memo.get(s.substring(index));
+        }
+
+        for (int i = 1; index + i <= s.length(); i++) {
+            if (dict.contains(s.substring(index, index + i)) &&
+                    dfs(s, dict, index + i, memo)) {
+                return true;
+            }
+        }
+
+        memo.put(s.substring(index), false);
+
+        return false;
+    }
+
+
 
     /**
      * Trie
-     *
-     * 易错点:
-     * 1. Trie+DP, 更新DP array时, 从后往前查后缀是否存在.
-     *    另外, 遇到 cur char时, DP array应当查下 cur char的下一个index位
      */
     class TrieNode{
         TrieNode[] children;
@@ -60,8 +105,15 @@ public class _0107_Word_Break {
         }
     }
 
-    /*
-    1. Trie + DP
+    /**
+     * Trie + DP, canSegment[i] 表示 substring(i, n) 在字典中存在, 所以能分割
+     *    - 更新 canSegment 时, 从后往前查后缀是否存在, 从短到长的检查
+     *    - 遇到 cur char 时, canSegment 应当查 cur char 的下一个 index 位
+     *
+     * 时间 O(w * l) + O(n ^ 2) - 前者是 build trie, 后者是遍历 s, 比对所有 substring;
+     * w targetStrings 中字符串个数, l 是这个字符串的平均长度
+     *
+     * TLE?
      */
     public boolean wordBreak_Trie_DP(String s, Set<String> dict) {
         if (s.equals(""))
@@ -71,12 +123,12 @@ public class _0107_Word_Break {
         buildTrie(dict, root);
 
         boolean[] canSegment = new boolean[s.length() + 1];
-        canSegment[s.length()] = true; // 这里需要从后往前反着查后缀
+        canSegment[s.length()] = true; // 这里需要从后往前反着查后缀, 从短到长
 
         for (int i = s.length() - 1; i >= 0; i--) {
             TrieNode curNode = root;
             for (int j = i; curNode != null && j < s.length(); j++) {
-                curNode = curNode.children[(int) s.charAt(j)];
+                curNode = curNode.children[s.charAt(j)];
                 if (curNode != null && curNode.isEnd && canSegment[j + 1]) { // 注意这里看 canSegment[j + 1]
                     canSegment[i] = true;
                     break;
@@ -88,8 +140,8 @@ public class _0107_Word_Break {
     }
 
 
-    /*
-    2. Trie + Recursion
+    /**
+     * Trie + Recursion
      */
     public boolean wordBreak_Trie_Recursion(String s, Set<String> dict) {
         if (s.equals(""))
@@ -98,28 +150,27 @@ public class _0107_Word_Break {
         TrieNode root = new TrieNode();
         buildTrie(dict, root);
 
-        if (canConstruct(s, root, 0))
-            return true;
+        char[] chars = s.toCharArray();
 
-        return false;
+        return canConstruct(chars, root, 0);
     }
 
-    private boolean canConstruct(String s, TrieNode root, int startIndex) {
+    private boolean canConstruct(char[] chars, TrieNode root, int startIndex) {
         TrieNode ptr = root;
 
-        for (int curIndex = startIndex; curIndex < s.length(); curIndex++) {
-            int i = (int) s.charAt(curIndex);
-            if (ptr.children[i] == null)
+        for (int curIndex = startIndex; curIndex < chars.length; curIndex++) {
+            if (ptr.children[chars[curIndex]] == null) {
                 return false;
+            }
 
-            ptr = ptr.children[i];
+            ptr = ptr.children[chars[curIndex]];
 
             if (ptr.isEnd) {
-                if (curIndex == s.length() - 1) { // 已读完所有字符, 并在字典中找到相应的词/组合
+                if (curIndex == chars.length - 1) { // 已读完所有字符, 并在字典中找到相应的词/组合
                     return true;
                 }
 
-                if (canConstruct(s, root, curIndex + 1)) { // s前缀在字典中存在, 继续检查后缀是否存在
+                if (canConstruct(chars, root, curIndex + 1)) { // s 前缀在字典中存在, 继续检查后缀是否存在
                     return true;
                 }
             }
@@ -129,6 +180,42 @@ public class _0107_Word_Break {
     }
 
 
+    /**
+     * DP 优化
+     * 1. 找出 dict 中 最长的字符串, 确定长度
+     */
+    public boolean wordBreak_DP_2(String s, Set<String> dict) {
+
+        int n = s.length();
+
+        int maxLen = 0;
+        for (String word : dict) {
+            maxLen = Math.max(maxLen, word.length());
+        }
+
+        boolean[] canSegment = new boolean[n + 1];
+
+        // 因为substring(0,0)是empty string, 可以被分割出来, 所以等于true
+        canSegment[0] = true;
+
+        for (int i = 1; i <= n; i++) {
+
+            for (int j = 1; j <= maxLen; j++) {
+                if (i < j) {
+                    break;
+                }
+                if (!canSegment[i - j]) {
+                    continue;
+                }
+                if (dict.contains(s.substring(i - j, i))) {
+                    canSegment[i] = true;
+                    break;
+                }
+            }
+        }
+
+        return canSegment[n];
+    }
 
 
 
@@ -140,9 +227,7 @@ public class _0107_Word_Break {
      *      例如, "lintcode", ["lint", "code"]
      *      canSegment = {T, F, F, F, T, F, F, F, T}
      *
-     *
-     *
-     * 时间 - O(n ^ 2)
+     * 时间 - O(n ^ 3) - 两层循环, substring 自己是 O(n)
      * 空间 - O(n)
      */
     public boolean wordBreak_DP(String s, Set<String> dict) {

@@ -1,14 +1,22 @@
 package util;
 
+import org.junit.Test;
+
 import java.util.*;
 
 public class helper {
 	public static void main(String[] args) {
-        char a = '9';
-        int k = 18;
-        k %= 10;
-        char b = (char) ('0' + (a - '0' + k) % 9);
-        System.out.println("-0-:"  + b);
+
+        String[] ans = getAllSubstrings("1234");
+        for (String s: ans) {
+            System.out.println("sub:" + s + ".");
+        }
+
+//        char a = '9';
+//        int k = 18;
+//        k %= 10;
+//        char b = (char) ('0' + (a - '0' + k) % 9);
+//        System.out.println("-0-:"  + b);
 
 //        boolean x = 3 > 2;
 
@@ -193,5 +201,53 @@ public class helper {
         return  ((n & (n-1)) == 0);
     }
 
+
+    /**
+     * s = "abc". 所以 substring 个数 = 3 + 2 + 1 + 1
+     * a, ab, abc | b, bc | c | ""
+     * "" - 注意 "" 也是一个substring
+     *
+     * 时间 O(n ^ 2) - 两层循环
+     *
+     * 如果用的是 substring(), 而不是 SB, substring()本身要 O(n), 所以整体是 O(n ^ 3)
+     */
+    public static String[] getAllSubstrings(String s) {
+
+        int n = s.length();
+
+        ArrayList<String> list = new ArrayList<>();
+
+        list.add(""); // "" 也是一个substring
+
+        StringBuilder sb = new StringBuilder();
+
+        // 正向来 -  - 从长到短
+        /*
+        for (int i = 0; i < n; i++) {
+            sb.setLength(0); // reset the SB
+
+            for (int j = i; j < n; j++) {
+                sb.append(s.charAt(j));
+                list.add(sb.toString());
+            }
+        }
+        */
+
+        // 反向来 - 从短到长
+        for (int i = n - 1; i >= 0; i--) {
+            sb.setLength(0);
+
+            for (int j = i; j < n; j++) {
+                sb.append(s.charAt(j));
+                list.add(sb.toString());
+            }
+
+        }
+
+        System.out.println("string size = " + n);
+        System.out.println("# of substrings = " + list.size()); // (1 + n) x n / 2 + 1
+
+        return list.toArray(new String[0]);
+    }
 
 }

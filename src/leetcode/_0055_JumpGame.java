@@ -24,8 +24,19 @@ package leetcode;
  */
 public class _0055_JumpGame {
 
+    /*
+    这题必须每格每格的去检查, 不然可能跳过, 错判 例如
+    [1,3,8,0,0,0] - 如果到达 3 之后, 直接去检查 index 为 1 + 3 的格, 就会误判. 所以必须每格都要检查
+     */
+
     /**
-     * 别人写的
+     * 从后往前遍历, 看从当前格能否去掉 last 格.
+     * - 如果可以, 将当前格设为 last
+     * - 如果不行, 继续往前遍历寻找有没有满足的格
+     * 最后判断 last 格是不是 index 0 格
+     *
+     * 时间 O(n)
+     * 空间 O(1)
      */
     public boolean canJump_3(int[] nums) {
         int last = nums.length - 1;
@@ -41,19 +52,26 @@ public class _0055_JumpGame {
 
 
     /**
-     * 我根据 canJump_bfs() 修改的
+     * 从前往后遍历, 判断从每格出发能到达的距离 VS 当前已经最远能到达的距离
+     * 不断更新 最远能达的距离
+     * 最后判断此距离是否 >= 最后一格
+     *
+     * 时间 O(n)
+     * 空间 O(1)
      */
     public boolean canJump_4(int[] nums) {
-        int curPos = 0, rightMost = 0; //　rightMost 到当前能跳到的最远的index
-        while (curPos <= rightMost) {
-            rightMost = Math.max(rightMost, curPos + nums[curPos]);
-            if (rightMost >= nums.length - 1) {
+        int cur = 0, max = 0; //　max 到当前能跳到的最远的index
+        while (cur <= max) {
+            max = Math.max(max, cur + nums[cur]);
+            if (max >= nums.length - 1) {
                 return true;
             }
-            curPos++;
+            cur++;
         }
         return false;
     }
+
+
 
     /**
      * 类似BFS
@@ -82,7 +100,8 @@ public class _0055_JumpGame {
     }
 
     /**
-     * 暴力解法
+     * 暴力解法 - 使用 size 为 n 的 boolean array
+     * 经过每一格, 都判断能否到达当前格
      */
     public boolean canJump_bf(int[] nums) {
         if (nums == null || nums.length < 2) {
