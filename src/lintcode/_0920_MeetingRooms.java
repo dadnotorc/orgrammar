@@ -28,6 +28,17 @@ import static org.junit.Assert.*;
  */
 public class _0920_MeetingRooms {
 
+    /*
+    暴力解法 - O(n ^ 2)
+     for i  in 1:n
+        for  j  in 1:n
+           判断i j有无交集 - 判断方法，令i.start<=j.start. 如果 i.start <= j.start <i.end 就会发生冲突
+
+     暴力解法的优化 - O(nlogn) + O(n) - 排序 + 遍历
+     先排序, 按 Interval.start 从小到大排序
+     再比较相邻的两个, 前者的 end VS 后者的 start
+     */
+
     /**
      * @param intervals: a list of meeting time intervals
      * @return: if a person could attend all meetings
