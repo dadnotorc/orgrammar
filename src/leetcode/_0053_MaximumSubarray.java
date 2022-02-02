@@ -1,11 +1,9 @@
-/*
-Easy
-#Array, #Divide and Conquer, #DP
- */
 package leetcode;
 
 /**
  * 53. Maximum Subarray
+ * Easy
+ * #Array, #Divide and Conquer, #DP
  *
  * Given an integer array nums, find the contiguous subarray (containing at least one number)
  * which has the largest sum and return its sum.
@@ -17,6 +15,8 @@ package leetcode;
  *
  * Follow up: If you have figured out the O(n) solution, try coding another solution using
  * the divide and conquer approach, which is more subtle.
+ *
+ * 类似 lintcode 402. Continuous Subarray Sum
  */
 public class _0053_MaximumSubarray {
 
@@ -66,7 +66,7 @@ public class _0053_MaximumSubarray {
 
     /**
      * 求当前值的curSum有两种情况:
-     * 1. 当前值 = curSum: 如果前一个值对应的curSum <= 0, 此时加上任何值只会与当前值相等或者更小
+     * 1. 当前值 = curSum: 如果前一个值对应的curSum < 0, 此时加上任何值只会与当前值相等或者更小
      * 2. 当前值 + curSum
      * 每读一个值, 更新maxSum
      *
@@ -79,13 +79,15 @@ public class _0053_MaximumSubarray {
         int curSum = nums[0], maxSum = nums[0];
 
         for (int i = 1; i < nums.length; i++) {
-            if (curSum <= 0) {
+            if (curSum < 0) {
                 curSum = nums[i];
             } else {
                 curSum += nums[i];
             }
 
-            maxSum = Math.max(curSum, maxSum);
+            if (curSum > maxSum) {
+                maxSum = curSum;
+            }
         }
 
         return maxSum;
