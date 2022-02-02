@@ -10,7 +10,7 @@ import static org.junit.Assert.assertTrue;
 /**
  * 1094. Car Pooling
  * Medium
- * #Array, #Sorting, #Heap, #Simulation, #Prefix SUm
+ * #Array, #Sorting, #Heap, #Simulation, #Prefix Sum
  * Microsoft
  *
  * You are driving a vehicle that has capacity empty seats initially available

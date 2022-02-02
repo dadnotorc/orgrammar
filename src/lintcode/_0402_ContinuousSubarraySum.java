@@ -11,12 +11,12 @@ import static org.junit.Assert.assertTrue;
 /**
  * 402. Continuous Subarray Sum
  * Medium
+ * #Array, #Prefix Sum
  * Amazon, Facebook
  *
- * Given an integer array, find a continuous subarray where the sum of numbers
- *  is the biggest. Your code should return the index of the first number and
- *  the index of the last number. (If their are duplicate answer, return the
- *  minimum one in lexicographical order)
+ * Given an integer array, find a continuous subarray where the sum of numbers is the biggest.
+ * Your code should return the index of the first number and the index of the last number.
+ * (If their are duplicate answer, return the minimum one in lexicographical order)
  *
  * Example 1:
  * Input: [-3, 1, 3, -3, 4]
@@ -26,6 +26,9 @@ import static org.junit.Assert.assertTrue;
  * Input: [0, 1, 0, 1]
  * Output: [0, 3]
  * Explanation: The minimum one in lexicographical order.
+ *
+ * 类似 leetcode 523. 但是 leetcode 是找是否存在 sum 为 k 的倍数的 subarray
+ * 此题是, 找拥有最大 sum 的一组 subarray
  */
 public class _0402_ContinuousSubarraySum {
 
