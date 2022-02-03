@@ -1,21 +1,18 @@
-/*
-Easy
-#Array, #Greedy
- */
 package leetcode;
 
 import org.junit.Test;
 
 /**
  * 122. Best Time to Buy and Sell Stock II
+ * medium
+ * #Array, #Greedy
  *
- * Say you have an array for which the ith element is the price of a given stock on day i.
+ * You are given an integer array prices where prices[i] is the price of a given stock on the ith day.
  *
- * Design an algorithm to find the maximum profit. You may complete as many transactions as you like
- * (i.e., buy one and sell one share of the stock multiple times).
+ * On each day, you may decide to buy and/or sell the stock. You can only hold at most one share of
+ * the stock at any time. However, you can buy it then immediately sell it on the same day.
  *
- * Note: You may not engage in multiple transactions at the same time
- * (i.e., you must sell the stock before you buy again).
+ * Find and return the maximum profit you can achieve.
  *
  * Input: [7,1,5,3,6,4]
  * Output: 7
@@ -34,12 +31,16 @@ import org.junit.Test;
  * Output: 0
  * Explanation: In this case, no transaction is done, i.e. max profit = 0.
  */
-public class _0122_BestTimeToBuyAndSellStock2 {
+public class _0122_Best_Time_Buy_Sell_Stock_2 {
+
+    /*
+    贪心 - 上涨时持有, 一旦下跌就买出. 跌到底, 开始上涨时又买
+     */
 
     /**
      * 速度更快 ~ 1ms
-     * @param prices
-     * @return
+     * 只要比前一天上涨, 就把涨额加入 ans 中
+     * 下跌 或者 不变, 都不做任何更新
      */
     public int maxProfit_2(int[] prices) {
         if (prices == null || prices.length < 2)
@@ -55,6 +56,7 @@ public class _0122_BestTimeToBuyAndSellStock2 {
 
         return ans;
     }
+
 
     /**
      * 速度较慢 ~ 3ms

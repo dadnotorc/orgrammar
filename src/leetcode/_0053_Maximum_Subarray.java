@@ -18,12 +18,14 @@ package leetcode;
  *
  * 类似 lintcode 402. Continuous Subarray Sum
  */
-public class _0053_MaximumSubarray {
+public class _0053_Maximum_Subarray {
 
     /**
-     * 每遇到一个数字, 考虑到当前数字为止 (必须包括当前值), 最大的subarry之和,
-     * 如果curMax + i < i, 则 curMax = i
-     * 同时更新maxSum
+     * DP - 简化写法, 改进空间消耗
+     *
+     * 每遇到一个数字, 考虑到当前数字为止 (必须包括当前值), 最大的 subarry 之和,
+     * 如果 curMax + i < i, 则 curMax = i
+     * 同时更新 maxSum
      */
     public int maxSubArray_3(int[] nums) {
         int curMax = 0, maxSum = Integer.MIN_VALUE;
