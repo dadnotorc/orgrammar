@@ -1,14 +1,12 @@
-/*
-Medium
-#Array, #DP, #Greedy
-Amazon
- */
 package leetcode;
 
 import org.junit.Test;
 
 /**
  * 1567. Maximum Length of Subarray With Positive Product
+ * Medium
+ * #Array, #DP, #Greedy
+ * Amazon
  *
  * Given an array of integers nums, find the maximum length of a subarray
  * where the product of all its elements is positive.
@@ -37,7 +35,7 @@ import org.junit.Test;
  * 1 <= nums.length <= 10^5
  * -10^9 <= nums[i] <= 10^9
  */
-public class _1567_MaximumLengthSubarrayPositiveProduct {
+public class _1567_Max_Length_Subarray_Positive_Product {
 
 
     /**

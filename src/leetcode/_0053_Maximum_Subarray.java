@@ -28,6 +28,9 @@ public class _0053_Maximum_Subarray {
      * 同时更新 maxSum
      */
     public int maxSubArray_3(int[] nums) {
+        if (nums == null || nums.length == 0)
+            return 0;
+
         int curMax = 0, maxSum = Integer.MIN_VALUE;
 
         for (int i : nums) {
