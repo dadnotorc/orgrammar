@@ -1,11 +1,9 @@
-/*
-Medium
-#Array, #Binary Search
- */
 package leetcode;
 
 /**
  * 33. Search in Rotated Sorted Array
+ * Medium
+ * #Array, #Binary Search
  *
  * There is an integer array nums sorted in ascending order (with distinct values).
  *
@@ -37,7 +35,7 @@ package leetcode;
  * - nums is guaranteed to be rotated at some pivot.
  * - -10^4 <= target <= 10^4
  */
-public class _0033_SearchInRotatedSortedArray {
+public class _0033_Search_Rotated_Sorted_Array {
 
     public int search(int[] nums, int target) {
         if (nums == null || nums.length == 0)

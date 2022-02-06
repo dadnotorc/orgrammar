@@ -16,7 +16,7 @@ Note that the information returned is the teacher's name and email address
 If there is no query results, nothing will be returned
 
 
-QL
+SQL
 
 ```
 select  name,
