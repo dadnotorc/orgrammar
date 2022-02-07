@@ -36,9 +36,46 @@ import java.util.Stack;
  */
 public class _0264_Counting_Universal_Subarrays {
 
-    // todo 未完成
+    /**
+     * 遍历 并 统计 当前数的长度. 每次读取都比较 前一个数的长度 VS 当前数长度.
+     * - 前一个数长度 >= 当前数长度, 则答案 +1
+     *
+     * 当前数改变时 (即 当前位 与 前一位 不同时), 交换长度, 并将当前数长度 reset 为 1
+     *
+     * 时间 - O(n), 空间 - O(1)
+     */
+    public int subarrays(int[] array) {
+        if (array == null || array.length < 2) {
+            return 0;
+        }
+
+        int ans = 0;
+
+        int preNumLen = 0; // 前一个数的长度从 0 开始, 因为最开始的时候, 就没有任何前一个数
+        int curNumLen = 1; // 当前数的长度从 1 开始, 因为刚读到它
+
+        for (int i = 1; i < array.length; i++) {
+            if (array[i] != array[i -1]) {
+                preNumLen = curNumLen;
+                curNumLen = 1;
+            } else {
+                curNumLen++;
+            }
+
+            // 每次都要比较长度
+            if (preNumLen >= curNumLen) {
+                ans++;
+            }
+        }
+
+        return ans;
+    }
+
+
+
 
     /**
+     * todo 能不能用 stack 做?   考虑 4, 2 顺序　加上　2,4 顺序
      * 有 bug
      */
     public int subarrays_bug(int[] array) {

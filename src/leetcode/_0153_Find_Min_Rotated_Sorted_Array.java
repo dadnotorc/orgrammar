@@ -48,47 +48,56 @@ public class _0153_Find_Min_Rotated_Sorted_Array {
 
     小心特殊情况
     1. rotate 到原位, 单调递增
-    2. 数组只有两位, 不能找到 nums[i - 1] > nums[i] && nums[i] < nums[i + 1])
+    2. 如果数组只有两位, 不能找到 nums[i - 1] > nums[i] && nums[i] < nums[i + 1])
      */
 
+
     /**
-     * todo 未完成
+     * 二分法
+     */
+    public int findMin_1(int[] nums) {
+        if (nums == null || nums.length == 0) {
+            return Integer.MIN_VALUE;
+        }
+
+        int l = 0, r = nums.length - 1;
+
+        while (l < r) {
+            int mid = l + (r - l) / 2;
+
+            // 只比较 两位, 为了避免数组只有 2 位的情况
+            if (mid > 0 && nums[mid] < nums[mid - 1]) {
+                return nums[mid];
+            }
+
+            // if (nums[mid] >= nums[l] && nums[mid] > nums[r]) {
+            if (nums[l] > nums[r] && nums[mid] >= nums[l]) {
+                l  = mid + 1; // 这必须 + 1, 不然会 TLE
+            } else {
+                r = mid;
+            }
+        }
+
+        return nums[l];
+    }
+
+    /**
+     *
      */
     public int findMin(int[] nums) {
         if (nums == null || nums.length == 0) {
             return Integer.MIN_VALUE;
         }
 
-        int n = nums.length;
-        int l = 0, r = n - 1;
+        int l = 0, r = nums.length - 1;
 
-        // 单调递增
-        if (nums[l] < nums[r]) {
-            return nums[l];
-        }
-
-        // 有pivot, 找 nums[i - 1] > nums[i] && nums[i] < nums[i + 1])
         while (l < r) {
             int mid = l + (r - l) / 2;
 
-            if (nums[mid - 1] > nums[mid] && nums[mid] < nums[mid + 1]) {
-                return nums[mid];
-            }
-
-//            if (nums[mid] >= nums[l] && nums[mid] > nums[r]) {
-//                l = mid + 1;
-//            } else {
-//                r = mid - 1;
-//            }
-
-            if (nums[l] > nums[r]) {
-                if (nums[mid] >= nums[l]) {
-                    l = mid + 1;
-                } else {
-                    r = mid;
-                }
+            if (nums[mid] > nums[r]) {
+                l = mid + 1;
             } else {
-                return nums[l];
+                r = mid;
             }
         }
 
