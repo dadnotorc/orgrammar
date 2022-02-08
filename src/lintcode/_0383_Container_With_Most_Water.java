@@ -1,12 +1,10 @@
-/*
-Medium
-#Array, #Two Pointers
-Amazon
- */
 package lintcode;
 
 /**
  * 383. Container With Most Water
+ * Medium
+ * #Array, #Two Pointers
+ * Amazon
  *
  * Given n non-negative integers a1, a2, ..., an, where each represents a point
  * at coordinate (i, ai). n vertical lines are drawn such that the two endpoints
@@ -39,8 +37,20 @@ package lintcode;
  * Selecting a2, a3, capacity is 2 * 1 = 2
  * Selecting a2, a4, capacity is 2 * 2 = 4
  * Selecting a3, a4, capacity is 2 * 1 = 2
+ *
+ * 等同 leetcode 11
  */
-public class _0383_ContainerWithMostWater {
+public class _0383_Container_With_Most_Water {
+
+    /*
+    1. 暴力解法 - 同向双指针, 两层循环
+    一个指针固定时, 另一个指针遍历其之后的所有点, 记录最大值 - 时间 O(n^2), 空间 O(1)
+
+    2. 改进 - 面对面 相向双指针, 一次遍历
+    指针从两头向中间移动, 每次移动较矮的一头. 当前面积 = 矮指针值 x 指针间距 - 时间 O(n^2), 空间 O(1)
+
+    移动较矮的一头, 理由是希望能找到高于较高的那一头
+     */
 
 
     /**
@@ -75,7 +85,7 @@ public class _0383_ContainerWithMostWater {
 
 
     /**
-     * 双指针, 两层循环, 右指针每移动一次, 左指针从头移动到右指针之前
+     * 暴力 - 双指针, 两层循环, 右指针每移动一次, 左指针从头移动到右指针之前
      *
      * time:  O((1 + (n-1)) * (n-1) / 2) = O(n^2)
      * space: O(1)

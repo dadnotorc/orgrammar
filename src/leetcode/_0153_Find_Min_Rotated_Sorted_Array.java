@@ -54,6 +54,18 @@ public class _0153_Find_Min_Rotated_Sorted_Array {
 
     /**
      * 二分法
+     * - 当 l 与 r 处于同一区间内 (同时处于左上 或者 右下), mid 只能存在期间
+     *    - r 左移到 mid                                              <- 这两者一样, 可以合并
+     *    - 注意! 这里不能 - 1, 因为 mid 可能已经等于 l
+     *
+     * - 当 l 于 r 处于不同区间内 (l 在左上, r 在右下)
+     *    - 如果 mid 也在左上 (nums[mid] >= nums[l])
+     *       - l 右移 到 mid + 1
+     *       - 这里必须 + 1, 不然会 TLE, 而且最小值在右下区间, 不担心越界
+     *
+     *    -  如果 mid 在 右下 (nums[mid] <= nums[r])
+     *        - r 左移到 mid                                          <- 这两者一样, 可以合并
+     *        - 注意! 这里不能 - 1, 因为 mid 可能已经达到最低
      */
     public int findMin_1(int[] nums) {
         if (nums == null || nums.length == 0) {
@@ -81,8 +93,15 @@ public class _0153_Find_Min_Rotated_Sorted_Array {
         return nums[l];
     }
 
+
+
+
     /**
+     * 简化 - 前一种解法中, l 需要右移的情况:
+     * 当 l 在左上, r 在右下, 且 mid 也在左上 (nums[mid] >= nums[l])
+     * 此情况 可以简写成 nums[mid] > nums[r]
      *
+     * 因为另外两种情况中, nums[mid] 不可能大于 nums[r]
      */
     public int findMin(int[] nums) {
         if (nums == null || nums.length == 0) {

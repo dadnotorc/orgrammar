@@ -7,12 +7,12 @@ functionality, HashMap and TreeMap have different implementations.
 The most important difference is the order in which iteration through
 the entries will happen.
 
-Property | HashMap | TreeMap
----|---|---
-ordering | not guaranteed | sorted, natural ordering
-get/put/remove complexity | O(1) | O(log(n))
-inherited interfaces | Map | Map, NavigableMap, SortedMap
-NULL values/keys | allowed | only values
+| Property                  | HashMap        | TreeMap                      |
+|---------------------------|----------------|------------------------------|
+| ordering                  | not guaranteed | sorted, natural ordering     |
+| get/put/remove complexity | O(1)           | O(log(n))                    |
+| inherited interfaces      | Map            | Map, NavigableMap, SortedMap |
+| NULL values/keys          | allowed        | only values                  |
 
 ###Major Difference between HashMap and TreeMap
 TreeMap is an example of a SortedMap and is implemented by Red-Black tree,

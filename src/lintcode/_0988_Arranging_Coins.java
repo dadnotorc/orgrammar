@@ -50,7 +50,7 @@ public class _0988_Arranging_Coins {
             return n;
         }
 
-        int curSum = 0, ans = 0;
+        int curSum = 0, ans = 0; // 这里不需要用 long, 因为 curSum 最大到 integer n
         while (curSum < n) {
             ans++; // 顺序很重要
             curSum = curSum + ans;
@@ -69,7 +69,9 @@ public class _0988_Arranging_Coins {
             return n;
         }
 
-        long l = 1, r = n; // 注意 用 long, 避免 integer overflow
+        // 注意 计算 curSum 要用 long, 避免 integer overflow
+
+        long l = 1, r = n;
         while (l < r) {
             long mid = l + (r - l) / 2;
             long curSum = getSum(mid);

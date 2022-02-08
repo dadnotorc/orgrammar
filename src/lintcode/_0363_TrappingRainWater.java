@@ -1,17 +1,13 @@
-/*
-Medium
-#Two Pointers, #Array, #Forward-Backward Traversal
-Airbnb, Amazon, Apple, Google, Twitter
-FAQ+
- */
 package lintcode;
-
-import org.junit.Test;
 
 import java.util.Stack;
 
 /**
  * 363. Trapping Rain Water
+ * Medium
+ * #Two Pointers, #Array, #Forward-Backward Traversal
+ * Airbnb, Amazon, Apple, Google, Twitter
+ * FAQ+
  *
  * Given n non-negative integers representing an elevation map where the width
  * of each bar is 1, compute how much water it is able to trap after raining.

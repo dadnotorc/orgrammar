@@ -1,12 +1,10 @@
-/*
-Easy
-#String
-Quora
- */
 package lintcode;
 
 /**
- * 1343 · Sum of Two Strings
+ * 1343 · Sum of Two Strings - 这题加法不涉及进位
+ * Easy
+ * #String
+ * Quora
  *
  * Given you two strings which are only contain digit character.
  * You need to return a string spliced by the sum of the bits.
