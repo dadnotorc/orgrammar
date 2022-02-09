@@ -7,9 +7,8 @@ import org.junit.Test;
  * Easy
  * #DP
  *
- * You are climbing a stair case. It takes n steps to reach to the top.
- * Each time you can either climb 1 or 2 steps. In how many distinct ways
- * can you climb to the top?
+ * You are climbing a staircase. It takes n steps to reach to the top. Each time you can either climb 1 or 2 steps.
+ * In how many distinct ways can you climb to the top?
  *
  * Note: Given n will be a positive integer.
  *
@@ -50,13 +49,13 @@ public class _0070_ClimbingStairs {
     /**
      * 简化 - 因为 dp[n] = dp[n - 2] + dp[n - 1]
      * 我们只需要记录 3 个临时函数, t2, t1 和 t0 对应上面的 3 个值
-     * 时间 O(n)
-     * 空间 O(1)
+     * 时间 O(n), 空间 O(1)
      */
     public int climbStairs(int n) {
+        /* 可以省略
         if (n < 2) {
             return 1;
-        }
+        }*/
 
         int t0 = 1;
         int t1 = 1;
@@ -68,7 +67,7 @@ public class _0070_ClimbingStairs {
             t1 = t2;
         }
 
-        return t2;
+        return t1; // 如果省略了开头的特判, 这里就不能返回 t2, 而必须返回 t1
     }
 
 
