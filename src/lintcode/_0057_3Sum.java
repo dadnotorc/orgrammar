@@ -32,11 +32,16 @@ import java.util.List;
  */
 public class _0057_3Sum {
 
+    /*
+    暴力解法 - 3层循环, 列出所有的 combination, 计算其和是否满足条件 - 时间 O(n^3), 空间 O(1)
+
+    改进 - 先固定一个点, 然后做 2 sum - 时间 O(n^2), 空间 O(1)
+     */
+
     /**
      * 双指针
      * 1. 排序
      * 2. 遍历数组 - 从 首位 到 倒数第三位, [0] ~ [n - 3], 以保证最后有两位数字
-     *
      */
     public List<List<Integer>> threeSum(int[] numbers) {
         if (numbers == null || numbers.length < 3)

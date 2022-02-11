@@ -92,64 +92,25 @@ public class _0300_Longest_Increasing_Subsequence {
 
 
     /**
-     * 使用 dp array + 二分法
-     */
-    public int lengthOfLIS_patience_sorting_1(int[] nums) {
-        if (nums == null) { return 0; }
-
-        int n = nums.length;
-        int[] dp = new int[n + 1]; // 这里使用 1-indexed, 为了方便理解. dp[1] 即 subsequence 长度为 1
-        int size = 1; // 1-indexed
-
-        for (int num : nums) {
-            /* 使用现有的 API
-            int index = Arrays.binarySearch(dp, 1, size, num);
-            if (index < 0) {
-                index = -(index + 1); // 这是 Arrays.binarySearch 里未找到 target 时的返回值
-            }
-             */
-
-            int index = binarySearch(dp, 1, size, num);
-            dp[index] = num;
-
-            if (index == size) {
-                size++;
-            }
-        }
-
-        return size - 1;
-    }
-
-
-    public int binarySearch(int[] dp, int start, int end, int target) {
-        while (start < end) {
-            int mid = start + (end - start) / 2;
-            if (dp[mid] == target) {
-                return mid;
-            }
-
-            if (dp[mid] < target) {
-                start = mid + 1;
-            } else {
-                end = mid; // 注意 这里不能用 mid - 1, 因为可能会错误的跳过当前的 mid
-            }
-        }
-
-        return start;
-    }
-
-
-
-    /**
-     * 使用 list 来记录当前 pile
-     */
-    public int lengthOfLIS_patience_sorting_2(int[] nums) {
+     * patience sorting - 使用 list 来记录当前 pile
+     * 找寻 pile 的时候
+     * 1. 基本做法就是遍历, 如果
+     *    - 如果 num >  pile.get(i) => 跳过, 检查下一位 i + 1
+     *    - 如果 num <= pile.get(i) => i 就是将被更新的 index
+      */
+    public int lengthOfLIS_patience_sorting_list(int[] nums) {
         if (nums == null) { return 0; }
 
         List<Integer> pile = new ArrayList<>();
 
         for (int num : nums) {
-            /*
+
+            // 遍历法
+            //int index = findPile(pile, num);
+
+
+            // 使用 二分法 改进
+            /* 利用现成的 API
             int index = Collections.binarySearch(pile, num);
             if (index < 0) {
                 index = -(index + 1); // 这是 Collections.binarySearch 里未找到 target 时的返回值
@@ -157,9 +118,9 @@ public class _0300_Longest_Increasing_Subsequence {
              */
             int index = binarySearch(pile, num);
 
-            if (index == pile.size()) {
+            if (index == pile.size()) { // 需要个新 pile
                 pile.add(num);
-            } else {
+            } else { // 更新现有 pile 即可
                 pile.set(index, num);
             }
         }
@@ -167,6 +128,18 @@ public class _0300_Longest_Increasing_Subsequence {
         return pile.size();
     }
 
+    /* 方法 1 - 遍历 */
+    public int findPile(List<Integer> pile, int target) {
+        for (int i = 0; i < pile.size(); i++) {
+            if (target <= pile.get(i)) { // 注意 是 <=, 遇到相同的时候, 并不需要个新的pile
+                return i;
+            }
+        }
+
+        return pile.size();
+    }
+
+    /* 改进 方法 2 - 二分法 */
     public int binarySearch(List<Integer> pile, int target){
         int l = 0, r = pile.size(); // 注意 这里 r 的取值, 不能时 pile.size() - 1
         while (l < r) {
@@ -190,11 +163,87 @@ public class _0300_Longest_Increasing_Subsequence {
 
 
 
+    /**
+     * patience sorting - 使用 dp array + 遍历 或者 二分法
+     *
+     * array 中并不是所有元素都有效, 所以 多加入一个 index_newPile 参数 (从它开始都是无效元素)
+     * 此解法用 1-indexed, 所以数组 从 1 到 index_newPile - 1 为有效元素
+     * 也就是, 共有 index_newPile - 1 个有效的 pile (此为返回值)
+     */
+    public int lengthOfLIS_patience_sorting_array(int[] nums) {
+        if (nums == null) { return 0; }
+
+        int[] dp = new int[nums.length + 1]; // 这里使用 1-indexed, 为了方便理解. dp[1] 即 subsequence 长度为 1
+        int index_newPile = 1; // 1-indexed
+
+        for (int num : nums) {
+            // 遍历法
+            //int index_pileToUpdate = findPile(dp, 1, index_newPile, int num) {
+
+
+            // 使用 二分法 改进
+            /* 利用现成的 API
+            int index = Arrays.binarySearch(dp, 1, size, );
+            if (index < 0) {
+                index = -(index + 1); // 这是 Arrays.binarySearch 里未找到 target 时的返回值
+            }
+             */
+            int index_pileToUpdate = binarySearch(dp, 1, index_newPile, num);
+
+            dp[index_pileToUpdate] = num;
+
+            // 别忘了, 如果开启个新 pile 时, 要更新 size (这里的 size 可以理解为 下一个 pile 的 下标)
+            if (index_pileToUpdate == index_newPile) {
+                index_newPile++;
+            }
+        }
+
+        return index_newPile - 1;
+    }
+    /* 方法 1 - 遍历 */
+    public int findPile(int[] dp, int start, int index_newPile, int target) {
+        for (int i = start; i < index_newPile; i++) { // 理论上, 这里必须用 <, 而不是 <=
+            if (target <= dp[i]) { // 注意 是 <=
+                return i;
+            }
+        }
+
+        return index_newPile;
+    }
+
+
+    /* 改进 方法 2 - 二分法 */
+    public int binarySearch(int[] dp, int start, int index_newPile, int target) {
+        while (start < index_newPile) {
+            int mid = start + (index_newPile - start) / 2;
+            if (dp[mid] == target) {
+                return mid;
+            }
+
+            if (dp[mid] < target) {
+                start = mid + 1;
+            } else {
+                index_newPile = mid; // 注意 这里不能用 mid - 1, 因为可能会错误的跳过当前的 mid
+            }
+        }
+
+        return start;
+    }
+
+
+
+
+
+
+
+
+
+
 
 
     @Test
     public void test1(){
         int[] nums = {10,9,2,5,3,4};
-        org.junit.Assert.assertEquals(3, lengthOfLIS_patience_sorting_2(nums));
+        org.junit.Assert.assertEquals(3, lengthOfLIS_patience_sorting_list(nums));
     }
 }

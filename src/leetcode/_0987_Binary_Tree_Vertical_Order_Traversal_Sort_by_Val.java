@@ -60,7 +60,7 @@ import java.util.*;
  * - same column, same column 的两个节点, 输出时按 val 从小到大排列 - 用 Priority Queue
  * - same column, but different row, 按从上到下的先后顺序 (不考虑前一项时 ArrayList 即可, 不然就需要多一层 TreeMap)
  */
-public class _0987_Binary_Tree_Vertical_Order_Traversal_TreeMap {
+public class _0987_Binary_Tree_Vertical_Order_Traversal_Sort_by_Val {
 
     /**
      * BFS + TreeMap<Integer, TreeMap<Integer, PriorityQueue<Integer>>>

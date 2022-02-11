@@ -1,9 +1,3 @@
-/*
-Medium
-#String, #Two Pointers
-LinkedIn, Facebook, Microsoft, Uber
-FAQ+
- */
 package lintcode;
 
 import org.junit.Test;
@@ -13,12 +7,13 @@ import static org.junit.Assert.assertTrue;
 
 /**
  * 415. Valid Palindrome
+ * Medium
+ * #String, #Two Pointers
+ * LinkedIn, Facebook, Microsoft, Uber
+ * FAQ+
  *
  * Given a string, determine if it is a palindrome, considering only
  * alphanumeric characters and ignoring cases.
- *
- * String可否为空 empty? 面试时可跟面试官确认.
- * 我们这里假设 empty string is a valid palindrome
  *
  * Example 1:
  * Input: "A man, a plan, a canal: Panama"
@@ -32,8 +27,14 @@ import static org.junit.Assert.assertTrue;
  *
  * Challenge
  * O(n) time without extra memory.
+ *
+ * 类似 leetcode 125
  */
 public class _0415_ValidPalindrome {
+    /*
+    String可否为空 empty? 面试时可跟面试官确认.
+    我们这里假设 empty string is a valid palindrome
+     */
 
     /**
      * 先使用regex移除标点/空格, 变成小写, 之后用双指针
