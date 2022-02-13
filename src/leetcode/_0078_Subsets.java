@@ -1,16 +1,11 @@
-/*
-Medium
-#Array, #Backtracking, #Bit Manipulation
- */
 package leetcode;
 
-import org.junit.Test;
-
-import java.lang.reflect.Array;
 import java.util.*;
 
 /**
  * 78. Subsets
+ * Medium
+ * #Array, #Backtracking, #Bit Manipulation
  *
  * Given a set of distinct integers, nums, return all possible subsets (the power set).
  *
