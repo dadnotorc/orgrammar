@@ -1,14 +1,12 @@
-/*
-Medium
-#Two Pointers, #Prefix Sum, #Array
-Facebook
- */
 package lintcode;
 
 import org.junit.Test;
 
 /**
  * 406 · Minimum Size Subarray Sum
+ * Medium
+ * #Two Pointers, #Prefix Sum, #Array
+ * Facebook
  *
  * Given an array of n positive integers and a positive integer s,
  * find the minimal length of a subarray of which the sum ≥ s. If there isn't one, return -1 instead.
@@ -24,13 +22,15 @@ import org.junit.Test;
  *
  * Challenge
  * - If you have figured out the O(nlog n) solution, try coding another solution of which the time complexity is O(n).
+ *
+ * 等同 leetcode 209
  */
-public class _0406_MinimumSizeSubarraySum {
+public class _0406_Minimum_Size_Subarray_Sum {
 
     /**
-     * 九章解法 - 类似前缀额解法, 但是不维护前缀和数组
+     * 九章解法 - 类似前缀额解法, 但是不维护前缀和数组 - sliding windows, 保持其长度在 s 附近
      *
-     * 时间 O(n) - 每个元素最多被访问 2 次, l 与 r 指针各 1 次
+     * 时间 O(2 x n) - 每个元素最多被访问 2 次, l 与 r 指针各 1 次
      * 空间 O(1)
      */
     public int minimumSize_9z(int[] nums, int s) {
@@ -63,7 +63,7 @@ public class _0406_MinimumSizeSubarraySum {
      * input = [1,2,3,4,5]; prefixSum = [1,3,6,10,15].
      * nums[0] ~ nums[4] 之和 = 1 + 2 + 3 + 4 + 5 = 15. 此答案通过前缀和相减无法获得
      *
-     * 时间 O(n) - 每个元素最多被访问 3 次. 求前缀和 1 次, 之后 l 与 r 指针各 1 次
+     * 时间 O(3 x n) - 每个元素最多被访问 3 次. 求前缀和 1 次, 之后 l 与 r 指针各 1 次
      * 空间 O(n)
      */
     public int minimumSize(int[] nums, int s) {
@@ -81,7 +81,7 @@ public class _0406_MinimumSizeSubarraySum {
         // 这里的 l 和 r 是 prefixSum 上的下标, 对应 nums 上的 l 与 r - 1
         int l = 0;
         for (int r = 1; r <= n; r++) { // 注意这里 r 从 1 开始, 而且要 <= n, 因为 prefixSum 数组长一位
-            if (prefixSum[r] - prefixSum[l] >= s) {
+            while (l < r && prefixSum[r] - prefixSum[l] >= s) {
                 ans = Math.min(ans, r - l);
                 l++;
             }
@@ -89,6 +89,10 @@ public class _0406_MinimumSizeSubarraySum {
 
         return ans == Integer.MAX_VALUE ? -1 : ans;
     }
+
+
+
+
 
 
     /**

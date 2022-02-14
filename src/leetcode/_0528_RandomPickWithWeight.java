@@ -3,10 +3,10 @@ package leetcode;
 import java.util.Random;
 
 /**
- * 528. Random Pick with Weight
+ * 528. Random Pick with Weight - random city pick
  * Medium
  * #Binary Search, #Random
- * Google
+ * Google, Facebook
  *
  * You are given a 0-indexed array of positive integers w where w[i] describes the weight of the ith index.
  *
