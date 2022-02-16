@@ -1,10 +1,10 @@
-/*
-Naive
- */
 package lintcode;
+
+import java.util.Scanner;
 
 /**
  * 2394 · Print matrix (Java version)
+ * Naive
  *
  * Given a positive integer n, with n as the side length, please output the sequence number
  * from left to right and top to bottom through the output statement to form a square matrix,
@@ -34,12 +34,10 @@ package lintcode;
  * 21 22 23 24 25
  */
 
-import java.util.Scanner;
-
-public class _2394_PrintMatrix {
+public class _2394_Print_Matrix {
     public static void main(String[] args) {
         Scanner input = new Scanner(System.in);
-        int n = input.nextInt();
+            int n = input.nextInt();
 
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i < n; i++) {

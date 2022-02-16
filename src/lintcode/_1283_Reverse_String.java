@@ -1,11 +1,9 @@
-/*
-Easy
-#String
- */
 package lintcode;
 
 /**
  * 1283 · Reverse String
+ * Easy
+ * #String
  *
  * Write a function that takes a string as input and returns the string reversed.
  *
@@ -17,7 +15,7 @@ package lintcode;
  * Input："hello world"
  * Output："dlrow olleh"
  */
-public class _1283_ReverseString {
+public class _1283_Reverse_String {
 
     /**
      * StringBuilder 反向加入 字符串
