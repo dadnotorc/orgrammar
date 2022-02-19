@@ -1,11 +1,10 @@
 package leetcode;
 
-import org.junit.Test;
-
-import java.lang.annotation.Target;
-
 /**
  * 2. Add Two Numbers
+ * Medium
+ * #Linked Lst, #Math, #Recursion
+ * Adobe, Airbnb, Amazon, Apple, Facebook meta, Google, Intel, Microsoft, Oracle, SAP, ....
  *
  * You are given two non-empty linked lists representing two non-negative integers.
  * The digits are stored in reverse order, and each of their nodes contains a single digit.
@@ -52,7 +51,7 @@ public class _0002_Add_Two_Numbers {
 
         ListNode i1 = l1, i2 = l2;
         while (i1 != null || i2 != null) {
-            int cur = carryover;
+            int cur = carryover; // 先加上 carryover
             if (i1 != null) {
                 cur += i1.val;
                 i1 = i1.next;
