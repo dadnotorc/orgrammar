@@ -1,19 +1,15 @@
-/*
-Easy
-Hash Table
-Facebook, Google
- */
 package lintcode;
 
 import org.junit.Test;
 
-import java.util.Hashtable;
+import java.util.HashMap;
 
 import static org.junit.Assert.assertEquals;
 
 /**
  * 838. Subarray Sum Equals K
  * Easy
+ * #Enumerate, #Hash Table, #Array
  * Facebook, Google
  *
  * Given an array of integers and an integer k, you need to find the
@@ -31,23 +27,26 @@ import static org.junit.Assert.assertEquals;
  * Explanation:
  * subarray [0,1], [1,4], [0,3] and [3,4]
  *
- * 注意：　数值可正可负
  *
- * 此题关键: 求 [i,j] 之和 = [0,j] 之和 - [0,i] 之和
  */
-public class _0838_SubarraySumEqualsK {
+public class _0838_Subarray_Sum_Equals_K {
+
+    /*
+    注意：　数值可正可负
+
+    此题关键: 求 [i,j] 之和 = [0,j] 之和 - [0,i] 之和
+     */
 
     /**
-     * 九章算法 解答 - 此题重点是在Hashtable中记录前缀和, 及其出现次数
-     * key为 prefixSum[i], value 为该数组和出现过的次数
+     * HashMap 中记录 <前缀和, 该前缀和出现的次数>
      *
      * prefixSum[i]表示从 0 位加到 i 位的数组和
      * prefixSum[j]表示从 0 位加到 j 位的数组和, j > i
      * prefixSum[j]-prefixSum[i]表示从 i+1 位加到 j 位的数组和
      *
-     * 访问每个前缀和prefixSum[i]时:
-     *   1. 如果Hashtable中存在 prefixSum[i]-k 为key的entry, 将其value加入答案
-     *   2. 将 prefixSum[i] 出现次数 +1
+     * 访问每个前缀和 prefixSum[i] 时:
+     *   1. 如果 hashmap 中存在 key = prefixSum[i] - k, 将其 value 加入答案
+     *   2. 将 hashmap 中 prefixSum[i] 出现次数递增 1
      *
      * 例2: [2,1,-1,1,2], 前缀和数组为 [2,3,2,3,5]
      *  当遍历到前缀和 nums[i] 时, 检查是否存在 nums[a]满足 nums[a] = nums[i] - k. 例如:
@@ -56,53 +55,34 @@ public class _0838_SubarraySumEqualsK {
      *  - 当遍历到 nums[4] = 5 时, nums[4]-3 = 2 = nums[0] = nums[2], 表示
      *     从0的下一位(1)开始到4, 数组和为3 -> [1,4]
      *     从2的下一位(3)开始到4, 数组和为3 -> [3,4]
+     *
+     * hashmap 中, 别忘了加上 <0, 1> - 当 subarray 为空时, 前缀和 = 0, 其出现次数 = 1
+     *
+     * 时间 O(n), 空间 O(n)
      */
     public int subarraySumEqualsK(int[] nums, int k) {
-        // 先求出前缀和prefixSum 数组
-        for (int i = 1; i < nums.length; i++) {
-            nums[i] += nums[i - 1];
-        }
+        int prefixSum = 0;
 
-        Hashtable<Integer, Integer> tb = new Hashtable<>();
-        tb.put(0,1); // (前缀数组和, 出现次数)  当一个数字都不加的时候, 前缀和=0, 其出现次数=1
+        HashMap<Integer, Integer> map = new HashMap<>(); // <前缀和, 出现次数>
+        map.put(0,1); // 易错点, 别忘了!
+
         int ans = 0;
-        for (int curPrefixSum : nums) {
+        for (int num : nums) {
+            prefixSum += num;
 
-            if (tb.containsKey(curPrefixSum - k)) { //存在nums[a], s.t nums[a] = 前缀和 nums[i] - k
-                ans += tb.get(curPrefixSum - k);
+            if (map.containsKey(prefixSum - k)) {
+                ans += map.get(prefixSum - k);
             }
 
-            if (tb.containsKey(curPrefixSum)) { //记录当前的前缀数组和
-                tb.put(curPrefixSum, tb.get(curPrefixSum) + 1);
-            } else {
-                tb.put(curPrefixSum, 1);
-            }
+            // 别忘了更新当前前缀和的出现次数
+            map.put(prefixSum, map.getOrDefault(prefixSum, 0) + 1);
         }
 
         return ans;
     }
 
-    /* 根据九章算法参考答案修改/缩短 */
-    public int subarraySumEqualsK_s(int[] nums, int k) {
-        int curPrefixSum = 0;
-        Hashtable<Integer, Integer> tb = new Hashtable<>();
-        tb.put(0,1); // (前缀数组和, 出现次数)  当一个数字都不加的时候, 前缀和=0, 其出现次数=1
-        int ans = 0;
-        for (int i = 0; i < nums.length; i++) {
-            curPrefixSum += nums[i];
-            if (tb.containsKey(curPrefixSum - k)) { //当前prefixSum与k之间差值
-                ans += tb.get(curPrefixSum - k);
-            }
 
-            if (tb.containsKey(curPrefixSum)) { //记录当前的前缀数组和
-                tb.put(curPrefixSum, tb.get(curPrefixSum) + 1);
-            } else {
-                tb.put(curPrefixSum, 1);
-            }
-        }
 
-        return ans;
-    }
 
     /**
      * for each integer in nums, find if there is subarray with sum = k
@@ -221,17 +201,18 @@ public class _0838_SubarraySumEqualsK {
         return ans;
     }
 
-        /**
-         * 这个解法的问题是, table中可能含有多个 k - nums[i], 但是答案只增加一次
-         * 例如 nums = [2,1,-1,1,2], k = 3
-         * prefixSum = [2,3,2,3,5] 答案有4个 [0,1], [1,4], [0,3] and [3,4]
-         */
+
+    /**
+     * 有 bug - table中可能含有多个 k - nums[i], 但是答案只增加一次
+     * 例如 nums = [2,1,-1,1,2], k = 3
+     * prefixSum = [2,3,2,3,5] 答案有4个 [0,1], [1,4], [0,3] and [3,4]
+     */
     public int subarraySumEqualsK_withbug(int[] nums, int k) {
         if (nums == null || nums.length == 0)
             return 0;
 
         int ans = 0;
-        Hashtable<Integer, Integer> table = new Hashtable<>();
+        HashMap<Integer, Integer> table = new HashMap<>();
         table.put(0, nums[0]); // (pos, value)
         for (int i = 1; i < nums.length; i++) {
             if (table.containsValue(k - nums[i]))
@@ -249,12 +230,8 @@ public class _0838_SubarraySumEqualsK {
         int[] nums = {1,1,1};
         int k = 2;
         int expected = 2;
-        int actual = new _0838_SubarraySumEqualsK().subarraySumEqualsK(nums, k);
+        int actual = new _0838_Subarray_Sum_Equals_K().subarraySumEqualsK(nums, k);
         assertEquals(expected, actual);
-
-        nums = new int[]{1,1,1};
-        int actual_s = new _0838_SubarraySumEqualsK().subarraySumEqualsK_s(nums, k);
-        assertEquals(expected, actual_s);
     }
 
     @Test
@@ -262,12 +239,8 @@ public class _0838_SubarraySumEqualsK {
         int[] nums = {2,1,-1,1,2};
         int k = 3;
         int expected = 4;
-        int actual = new _0838_SubarraySumEqualsK().subarraySumEqualsK(nums, k);
+        int actual = new _0838_Subarray_Sum_Equals_K().subarraySumEqualsK(nums, k);
         assertEquals(expected, actual);
-
-        nums = new int[]{2,1,-1,1,2};
-        int actual_s = new _0838_SubarraySumEqualsK().subarraySumEqualsK_s(nums, k);
-        assertEquals(expected, actual_s);
     }
 
     @Test
@@ -275,11 +248,7 @@ public class _0838_SubarraySumEqualsK {
         int[] nums = {-4,-1,-6,16,13,2,-1,-4,6,6,-9,13,3,-6,-6,16,8,-10,2,1,0,8,6,16,11,0,10,-6,-5,16};
         int k = 12;
         int expected = 5;
-        int actual = new _0838_SubarraySumEqualsK().subarraySumEqualsK(nums, k);
+        int actual = new _0838_Subarray_Sum_Equals_K().subarraySumEqualsK(nums, k);
         assertEquals(expected, actual);
-
-        nums = new int[]{-4,-1,-6,16,13,2,-1,-4,6,6,-9,13,3,-6,-6,16,8,-10,2,1,0,8,6,16,11,0,10,-6,-5,16};
-        int actual_s = new _0838_SubarraySumEqualsK().subarraySumEqualsK_s(nums, k);
-        assertEquals(expected, actual_s);
     }
 }

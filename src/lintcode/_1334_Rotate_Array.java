@@ -30,7 +30,7 @@ package lintcode;
  * 类似 lintcode 8 · Rotate String
  * 区别是 后者要求是 in-place
  */
-public class _1334_RotateArray {
+public class _1334_Rotate_Array {
 
     // 要注意:
     // 1: k < n
