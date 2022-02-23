@@ -52,4 +52,6 @@ package leetcode;
  *     given in the description.
  */
 public class _1096 {
+
+    // todo
 }

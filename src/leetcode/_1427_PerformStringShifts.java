@@ -3,7 +3,9 @@ package leetcode;
 import org.junit.Test;
 
 /**
- * Perform String Shifts
+ * 1427. Perform String Shifts
+ * Easy
+ * #Prime
  *
  * You are given a string s containing lowercase English letters,
  * and a matrix shift, where shift[i] = [direction, amount]:
@@ -39,7 +41,7 @@ import org.junit.Test;
  *     0 <= shift[i][0] <= 1
  *     0 <= shift[i][1] <= 100
  */
-public class _0000_PerformStringShifts {
+public class _1427_PerformStringShifts {
 
     /**
      * left shift和right shift会互相抵消, 所以先计算抵消后的移动方向及步数

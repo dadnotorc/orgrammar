@@ -1,13 +1,11 @@
-/*
-Medium
-#Binary Search, #Tree
- */
 package leetcode;
 
 import java.util.Stack;
 
 /**
  * 230. Kth Smallest Element in a BST
+ * Medium
+ * #Binary Search, #Tree, #DFS
  *
  * Given a binary search tree, write a function kthSmallest to find the kth smallest element in it.
  *
@@ -39,7 +37,7 @@ import java.util.Stack;
  * The number of elements of the BST is between 1 to 10^4.
  * You may assume k is always valid, 1 ≤ k ≤ BST's total elements.
  */
-public class _0000_KthSmallestElementInBST {
+public class _0230_Kth_Smallest_Element_In_BST {
 
     /**
      * 先走到左下角 (最小值), 然后沿着树走k步

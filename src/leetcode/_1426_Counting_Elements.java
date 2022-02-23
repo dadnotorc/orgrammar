@@ -5,7 +5,9 @@ import org.junit.Test;
 import java.util.HashSet;
 
 /**
- * Counting Elements
+ * 1426. Counting Elements
+ * Easy
+ * #Prime
  *
  * Given an integer array arr, count element x such that x + 1 is also in arr.
  * If there're duplicates in arr, count them separately.
@@ -35,7 +37,7 @@ import java.util.HashSet;
  * 1 <= arr.length <= 1000
  * 0 <= arr[i] <= 1000
  */
-public class _0000_CountingElements {
+public class _1426_Counting_Elements {
 
     /**
      * 易错点:
@@ -63,6 +65,7 @@ public class _0000_CountingElements {
 
 
     /**
+     * 另一种做法
      * 因为不用考虑每个数字的出现次数 (不管i有几个, 只要i+1有一个就够), 所以用HashSet即可
      */
     public int countElements_2(int[] arr) {
@@ -81,6 +84,8 @@ public class _0000_CountingElements {
 
         return ans;
     }
+
+
 
     @Test
     public void test1() {

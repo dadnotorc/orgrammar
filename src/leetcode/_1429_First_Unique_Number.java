@@ -4,6 +4,9 @@ import java.util.*;
 
 /**
  * First Unique Number
+ * Medium
+ * #Prime
+ * Amazon
  *
  * You have a queue of integers, you need to retrieve the first unique integer in the queue.
  *
@@ -59,7 +62,7 @@ import java.util.*;
  * - 1 <= value <= 10^8
  * - At most 50000 calls will be made to showFirstUnique and add.
  */
-public class _0000_FirstUniqueNumber {
+public class _1429_First_Unique_Number {
 
     /**
      * 为了解决TLE问题, 使用LinkedHashSet替代LinkedList
@@ -69,7 +72,7 @@ public class _0000_FirstUniqueNumber {
     Set<Integer> uniqueSet;
     Set<Integer> allSet;
 
-    public _0000_FirstUniqueNumber(int[] nums) {
+    public _1429_First_Unique_Number(int[] nums) {
         uniqueSet = new LinkedHashSet<>();
         allSet = new HashSet<>();
 

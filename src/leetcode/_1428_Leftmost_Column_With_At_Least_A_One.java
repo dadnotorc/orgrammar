@@ -3,7 +3,10 @@ package leetcode;
 import java.util.List;
 
 /**
- * Leftmost Column with at Least a One
+ * 1428. Leftmost Column with at Least a One
+ * Medium
+ * #Prime
+ * Facebook Meta
  *
  * (This problem is an interactive problem.)
  *
@@ -55,7 +58,7 @@ import java.util.List;
  * - mat[i][j] is either 0 or 1.
  * - mat[i] is sorted in a non-decreasing way.
  */
-public class _0000_LeftmostColumnWithAtLeastAOne {
+public class _1428_Leftmost_Column_With_At_Least_A_One {
 
     /**
      * 比第一种解法优化的地方是, 每行不是再从头找到尾, 而是找到上一个1出现的地方, 缩短每行binary search长度

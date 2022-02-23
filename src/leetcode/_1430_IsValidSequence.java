@@ -1,7 +1,9 @@
 package leetcode;
 
 /**
- * Check If a String Is a Valid Sequence from Root to Leaves Path in a Binary Tree
+ * 1430. Check If a String Is a Valid Sequence from Root to Leaves Path in a Binary Tree
+ * Medium
+ * #Prime
  *
  * Given a binary tree where each path going from the root to any leaf form a valid sequence,
  * check if a given string is a valid sequence in such binary tree.
@@ -55,7 +57,7 @@ package leetcode;
  * - 0 <= arr[i] <= 9
  * - Each node's value is between [0 - 9].
  */
-public class _0000_IsValidSequence {
+public class _1430_IsValidSequence {
 
     /**
      * DFS - 将当前array index带入下一层递归

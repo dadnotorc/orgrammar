@@ -56,7 +56,7 @@ public class _1509_Min_Diff_Between_Largest_Smallest_Value_Three_Moves {
             return arr[right] - arr[left];
         }
         steps--;
-        
+
         // 修改最小的的element
         int leftDiff = helper(arr, left + 1, right, steps);
         // 修改最大的element
@@ -92,6 +92,8 @@ public class _1509_Min_Diff_Between_Largest_Smallest_Value_Three_Moves {
      * 简单地讲
      * min heap - 上升排序, 最小值先被 poll, 最后保留最大值
      * max heap - 下降排序, 最大值先被 poll, 最后保留最小值
+     * 
+     * https://www.geeksforgeeks.org/difference-between-min-heap-and-max-heap/?ref=rp
      */
     public int minDifference_3(int[] nums) {
         if (nums == null || nums.length < 5) {
