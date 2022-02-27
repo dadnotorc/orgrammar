@@ -29,6 +29,25 @@ package leetcode;
  */
 public class _0121_Best_Time_Buy_Sell_Stock {
 
+
+    /**
+     * 另一写法
+     */
+    public int maxProfit_2(int[] prices) {
+        if (prices == null || prices.length < 2) { return 0; }
+
+        int min = prices[0]; // 注意 这里必须从 第一位 开始, 而不是给定 0
+        int maxProfit = 0;
+
+        for (int i: prices) {
+            min = Math.min(min, i);
+            maxProfit = Math.max(maxProfit, i - min);
+        }
+
+        return maxProfit;
+    }
+
+
     /**
      * 遍历数组
      * 1. 如果当前值 > curHigh, 说明还有 profit
