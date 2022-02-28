@@ -31,11 +31,14 @@ import java.util.HashSet;
 public class _0217_Contains_Duplicate {
 
     /*
-    暴力解法 - 两层循环, i 从 [0, n - 1], j 从 [i, n - 1], 对比 nums[i] vs nums[j]. 时间 - O(n^2). 空间 - O(1)
+    暴力解法 - 两层循环, i 从 [0, n - 1], j 从 [i, n - 1], 对比 nums[i] vs nums[j].
+            - O(n ^ 2)
 
-    排序 + 遍历 - 排序后, 对比 i 与 i - 1 两个元素是否相等. 时间 - O(nlogn). 空间 - O(1)
+    排序 + 遍历 - 排序后, 对比相邻两个元素是否相等.
+               - O(nlogn)
 
-    使用 set - 遍历的同时, 检查当前元素是否在 set 中已存在, 将未见过的元素放入 set. 时间 - O(n). 空间 - O(n)
+    HashSet - 检查遇到的元素是否存在于在 set 中, 如果未见过, 将其放入 set
+            - O(n)
      */
 
     public boolean containsDuplicate(int[] nums) {

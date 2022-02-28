@@ -28,8 +28,9 @@ public class _0053_Maximum_Subarray {
      * 同时更新 maxSum
      */
     public int maxSubArray_3(int[] nums) {
-        if (nums == null || nums.length == 0)
+        if (nums == null || nums.length == 0) {
             return 0;
+        }
 
         int curMax = 0, maxSum = Integer.MIN_VALUE;
 
@@ -48,24 +49,21 @@ public class _0053_Maximum_Subarray {
      * 2. 如果当前位的prefixSum < min, 则更新min
      */
     public int maxSubArray_2(int[] nums) {
-        if (nums == null || nums.length == 0)
+        if (nums == null || nums.length == 0) {
             return 0;
-
-        int prefixSum = 0, maxSum = nums[0], min = 0;
-
-        for (int i : nums) {
-            prefixSum += i;
-
-            if (prefixSum - min > maxSum) {
-                maxSum = prefixSum - min;
-            }
-
-            if (prefixSum < min) {
-                min = prefixSum;
-            }
         }
 
-        return maxSum;
+        int curSum = 0, max = nums[0], min = 0;
+
+        for (int i : nums) {
+            curSum += i;
+
+            max = Math.max(max, curSum - min); // 这里要先判断 max, 之后再更新 min
+
+            min = Math.min(min, curSum);
+        }
+
+        return max;
     }
 
 

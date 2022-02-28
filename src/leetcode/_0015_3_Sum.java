@@ -33,12 +33,12 @@ import java.util.*;
  *
  *  此题与 lintcode 57. 3Sum 完全相同
  */
-public class _0015_3Sum {
+public class _0015_3_Sum {
 
     /*
     暴力解法 - 3层循环, 列出所有的 combination, 计算其和是否满足条件 - 时间 O(n^3), 空间 O(1)
 
-    改进 - 先固定一个点, 然后做 2 sum - 时间 O(n^2), 空间 O(1)
+    改进 - 先排序, 固定一个点后, 做 2 sum - 时间 O(n^2), 空间 O(1)
      */
 
     /**

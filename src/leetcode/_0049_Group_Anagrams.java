@@ -1,13 +1,11 @@
-/*
-Medium
-#Hash Table, #String
- */
 package leetcode;
 
 import java.util.*;
 
 /**
  * Group Anagrams
+ * Medium
+ * #Hash Table, #String
  *
  * Given an array of strings, group anagrams together.
  *
@@ -26,30 +24,41 @@ import java.util.*;
  *
  * LintCode 772. Group Anagrams 是同样的题目
  */
-public class _0049_GroupAnagrams {
+public class _0049_Group_Anagrams {
 
-    /**
-     * 不用sort, 而且是遍历字符串并记录每个字符出现次数, 以此作为map的key
-     *
-     * 注意, map的key不能用char[], 读取字符得出的charCount转成String是一样, 但是本身不一样 -> map.containsKey会认为都是新的
+    /*
+    读取每个字符串, 记录其中每个字符的出现次数, 对其取 hash
+
+    hashmap 记录 <hash, 该 hash 对应的所有字符串 (队列) >
      */
-    public List<List<String>> groupAnagrams＿２(String[] strs) {
-        if (strs == null || strs.length == 0)
-            return new ArrayList<>();
 
-        Map<String, List<String>> map = new HashMap<>();
+    public List<List<String>> groupAnagrams_3(String[] strs) {
+        List<List<String>> ans = new ArrayList<>();
+
+        if (strs == null || strs.length == 0) {
+            return ans;
+        }
+
+        Map<Integer, List<String>> map = new HashMap<>();
 
         for (String s : strs) {
-            char[] charCount = new char[26]; // 26个小写字母
-            for (char c : s.toCharArray()) {
-                charCount[c - 'a']++;
+            int[] counts = new int[26];
+            for (int i = 0; i < s.length(); i++) {
+                counts[s.charAt(i) - 'a']++;
             }
-            String key = String.valueOf(charCount);
 
-            if (!map.containsKey(key)) {
-                map.put(key, new ArrayList<>());
+            int hash = Arrays.hashCode(counts);
+            // 要不要考虑 hash conflict. 如果有 conflict, int[] 转 string 可能更合适
+            // String key = String.valueOf(counts);
+
+            // 这里不能直接将 int[] 作为 map 的 key, 必须转化一下
+
+            if (!map.containsKey(hash)) {
+                map.put(hash, new ArrayList<>());
             }
-            map.get(key).add(s);
+
+
+            map.get(hash).add(s);
         }
 
         return new ArrayList<>(map.values());

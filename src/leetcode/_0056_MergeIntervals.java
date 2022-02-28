@@ -26,6 +26,17 @@ import java.util.PriorityQueue;
  */
 public class _0056_MergeIntervals {
 
+    /*
+    检查是否 overlap 时
+    情况1 - end > start  |  情况 2 - end = start  |  情况3 - end < start
+    [_________]            [_____]                  [_____]
+        [_____]                  [_____]                     [_____]
+
+   情况 1 & 2: 更新区间1 的 end, 注意 这里要取两个区间 end 的较大者
+
+   情况 3: 直接加入新的区间
+     */
+
     /**
      * sort + linkedlist (无需 PQ)
      * 简化写法
@@ -37,19 +48,24 @@ public class _0056_MergeIntervals {
 
         Arrays.sort(intervals, Comparator.comparingInt(a -> a[0]));
 
-        LinkedList<int[]> merged = new LinkedList<>();
+        LinkedList<int[]> list = new LinkedList<>(); // 也可以使用 ArrayList, 后面读取时用, list.get(list.size() - 1)
+        list.add(intervals[0]);
 
-        for (int[] it : intervals) {
-            if (!merged.isEmpty() && merged.getLast()[1] >= it[0]) { // 有 overlap 时, end 取 两个区间的较大者
-                merged.getLast()[1] = Math.max(merged.getLast()[1], it[1]);
+        for (int i = 1; i < intervals.length; i++) {
+            // 如果有 overlap 时, 更新最后一位的 end, 取两个区间 end 较大者
+            // 如果无 overlap 时, 直接加入 list
+            if (list.getLast()[1] >= intervals[i][0]) {
+                list.getLast()[1] = Math.max(list.getLast()[1], intervals[i][1]); // 注意! 这里要取两者 end 的较大值
             } else { // 无 overlap
-                merged.add(it);
+                list.add(intervals[i]);
             }
         }
 
-        // 注意 写法
-        return merged.toArray(new int[merged.size()][2]);
+        // 注意 写法, 返回 int[][],
+        return list.toArray(new int[list.size()][2]);
     }
+
+
 
 
     /**

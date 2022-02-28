@@ -20,6 +20,20 @@ import java.util.HashMap;
  */
 public class _0001_Two_Sum {
 
+    /*
+    面试时要确认
+    - 答案是否一定存在
+    - 答案是否不止一组
+
+    暴力解法 - 先排序, 然后两层循环, 针对每一个数, 看其之后是否存在另一个值, 两者之和等于 target
+            - 增强: 因为数组已经排序, 如果当前值 >  target, 则无需继续
+            - O(n ^ 2)
+
+    优化解 - HashMap <target - i, index_of_i>
+          - 将当前值与 target 的差值记录, 并记录当前值的座标. 之后遇到时, 说明找到了一对
+          - O (n)
+     */
+
     public int[] twoSum(int[] nums, int target) {
         if (nums == null || nums.length == 0) { return new int[0]; }
 
