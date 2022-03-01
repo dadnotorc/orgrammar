@@ -72,13 +72,21 @@ public class _0033_Search_Rotated_Sorted_Array {
                 return mid;
             }
 
+            // if 中, 如果要写 target >= nums[l] && nums[mid] <= nums[r]
+            // 必须加上 nums[l] > nums[r], 保证是 rotated 过的
+
+            // 同理, else 中要写, t
+
             if (nums[mid] < target) {
+                // 如果要写 target >= nums[l] && nums[mid] <= nums[r]
+                // 必须加上 nums[l] > nums[r], 保证是 rotated 过的
                 if (target > nums[r] && nums[mid] < nums[l]) {
                     r = mid - 1;
                 } else {
                     l = mid + 1;
                 }
             } else {
+                // 同理, 这里可以写 nums[l] > nums[r] && target <= nums[r] && nums[mid] >= nums[l]
                 if (target < nums[l] && nums[mid] > nums[r]) {
                     l = mid + 1;
                 } else {

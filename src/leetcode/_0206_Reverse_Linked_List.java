@@ -1,12 +1,9 @@
-/*
-Easy
-#Linked List
-
- */
 package leetcode;
 
 /**
  * 206. Reverse Linked List
+ * Easy
+ * #Linked List
  *
  * Reverse a singly linked list.
  *
@@ -20,7 +17,7 @@ package leetcode;
  * Follow up:
  * A linked list can be reversed either iteratively or recursively. Could you implement both?
  */
-public class _0206_ReverseLinkedList {
+public class _0206_Reverse_Linked_List {
 
     /**
      * iterative
@@ -34,7 +31,7 @@ public class _0206_ReverseLinkedList {
             cur = next;
         }
 
-        // 循环结束时, cur 指去了 NULl, 所以要返回 pre
+        // 循环结束时, cur 指去了 null, 所以要返回 pre
         return pre;
     }
 
