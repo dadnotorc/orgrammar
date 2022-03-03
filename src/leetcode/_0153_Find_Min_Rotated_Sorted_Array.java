@@ -68,25 +68,23 @@ public class _0153_Find_Min_Rotated_Sorted_Array {
      *        - 注意! 这里不能 - 1, 因为 mid 可能已经达到最低
      */
     public int findMin_1(int[] nums) {
-        if (nums == null || nums.length == 0) {
-            return Integer.MIN_VALUE;
-        }
+        if (nums == null || nums.length == 0) { return Integer.MIN_VALUE; }
 
         int l = 0, r = nums.length - 1;
+
+        // if (nums[l] <= nums[r]) { return nums[l]; } // 不用单独写, 在 while 里重复了
 
         while (l < r) {
             int mid = l + (r - l) / 2;
 
-            // 只比较 两位, 为了避免数组只有 2 位的情况
-            if (mid > 0 && nums[mid] < nums[mid - 1]) {
-                return nums[mid];
-            }
-
-            // if (nums[mid] >= nums[l] && nums[mid] > nums[r]) {
-            if (nums[l] > nums[r] && nums[mid] >= nums[l]) {
-                l  = mid + 1; // 这必须 + 1, 不然会 TLE
+            if (nums[l] > nums[r]) {
+                if (nums[mid] >= nums[l]) { // 注意要用 >=, 不然当数组只有两位时, 会出错
+                    l = mid + 1;
+                } else {
+                    r = mid; // 这里不能 - 1, 避免跳过最小值
+                }
             } else {
-                r = mid;
+                return nums[l];
             }
         }
 
@@ -104,11 +102,11 @@ public class _0153_Find_Min_Rotated_Sorted_Array {
      * 因为另外两种情况中, nums[mid] 不可能大于 nums[r]
      */
     public int findMin(int[] nums) {
-        if (nums == null || nums.length == 0) {
-            return Integer.MIN_VALUE;
-        }
+        if (nums == null || nums.length == 0) { return Integer.MIN_VALUE; }
 
         int l = 0, r = nums.length - 1;
+
+        if (nums[l] <= nums[r]) { return nums[l]; }
 
         while (l < r) {
             int mid = l + (r - l) / 2;

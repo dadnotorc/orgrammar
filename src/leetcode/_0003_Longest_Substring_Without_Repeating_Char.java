@@ -1,5 +1,8 @@
 package leetcode;
 
+import org.junit.Test;
+
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 
@@ -38,13 +41,40 @@ public class _0003_Longest_Substring_Without_Repeating_Char {
     /* 面试时确认
     1. 是否是 连续的 substring, 还是 可不连续的 subsequence
 
+    "aaa", "aab", "abb", "abc"
      */
+
+    /**
+     * 用数组记录, 每个字符最后出现的位置下标
+     */
+    public int lengthOfLongestSubstring_array(String s) {
+        if(s == null || s.length() == 0) { return 0; }
+
+        int n = s.length();
+        int ans = 0, l = 0, r = 0;
+
+        int[] lastPos = new int[256];
+        Arrays.fill(lastPos, -1);
+
+        for (; r < n; r++) {
+            char c = s.charAt(r);
+
+            if (lastPos[c] != -1) {
+                l = Math.max(l, lastPos[c] + 1);
+            }
+
+            ans = Math.max(ans, r - l + 1); // 这句别放在 if 里, 不然就麻烦多了
+            lastPos[c] = r;
+        }
+
+        return ans;
+    }
 
 
     /**
-     * 记录出现字符, 及其最后出现的次数
+     * 相同做法, 用 hashmap 记录
      */
-    public int lengthOfLongestSubstring(String s) {
+    public int lengthOfLongestSubstring_hashmap(String s) {
         if (s == null || s.length() == 0) { return 0; }
 
         int ans = 0, l = 0, r = 0;
@@ -119,5 +149,12 @@ public class _0003_Longest_Substring_Without_Repeating_Char {
         ans = Math.max(r - l, ans);
 
         return ans;
+    }
+
+
+    @Test
+    public void test1() {
+        String s = "cdd";
+        org.junit.Assert.assertEquals(1, lengthOfLongestSubstring_array(s));
     }
 }

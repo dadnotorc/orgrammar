@@ -50,6 +50,8 @@ public class _0152_Maximum_Product_Subarray {
                 min = temp;
             }
 
+            // 注意, 这里不是跟 max (或者 min) 比较, 而是跟 nums[i]
+            // 意思是, 如果乘积不够, 不如不取, 只取当前值就行
             max = Math.max(max * nums[i], nums[i]);
             min = Math.min(min * nums[i], nums[i]);
 
@@ -68,9 +70,7 @@ public class _0152_Maximum_Product_Subarray {
             return 0;
         }
 
-        int ans = nums[0];
-        int max = Math.max(nums[0], 0);
-        int min = Math.min(nums[0], 0);
+        int ans = nums[0], max = nums[0], min = nums[0];
 
         for (int i = 1; i < nums.length; i++) {
             if (nums[i] > 0) {
