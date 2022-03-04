@@ -64,7 +64,7 @@ public class UnionFind {
 
     // 找到 x 所在树的根节点
     public int find(int x) {
-        while (x != parent[x]) {
+        while (x != parent[x]) {  // 这里是while, 一路走到底
             parent[x] = parent[parent[x]]; // 进行路径压缩, 将父节点指向爷爷节点
             x = parent[x];
         }

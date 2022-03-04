@@ -32,37 +32,60 @@ public class _0200_Number_Of_Islands {
      * Union Find
      */
     public int numIslands(char[][] grid) {
-        if (grid == null || grid.length == 0 || grid[0].length == 0)
-            return 0;
+        if (grid == null || grid.length == 0 || grid[0].length == 0) { return 0; }
 
-        int ans = 0;
-        boolean[][] isVisited = new boolean[grid.length][grid[0].length];
+        UF uf = new UF(grid);
 
-        for (int i = 0; i < grid.length; i++) {
-            for (int j = 0; j < grid[0].length; j++) {
-                if (!isVisited[i][j] && grid[i][j] == '1') {
-                    ans++;
-                    exploreIsland(grid, isVisited, i, j);
+        int m = grid.length;
+        int n = grid[0].length;
+
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < n; j++) {
+
+                // 找到陆地后, 将所有与之相连的陆地进行 union
+                if (grid[i][j] == '1') {
+                    for (int[] di : direction) {
+                        int x = i + di[0];
+                        int y = j + di[1];
+
+                        if (x >= 0 && x < m && y >= 0 && y < n && grid[x][y] == '1') {
+                            // 将 [i][j] 与 [x][y] 进行 union
+                            int p = i * n + j;
+                            int q = x * n + y;
+                            uf.union(p, q);
+                        }
+                    }
                 }
             }
         }
 
-        return ans;
+        return uf.getCount();
     }
 
+    private final int[][] direction = {{0, 1}, {0, -1}, {1, 0}, {-1, 0}};
+
     class UF {
+        private int m, n;
         private int count;
         private int[] parent;
         private int[] size;
 
-        public UF(int n) {
-            count = n;
-            parent = new int[n];
-            size = new int[n];
+        public UF(char[][] grid) {
+            m = grid.length;
+            n = grid[0].length;
+            parent = new int[m * n];
+            size = new int[m * n];
+            count = 0; // 这里跟模板不一样, 模板是 count = n, 这里是从 0 开始, 找到陆地才递增
 
-            for (int i = 0; i < n; i++) {
-                parent[i] = i;
-                size[i] = 1;
+            for (int i = 0; i < m; i++) {
+                for (int j = 0; j < n; j++) {
+                    if (grid[i][j] == '1') {
+                        int id = i * n + j;
+                        parent[id] = id;
+                        size[id] = 1;
+                        count++; // 递增陆地数量
+                    }
+                }
             }
         }
 
@@ -84,7 +107,7 @@ public class _0200_Number_Of_Islands {
         }
 
         public int find(int x) {
-            if (x != parent[x]) {
+            while (x != parent[x]) {  // 这里是while, 一路走到底, 小心别写成 if 了
                 parent[x] = parent[parent[x]];
                 x = parent[x];
             }

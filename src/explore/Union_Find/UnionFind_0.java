@@ -39,7 +39,7 @@ public class UnionFind_0 {
 
 
     public int find(int x) {
-        while (parent[x] != x) {
+        while (parent[x] != x) { // 这里是while, 一路走到底
             x = parent[x];
         }
 
