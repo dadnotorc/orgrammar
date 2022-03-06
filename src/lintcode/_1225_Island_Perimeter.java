@@ -1,8 +1,3 @@
-/*
-Easy
-Hash Table
-Google
- */
 package lintcode;
 
 import java.util.LinkedList;
@@ -10,6 +5,9 @@ import java.util.Queue;
 
 /**
  * 1225. Island Perimeter
+ * Easy
+ * Hash Table
+ * Google
  *
  * You are given a map in form of a two-dimensional integer grid where 1
  * represents land and 0 represents water. Grid cells are connected
@@ -28,9 +26,43 @@ import java.util.Queue;
  *
  * Answer: 16
  */
-public class _1225_IslandPerimeter {
+public class _1225_Island_Perimeter {
 
-    // BFS
+    /*
+    有没有可能只有水, 没有陆地?
+     */
+
+    /**
+     * 遍历 + 确定 1 四周是否与 0 相连 或者 越界
+     */
+    public int islandPerimeter_DFS(int[][] grid) {
+        if (grid == null || grid.length == 0 || grid[0].length == 0) { return 0; }
+
+        int ans = 0;
+
+        for (int i = 0; i < grid.length; i++) {
+            for (int j = 0; j < grid[0].length; j++) {
+                if (grid[i][j] == 1) {
+                    for (int[] di : directions) {
+                        ans += isWater(grid, i + di[0], j + di[1]) ? 1 : 0;
+                    }
+                }
+            }
+        }
+
+        return ans;
+    }
+
+    private boolean isWater(int[][] grid, int x, int y) {
+        return x < 0 || x >= grid.length || y < 0 || y >= grid[0].length || (grid[x][y] == 0);
+    }
+
+    private int[][] directions = {{0, 1} , {0, -1}, {1, 0}, {-1, 0}};
+
+
+    /**
+     * BFS
+     */
     public int islandPerimeter(int[][] grid) {
         if (grid == null || grid.length == 0 || grid[0].length == 0)
             return 0;

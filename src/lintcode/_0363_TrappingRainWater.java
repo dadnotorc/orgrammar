@@ -28,11 +28,12 @@ public class _0363_TrappingRainWater {
 
     /**
      * 使用 stack - 按照递减的顺序，每次新进来的高度大于栈顶，就pop出栈顶，然后计算出上面盛水量
+     * stack 中记录 下标, 所以注意比较是 要用 heights[stack.peek()]
      *
      * 时间复杂度O(n)
      * 空间复杂度O(n)
      *
-     * todo 再读读 没明白
+     * 速度不如双指针写法
      */
     public int trapRainWater_stack(int[] heights) {
         if (heights == null) { return 0; }
@@ -41,7 +42,7 @@ public class _0363_TrappingRainWater {
         Stack<Integer> stack = new Stack<>();
 
         for (int i = 0; i < heights.length; i++) {
-            while (!stack.isEmpty() && heights[i] > heights[stack.peek()]) {
+            while (!stack.isEmpty() && heights[i] > heights[stack.peek()]) { // 注意后者是 heights[stack.peek()]
                 int j = stack.pop();
                 if (!stack.isEmpty()) {
                     int width = i - stack.peek() - 1;
@@ -71,7 +72,7 @@ public class _0363_TrappingRainWater {
         int leftMax = heights[l - 1], rightMax = heights[r + 1]; // leftMax, rightMax 从两头开始
 
         while (l <= r) { // 用 <= : {1,0,1}, len=3, 初始时 l = 1 = r
-            if (leftMax < rightMax) {
+            if (leftMax < rightMax) { // 这里比较的是 leftMax VS rightMax, 而不是 heights[l] VS heights[r]
                 if (leftMax <= heights[l]) {
                     leftMax = heights[l];
                 } else {
