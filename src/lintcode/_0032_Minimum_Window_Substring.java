@@ -1,8 +1,3 @@
-/*
-Medium
-#Hash Table, #Two Pointers
-LinkedIn, Snapchat, Facebook, Uber
- */
 package lintcode;
 
 import org.junit.Test;
@@ -15,6 +10,9 @@ import static org.junit.Assert.assertTrue;
 
 /**
  * 32. Minimum Window Substring
+ * Medium
+ * #Hash Table, #Two Pointers
+ * LinkedIn, Snapchat, Facebook, Uber
  *
  * Given two strings source and target.  Return the minimum substring of source which contains each char of target.
  *
@@ -29,8 +27,7 @@ import static org.junit.Assert.assertTrue;
  * Example 2:
  * Input: source = "adobecodebanc", target = "abc"
  * Output: "banc"
- * Explanation: "banc" is the minimum substring of source string
- *  which contains each char of target "abc".
+ * Explanation: "banc" is the minimum substring of source string which contains each char of target "abc".
  *
  * Example 3:
  * Input: source = "abc", target = "aa"
@@ -40,9 +37,69 @@ import static org.junit.Assert.assertTrue;
  * Challenge
  * - O(n) time
  *
+ * leetcode 76
+ *
  * 例题2 说明 -前后顺序没有关系-, 只要包含即可
  */
-public class _0032_MinimumWindowSubstring {
+public class _0032_Minimum_Window_Substring {
+
+    /*
+    1. 获得 target 中所有字符的个数
+    2. 双指针在 source 上移动
+       - 当双指针内 window 中遇到的字符数相同
+     */
+
+    public String minWindow_1(String s, String t) {
+        if (s == null || s.length() == 0 || t == null || t.length() == 0) { return ""; }
+
+        int m = s.length(), n = t.length();
+
+        int[] count_s = new int[256];
+        int[] count_t = new int[256];
+
+        for (int i = 0; i < n; i++) {
+            count_t[t.charAt(i)]++;
+        }
+
+        int l = 0, r = 0, ans_l = -1, ans_r = -1;
+        int met = 0; // 当前 windows 中, 有效字符的长度
+
+        while (l < m) { // 用 l 来比较, 因为在末尾, 会 l++ (不能用 l < = r)
+            // r - in window
+            while (r < m && met < n) {
+                char rc = s.charAt(r);
+                count_s[rc]++;
+                if (count_s[rc] <= count_t[rc]) { // 这里用 <=, 只要当前字符没有多余, 就要递增 met
+                    met++;
+                }
+                r++;
+            }
+
+            // find valid windows - compare and get min
+            if (met == n) {
+                if (ans_l == -1 || r - l < ans_r - ans_l) {
+                    ans_l = l;
+                    ans_r = r;
+                }
+            }
+
+            // l - out window
+            char lc = s.charAt(l);
+            count_s[lc]--;
+            if (count_s[lc] < count_t[lc]) { // 这里用 <, 而不是 <=. 当前字符不足够了, 就要递减 met
+                met--;
+            }
+            l++;
+        }
+
+        // if not found
+        if (ans_l == -1 ) { return ""; }
+
+        return s.substring(ans_l, ans_r);
+    }
+
+
+
 
     /**
      * 双指针 - 九章解法
@@ -101,7 +158,8 @@ public class _0032_MinimumWindowSubstring {
             // l  指针的字符 出 window
             char lc = chars_source[l];
             counts_source[lc]--;
-            if (counts_source[lc] == counts_target[lc] - 1) { // 出 window 后, 字符数量不满足, 则减少 met
+            // 出 window 后, 字符数量不满足, 则减少 met
+            if (counts_source[lc] == counts_target[lc] - 1) { // 用 = 减少1, 而不是 <, 避免错误的多次减少 met
                 met--;
             }
         }
@@ -191,10 +249,10 @@ public class _0032_MinimumWindowSubstring {
             return "";
         }
 
-        /**
-         * 将target中每个字符作为key存入Hashtable, 对应value为该字符出现次数
-         * 该value也为在source中需要找到该字符的次数
-         */
+
+        // 将target中每个字符作为key存入Hashtable, 对应value为该字符出现次数
+        // 该value也为在source中需要找到该字符的次数
+
         Hashtable<Character, Integer> tb = new Hashtable<>();
         for (char c : target.toCharArray()) {
 //            if (tb.containsKey(c)) {
@@ -260,7 +318,7 @@ public class _0032_MinimumWindowSubstring {
     public void test1() {
         String source = "abc", target = "ac";
         String expected = "abc";
-        String actual = new _0032_MinimumWindowSubstring().minWindow(source,target);
+        String actual = new _0032_Minimum_Window_Substring().minWindow(source,target);
         assertTrue(expected.equals(actual));
     }
 
@@ -268,7 +326,7 @@ public class _0032_MinimumWindowSubstring {
     public void test2() {
         String source = "adobecodebanc", target = "abc";
         String expected = "banc";
-        String actual = new _0032_MinimumWindowSubstring().minWindow(source,target);
+        String actual = new _0032_Minimum_Window_Substring().minWindow(source,target);
         assertTrue(expected.equals(actual));
     }
 
@@ -276,7 +334,7 @@ public class _0032_MinimumWindowSubstring {
     public void test3() {
         String source = "abc", target = "aa";
         String expected = "";
-        String actual = new _0032_MinimumWindowSubstring().minWindow(source,target);
+        String actual = new _0032_Minimum_Window_Substring().minWindow(source,target);
         assertTrue(expected.equals(actual));
     }
 
@@ -284,7 +342,7 @@ public class _0032_MinimumWindowSubstring {
     public void test4() {
         String source = "a", target = "aa";
         String expected = "";
-        String actual = new _0032_MinimumWindowSubstring().minWindow(source,target);
+        String actual = new _0032_Minimum_Window_Substring().minWindow(source,target);
         assertTrue(expected.equals(actual));
     }
 
@@ -292,7 +350,7 @@ public class _0032_MinimumWindowSubstring {
     public void test5() {
         String source = "daboc", target = "abc";
         String expected = "aboc";
-        String actual = new _0032_MinimumWindowSubstring().minWindow(source,target);
+        String actual = new _0032_Minimum_Window_Substring().minWindow(source,target);
         assertTrue(expected.equals(actual));
     }
 
@@ -300,7 +358,7 @@ public class _0032_MinimumWindowSubstring {
     public void test6() {
         String source = "aboccb", target = "abc";
         String expected = "aboc";
-        String actual = new _0032_MinimumWindowSubstring().minWindow(source,target);
+        String actual = new _0032_Minimum_Window_Substring().minWindow(source,target);
         assertTrue(expected.equals(actual));
     }
 
@@ -308,7 +366,7 @@ public class _0032_MinimumWindowSubstring {
     public void test7() {
         String source = "aaaaaaaaaaaabbbbbcdd", target = "abcdd";
         String expected = "abbbbbcdd";
-        String actual = new _0032_MinimumWindowSubstring().minWindow(source,target);
+        String actual = new _0032_Minimum_Window_Substring().minWindow(source,target);
         System.out.println("=" + actual + "=");
         assertTrue(expected.equals(actual));
     }
@@ -317,7 +375,7 @@ public class _0032_MinimumWindowSubstring {
     public void test8() {
         String source = "aabc", target = "abc";
         String expected = "abc";
-        String actual = new _0032_MinimumWindowSubstring().minWindow(source,target);
+        String actual = new _0032_Minimum_Window_Substring().minWindow(source,target);
         System.out.println("=" + actual + "=");
         assertTrue(expected.equals(actual));
     }

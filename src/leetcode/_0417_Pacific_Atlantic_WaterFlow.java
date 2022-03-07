@@ -76,14 +76,16 @@ public class _0417_Pacific_Atlantic_WaterFlow {
         // 最上行 和 最左列 一定能到达 P, 所以反向推, 我们要从 最上行 和 最左列 开始移动, 寻找能从 P 到达的节点
         // 同理, 要从最下行 和 最右列开始移动, 寻找能从 A 到达的节点
 
+        // 其实 h 从 0 开始, 是选定最低的陆地为基点
+
         for (int i = 0; i < m; i++) {
-            dfs(heights, reachableFromPacific, i, 0, -1); // left column
-            dfs(heights, reachableFromAtlantic, i, n - 1, -1); // right column
+            dfs(heights, reachableFromPacific, i, 0, 0); // left column
+            dfs(heights, reachableFromAtlantic, i, n - 1, 0); // right column
         }
 
         for (int j = 0; j < n; j++) {
-            dfs(heights, reachableFromPacific, 0, j, -1); // top row
-            dfs(heights, reachableFromAtlantic, m - 1, j, -1); // bottom row
+            dfs(heights, reachableFromPacific, 0, j, 0); // top row
+            dfs(heights, reachableFromAtlantic, m - 1, j, 0); // bottom row
         }
 
         findCommon(ans, reachableFromPacific, reachableFromAtlantic);
