@@ -1,14 +1,9 @@
-/*
-Easy
-#Enumerate, #Math
- */
 package lintcode;
-
-import org.xml.sax.helpers.AttributesImpl;
 
 /**
  * 3 · Digit Counts
- *
+ * Easy
+ * #Enumerate, #Math
  * Give a number k, Count the number of k between 0 and n, k can be 0 to 9.
  *
  * 1 <= n <= 10^5

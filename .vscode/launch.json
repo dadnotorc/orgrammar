@@ -1,0 +1,98 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Launch Current File",
+            "request": "launch",
+            "mainClass": "${file}"
+        },
+        {
+            "type": "java",
+            "name": "Launch FileSearch",
+            "request": "launch",
+            "mainClass": "explore.FileSearch",
+            "projectName": "orgrammar_16c83cb3"
+        },
+        {
+            "type": "java",
+            "name": "Launch Recursion_ReverseString",
+            "request": "launch",
+            "mainClass": "explore.Recursion_ReverseString",
+            "projectName": "orgrammar_16c83cb3"
+        },
+        {
+            "type": "java",
+            "name": "Launch AddNumbers",
+            "request": "launch",
+            "mainClass": "interviews.AddNumbers",
+            "projectName": "orgrammar_16c83cb3"
+        },
+        {
+            "type": "java",
+            "name": "Launch DiffArrays",
+            "request": "launch",
+            "mainClass": "interviews.DiffArrays",
+            "projectName": "orgrammar_16c83cb3"
+        },
+        {
+            "type": "java",
+            "name": "Launch Heap_MergeSubFiles",
+            "request": "launch",
+            "mainClass": "interviews.Heap_MergeSubFiles",
+            "projectName": "orgrammar_16c83cb3"
+        },
+        {
+            "type": "java",
+            "name": "Launch SortString",
+            "request": "launch",
+            "mainClass": "interviews.SortString",
+            "projectName": "orgrammar_16c83cb3"
+        },
+        {
+            "type": "java",
+            "name": "Launch _1046_MaxHeap",
+            "request": "launch",
+            "mainClass": "leetcode._1046_MaxHeap",
+            "projectName": "orgrammar_16c83cb3"
+        },
+        {
+            "type": "java",
+            "name": "Launch _2329_DistanceBetweenTwoPointsInRectangularCoordinate",
+            "request": "launch",
+            "mainClass": "lintcode._2329_DistanceBetweenTwoPointsInRectangularCoordinate",
+            "projectName": "orgrammar_16c83cb3"
+        },
+        {
+            "type": "java",
+            "name": "Launch _2394_Print_Matrix",
+            "request": "launch",
+            "mainClass": "lintcode._2394_Print_Matrix",
+            "projectName": "orgrammar_16c83cb3"
+        },
+        {
+            "type": "java",
+            "name": "Launch _2450_StartThreadPrintHelloWorld",
+            "request": "launch",
+            "mainClass": "lintcode._2450_StartThreadPrintHelloWorld",
+            "projectName": "orgrammar_16c83cb3"
+        },
+        {
+            "type": "java",
+            "name": "Launch Main",
+            "request": "launch",
+            "mainClass": "lintcode._2454_N_threads_to_find_the_number_with_most_factors.java.Main",
+            "projectName": "orgrammar_16c83cb3"
+        },
+        {
+            "type": "java",
+            "name": "Launch helper",
+            "request": "launch",
+            "mainClass": "util.helper",
+            "projectName": "orgrammar_16c83cb3"
+        }
+    ]
+}
