@@ -1,8 +1,3 @@
-/*
-Medium
-#Divide and Conquer, #BST, #Binary Tree, #Recursion
-Amazon, Facebook, Microsoft
- */
 package lintcode;
 
 import util.TreeNode;
@@ -11,7 +6,10 @@ import java.util.Stack;
 
 /**
  * 95. Validate Binary Search Tree (BST)
- *
+ * Medium
+ * #Divide and Conquer, #BST, #Binary Tree, #Recursion
+ * Amazon, Facebook, Microsoft
+ * 
  * Given a binary tree, determine if it is a valid binary search tree (BST).
  *
  * Assume a BST is defined as follows:
@@ -49,18 +47,26 @@ import java.util.Stack;
  * 	   / \
  * 	  2   6
  * Output: false
+ * 
+ * leetcode 98
  */
 public class _0095_ValidateBinarySearchTree {
 
+    /*
+    暴力 - In-order traversal 左-上-右, 将所有节点值存入 list. 然后遍历 list, 比较前后两个值 - O (2n)
+     */
+
     /**
-     * 解法 1 - 分制法
-     * time:  O(n)
+     * 解法 1 - 分制法 - O(n)
+     * 
+     * 每次用当前值 比较 当前最小值 与 当前最大值.
+     * 
+     * 注意要用 Long, 针对 {Integer.MAX_VALUE} 这个case, input = [2147483647]
      */
     public boolean isValidBST(TreeNode root) {
         return divideConquer(root, Long.MIN_VALUE, Long.MAX_VALUE);
     }
 
-    // 用long的原因是 针对 {Integer.MAX_VALUE} 这个case
     private boolean divideConquer(TreeNode node, long min, long max) {
         if (node == null)
             return true;
@@ -74,7 +80,7 @@ public class _0095_ValidateBinarySearchTree {
 
 
     /**
-     * 解法 2 - 循环
+     * 解法 2 - 循环 - O(n)
      */
     public boolean isValidBST_2(TreeNode root) {
         Stack<TreeNode> stack = new Stack<>();
