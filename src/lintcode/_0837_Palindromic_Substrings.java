@@ -1,14 +1,12 @@
-/*
-Easy
-String,
-Facebook, LinkedIn
- */
 package lintcode;
 
 import org.junit.Test;
 
 /**
  * 837. Palindromic Substrings
+ * Easy
+ * String,
+ * Facebook, LinkedIn
  *
  * Given a string, your task is to count how many palindromic substrings in
  * this string. The substrings with different start indexes or end indexes
@@ -28,8 +26,10 @@ import org.junit.Test;
  * Output: 4
  * Explanation:
  * 4 palindromic strings: "a", "b", "a", "aba".
+ *
+ * leetcode 647
  */
-public class _0837_PalindromicSubstrings {
+public class _0837_Palindromic_Substrings {
 
     /**
      * 解法1
