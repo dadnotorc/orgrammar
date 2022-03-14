@@ -37,7 +37,10 @@ import java.util.*;
  */
 public class _0137_CloneGraph {
 
-    /* 解法1 */
+
+
+
+
 
     /**
      * 三次遍历
@@ -67,8 +70,10 @@ public class _0137_CloneGraph {
 
         // 复制节点, 使用 HashMap 存储旧节点->新节点的mapping
         HashMap<UndirectedGraphNode, UndirectedGraphNode> map = new HashMap<>();
-        for (UndirectedGraphNode oldNode : oldNodes)
+
+        for (UndirectedGraphNode oldNode : oldNodes) {
             map.put(oldNode, new UndirectedGraphNode(oldNode.label));
+        }
 
         // 复制边 (节点的neighbors)
         for (UndirectedGraphNode oldNode : oldNodes) {
@@ -157,22 +162,23 @@ public class _0137_CloneGraph {
     }
 
 
-    /* 解法2 */
+
+
+
 
     /**
-     * 把解法1中的第一步和第二步合并, 一边寻找节点一边复制. 所以是两次便利
-     * 1. 从原图中获得所有节点, 并复制
-     * 2. 复制边
+     * map 存储 旧节点->新节点 mapping
+     * list 存储原图中所有节点 uniquely
      *
-     * 步骤1中, 是利用ArrayList来实现Queue, 而不是LinkedList, 所以也可理解为BFS
+     * 1. 从原图中获得所有节点, 找出其所有的邻居
+     * 2. 对每个邻居
+     *    - 如之前未遇见过, 在 map 和 list 中加入
+     *    - 将此邻居加入新建节点的 邻居列表中
      */
     public UndirectedGraphNode cloneGraph_2(UndirectedGraphNode node) {
-        if (node == null)
-            return null;
+        if (node == null) { return null; }
 
-        // map存储旧节点->新节点的mapping
         HashMap<UndirectedGraphNode, UndirectedGraphNode> map = new HashMap<>();
-        // list存储原图中所有节点 uniquely
         ArrayList<UndirectedGraphNode> oldNodes = new ArrayList<>();
 
         map.put(node, new UndirectedGraphNode(node.label));
@@ -181,26 +187,20 @@ public class _0137_CloneGraph {
         int index = 0;
         while (index < oldNodes.size()) {
             UndirectedGraphNode oldNode = oldNodes.get(index);
-            for (UndirectedGraphNode oldNodeNeighbor : oldNode.neighbors) {
-                if (!map.containsKey(oldNodeNeighbor)) {
-                    map.put(oldNodeNeighbor, new UndirectedGraphNode(oldNodeNeighbor.label));
-                    oldNodes.add(oldNodeNeighbor);
+            for (UndirectedGraphNode oldNeighbor : oldNode.neighbors) {
+                if (!map.containsKey(oldNeighbor)) {
+                    map.put(oldNeighbor, new UndirectedGraphNode(oldNeighbor.label));
+                    oldNodes.add(oldNeighbor);
                 }
+
+                map.get(oldNode).neighbors.add(map.get(oldNeighbor));
             }
             index++; // 别忘了更新index
         }
 
-        for (UndirectedGraphNode oldNode : oldNodes) {
-            UndirectedGraphNode newNode = map.get(oldNode);
-
-            for (UndirectedGraphNode oldNodeNeighbor : oldNode.neighbors) {
-                UndirectedGraphNode newNodeNeighbor = map.get(oldNodeNeighbor); // 注意这一步, 要选新的节点作为neighbor
-                newNode.neighbors.add(newNodeNeighbor);
-            }
-        }
-
         return map.get(node);
     }
+
 
 
 
