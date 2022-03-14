@@ -1,15 +1,13 @@
-/*
-Medium
-#BFS, #DFS, #Hash Table
-Facebook, Google, Uber
-FAQ
- */
 package lintcode;
 
 import java.util.*;
 
 /**
  * 137. Clone Graph
+ * Medium
+ * #BFS, #DFS, #Hash Table
+ * Facebook, Google, Uber
+ * FAQ
  *
  * Clone an undirected graph. Each node in the graph contains a label
  * and a list of its neighbors. Nodes are labeled uniquely.

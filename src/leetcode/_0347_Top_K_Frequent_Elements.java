@@ -66,17 +66,18 @@ public class _0347_Top_K_Frequent_Elements {
             buckets[freq].add(key);
         }
 
-        int[] res = new int[k];
+        int[] ans = new int[k];
         int index = 0;
-        for (int i = buckets.length - 1; i >= 0 && index < k; i--) {
+        for (int i = buckets.length - 1; i >= 0; i--) {
             if (buckets[i] != null) {
                 for (int element : buckets[i]) {
-                    res[index++] = element;
+                    ans[index++] = element;
+                    if (index == k) { return ans; }
                 }
             }
         }
 
-        return res;
+        return ans;
     }
 
 
