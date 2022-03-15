@@ -39,44 +39,45 @@ import java.util.*;
  */
 public class _0137_Clone_Graph {
 
-    /**
-     * 如果题目中给出 (或者假设) 图中 node 总数 in the range [0, 100], 共有 101 个
+    /*
+    面试中, 询问
+    - node 的数量 / node.val 的值的范围
+    - 是否有不同的 node 包含相同的 val
+
+    如果题目中给出 node value 的 range 是 [0, 100], 共有 101 个, 可用 array 取代 hashmap
      */
     public UndirectedGraphNode cloneGraph_array(UndirectedGraphNode node) {
         if (node == null) { return null; }
 
+        // 使用 array 取代 hashmap, 所以这不是 boolean array, 而是 node array
+        // array[oldNode.val] = newNode
+        UndirectedGraphNode[] mapping = new UndirectedGraphNode[101]; // 101 是 node.val 的range
+        Arrays.fill(mapping, null);
+
         UndirectedGraphNode newNode = new UndirectedGraphNode(node.label);
-
-        // 使用 array of Node, 而不是 boolean, 原因是
-        // because i have to add all the adjacent nodes of particular vertex, whether it's visited or not,
-        // so in the Node[] initially null is stored, if that node is visited,
-        // we will store the respective node at the index, and can retrieve that easily.
-        // 不用通过 map 来关联 oldNode 与 newNode
-        UndirectedGraphNode[] visited = new UndirectedGraphNode[101];
-        Arrays.fill(visited, null);
-
-        dfs(node, newNode, visited);
+        dfs(node, newNode, mapping);
 
         return newNode;
     }
 
     private void dfs(UndirectedGraphNode oldNode,
                      UndirectedGraphNode newNode,
-                     UndirectedGraphNode[] visited) {
-        visited[newNode.label] = newNode;
+                     UndirectedGraphNode[] mapping) {
+        mapping[newNode.label] = newNode;
 
         for (UndirectedGraphNode oldNeighbor : oldNode.neighbors) {
-            if (visited[oldNeighbor.label] == null) {
+            if (mapping[oldNeighbor.label] == null) {
                 UndirectedGraphNode newNeighbor = new UndirectedGraphNode(oldNeighbor.label);
-                newNode.neighbors.add(newNeighbor);
 
-                dfs(oldNeighbor, newNeighbor, visited);
+                // 这里不用在 mapping 中添加, 因为会在 dfs 下一层中加入
+
+                newNode.neighbors.add(newNeighbor);
+                dfs(oldNeighbor, newNeighbor, mapping);
             } else {
-                newNode.neighbors.add(visited[oldNeighbor.label]);
+                newNode.neighbors.add(mapping[oldNeighbor.label]);
             }
         }
     }
-
 
 
     /**
@@ -87,6 +88,46 @@ public class _0137_Clone_Graph {
      *
      * 遍历时, 注意保证节点的独立性, 因为节点是undirected, 所以邻居的邻居可以是本身
      * 跟新node添加neighbor的时候, 注意要选择新建出来的neighbor nodes
+     */
+    public UndirectedGraphNode cloneGraph_3(UndirectedGraphNode node) {
+        if (node == null) { return null; }
+
+        // list existing vertexes
+        HashSet<UndirectedGraphNode> oldNodes = new HashSet<>();
+        getNodes(node, oldNodes);
+
+        // copy vertexes
+        UndirectedGraphNode[] mapping = new UndirectedGraphNode[101];
+        for (UndirectedGraphNode oldNode : oldNodes) {
+            mapping[oldNode.label] = new UndirectedGraphNode(oldNode.label);
+        }
+
+        // copy edges
+        for (UndirectedGraphNode oldNode : oldNodes) {
+            UndirectedGraphNode newNode = mapping[oldNode.label];
+
+            for (UndirectedGraphNode neighbor : oldNode.neighbors) {
+                newNode.neighbors.add(mapping[neighbor.label]);
+            }
+        }
+
+        return mapping[node.label];
+    }
+
+    private void getNodes(UndirectedGraphNode oldNode, HashSet<UndirectedGraphNode> oldNodes) {
+        if (!oldNodes.contains(oldNode)) {
+            oldNodes.add(oldNode);
+            for (UndirectedGraphNode neighbor : oldNode.neighbors) {
+                getNodes(neighbor, oldNodes);
+            }
+        }
+    }
+
+
+
+
+    /**
+     * 原来的写法
      */
     public UndirectedGraphNode cloneGraph(UndirectedGraphNode node) {
         if (node == null)

@@ -1,8 +1,3 @@
-/*
-Medium
-#Binary Tree
-Amazon, Facebook, Google, LinkedIn, Microsoft, Uber
- */
 package lintcode;
 
 import org.junit.Test;
@@ -14,10 +9,12 @@ import java.util.Queue;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
-
 /**
  * 7. Serialize and Deserialize Binary Tree
-
+ * Medium
+ * #Binary Tree
+ * Amazon, Facebook, Google, LinkedIn, Microsoft, Uber
+ *
  * Design an algorithm and write code to serialize and deserialize a binary tree.
  * Writing the tree to a file is called 'serialization' and reading back from
  * the file to reconstruct the exact same binary tree is 'deserialization'.
@@ -47,11 +44,13 @@ import static org.junit.Assert.assertTrue;
  * Our data serialization use BFS traversal. This is just for when you got
  * Wrong Answer and want to debug the input.
  * You can use other method to do serialization and deserialization.
+ *
+ * leetcode 297
  */
 public class _0007_SerializeDeserializeBinaryTree {
 
     /**
-     * 用bfs, 把每一层的nodes加到queue中, 然后依次存入String
+     * BFS - 把每一层的nodes加到queue中, 然后依次存入String
      *
      * 易错点:
      * 1. 不管子树是否为空, 都将其加入queue中, 因为可能当前层后续nodes子树不为空
@@ -59,8 +58,7 @@ public class _0007_SerializeDeserializeBinaryTree {
      */
     public String serialize(TreeNode root) {
         if (root == null) {
-            // 注意: 应返回"{}", 而不是""
-            return "{}";
+            return "{}"; // 注意: 应返回"{}", 而不是""
         }
 
         // Can't use Deque as it throw NP exception when adding null.
@@ -92,23 +90,19 @@ public class _0007_SerializeDeserializeBinaryTree {
 
                 sb.append(",");
             }
-            if (q.isEmpty()) {
-                sb.deleteCharAt(sb.length() - 1); // 删掉末尾多余的","
-            }
         }
 
-        String ans = sb.toString();
-
-        // 删除末端的 ",#"
-        // 如果 input={3,9,20,#,#,15}, 这段会将20的右子树(null节点)删掉
-        while (ans.substring(ans.length() - 2).equals(",#")) {
-            ans = ans.substring(0, ans.length() - 2);
+        // 删除末端多余的 ',' 和 '#'
+        // 如果 input={3,9,20,#,#,15}, 需要将 20 的右子树(null节点)删掉
+        int i = sb.length() - 1;
+        while (sb.charAt(i) == ',' || sb.charAt(i) == '#') {
+            sb.deleteCharAt(i);
+            i--;
         }
 
-        ans += "}"; // 别忘了关括号
+        sb.append('}'); // 别忘了关括号
 
-        return ans;
-
+        return sb.toString();
     }
 
 
@@ -154,6 +148,10 @@ public class _0007_SerializeDeserializeBinaryTree {
 
         return root;
     }
+
+
+
+
 
     @Test
     public void test1() {

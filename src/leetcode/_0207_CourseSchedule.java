@@ -1,7 +1,3 @@
-/*
-Medium
-#DFS, #BFS, #Graph, #Topological Sort
- */
 package leetcode;
 
 import org.junit.Test;
@@ -10,14 +6,15 @@ import java.util.*;
 
 /**
  * 207. Course Schedule
+ * Medium
+ * #DFS, #BFS, #Graph, #Topological Sort
  *
- * There are a total of numCourses courses you have to take, labeled from 0 to numCourses-1.
+ * There are a total of numCourses courses you have to take, labeled from 0 to numCourses - 1.
+ * You are given an array prerequisites where prerequisites[i] = [ai, bi] indicates that
+ * you must take course bi first if you want to take course ai.
+ * - For example, the pair [0, 1], indicates that to take course 0 you have to first take course 1.
  *
- * Some courses may have prerequisites, for example:
- * to take course 0 you have to first take course 1, which is expressed as a pair: [0,1]
- *
- * Given the total number of courses and a list of prerequisite pairs,
- * is it possible for you to finish all courses?
+ * Return true if you can finish all courses. Otherwise, return false.
  *
  * Example 1:
  * Input: numCourses = 2, prerequisites = [[1,0]]
@@ -32,39 +29,44 @@ import java.util.*;
  *              To take course 1 you should have finished course 0, and to take course 0 you should
  *              also have finished course 1. So it is impossible.
  *
- *
  * Constraints:
- * - The input prerequisites is a graph represented by a list of edges, not adjacency matrices. Read more about how a graph is represented.
- *   https://www.khanacademy.org/computing/computer-science/algorithms/graph-representation/a/representing-graphs
- * - You may assume that there are no duplicate edges in the input prerequisites.
- * - 1 <= numCourses <= 10^5
+ * 1 <= numCourses <= 10^5
+ * 0 <= prerequisites.length <= 5000
+ * prerequisites[i].length == 2
+ * 0 <= ai, bi < numCourses
+ * All the pairs prerequisites[i] are unique.
  *
  *
- * 此题与lintcode 615. Course Schedule 相同
+ *  此题与lintcode 615. Course Schedule 相同
  */
 public class _0207_CourseSchedule {
 
     /**
-     * BFS - 4ms
-     * 之前的map中 key = 课程, value = 必修的前置课程的列表
-     * 这里 key = 前置课程, value = 前置课程所能解锁的后续课程列表
-     * 需要新加入int[]记录indegree
+     * 1. get inDegree for all courses - 用 int 数组
+     * 2. map preq course with following courses that can be unlocked - 用 hashmap
+     * 3. use queue for courses which preq has been made
      *
      * time: O(2n + 2m), n = numCourses, m = prerequisites.length
      * space: O(n + m), n = inDegree.length, m = map的空间
      */
     public boolean canFinish_2(int numCourses, int[][] prerequisites) {
 
-        Map<Integer, ArrayList<Integer>> courseMap = new HashMap<>();
+        // get inDegree for all courses
         int[] inDegree = new int[numCourses];
-        for (int i = 0; i < numCourses; i++) {
-            courseMap.put(i, new ArrayList<Integer>());
-        }
+
+        // map preq course with following courses that can be unlocked
+        Map<Integer, ArrayList<Integer>> courseMap = new HashMap<>();
+
         for (int[] preq : prerequisites) {
             inDegree[preq[0]]++; // 后续课程的入度
+
+            if (!courseMap.containsKey(preq[1])) {
+                courseMap.put(preq[1], new ArrayList<Integer>());
+            }
             courseMap.get(preq[1]).add(preq[0]); // key = 前置课程, value = 前置课程所能解锁的后续课程列表
         }
 
+        // use queue for courses which preq has been made
         Queue<Integer> q = new LinkedList<>();
         for (int i = 0; i < numCourses; i++) {
             if (inDegree[i] == 0) { // 将入度为0的课程加入队列
@@ -80,6 +82,9 @@ public class _0207_CourseSchedule {
             if (coursesTaken == numCourses) {
                 return true;
             }
+
+            // reduce the indegree of the following courses
+            // and add the courses that has preq met to queue
             for (int i : courseMap.get(cur)) { // 解锁的后续课程
                 inDegree[i]--;
                 if (inDegree[i] == 0) {
@@ -88,7 +93,7 @@ public class _0207_CourseSchedule {
             }
         }
 
-        return coursesTaken == numCourses;
+        return false;
     }
 
 
