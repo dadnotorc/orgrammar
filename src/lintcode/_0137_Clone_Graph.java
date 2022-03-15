@@ -34,11 +34,48 @@ import java.util.*;
 
  * Clarification
  * How we serialize an undirected graph: http://www.lintcode.com/help/graph/
+ *
+ * leetcode 133
  */
-public class _0137_CloneGraph {
+public class _0137_Clone_Graph {
 
+    /**
+     * 如果题目中给出 (或者假设) 图中 node 总数 in the range [0, 100], 共有 101 个
+     */
+    public UndirectedGraphNode cloneGraph_array(UndirectedGraphNode node) {
+        if (node == null) { return null; }
 
+        UndirectedGraphNode newNode = new UndirectedGraphNode(node.label);
 
+        // 使用 array of Node, 而不是 boolean, 原因是
+        // because i have to add all the adjacent nodes of particular vertex, whether it's visited or not,
+        // so in the Node[] initially null is stored, if that node is visited,
+        // we will store the respective node at the index, and can retrieve that easily.
+        // 不用通过 map 来关联 oldNode 与 newNode
+        UndirectedGraphNode[] visited = new UndirectedGraphNode[101];
+        Arrays.fill(visited, null);
+
+        dfs(node, newNode, visited);
+
+        return newNode;
+    }
+
+    private void dfs(UndirectedGraphNode oldNode,
+                     UndirectedGraphNode newNode,
+                     UndirectedGraphNode[] visited) {
+        visited[newNode.label] = newNode;
+
+        for (UndirectedGraphNode oldNeighbor : oldNode.neighbors) {
+            if (visited[oldNeighbor.label] == null) {
+                UndirectedGraphNode newNeighbor = new UndirectedGraphNode(oldNeighbor.label);
+                newNode.neighbors.add(newNeighbor);
+
+                dfs(oldNeighbor, newNeighbor, visited);
+            } else {
+                newNode.neighbors.add(visited[oldNeighbor.label]);
+            }
+        }
+    }
 
 
 
@@ -59,7 +96,7 @@ public class _0137_CloneGraph {
         // 使用BFS
         ArrayList<UndirectedGraphNode> oldNodes = getNodes_BFS(node);
 
-        // 使用DFS Recursion
+        // 使用DFS Recursion, 这里只要 HashSet 即可, 无需 ArrayList
 //        ArrayList<UndirectedGraphNode> oldNodes = new ArrayList<>();
 //        HashSet<UndirectedGraphNode> set = new HashSet<>();
 //        getNodes_DFS_Recursive(node, oldNodes, set);
