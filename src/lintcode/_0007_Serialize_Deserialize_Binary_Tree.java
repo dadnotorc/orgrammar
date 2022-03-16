@@ -47,7 +47,7 @@ import static org.junit.Assert.assertTrue;
  *
  * leetcode 297
  */
-public class _0007_SerializeDeserializeBinaryTree {
+public class _0007_Serialize_Deserialize_Binary_Tree {
 
     /**
      * BFS - 把每一层的nodes加到queue中, 然后依次存入String
@@ -166,11 +166,11 @@ public class _0007_SerializeDeserializeBinaryTree {
         n2.right = n4;
 
         String expSe = "{3,9,20,#,#,15,7}";
-        String actSe = new _0007_SerializeDeserializeBinaryTree().serialize(n0);
+        String actSe = new _0007_Serialize_Deserialize_Binary_Tree().serialize(n0);
         System.out.println(actSe);
         assertTrue(expSe.equals(actSe));
 
-        TreeNode deRoot = new _0007_SerializeDeserializeBinaryTree().deserialize(actSe);
+        TreeNode deRoot = new _0007_Serialize_Deserialize_Binary_Tree().deserialize(actSe);
         System.out.println(deRoot.val);
         System.out.println(deRoot.left.val);
         System.out.println(deRoot.right.val);
@@ -186,11 +186,11 @@ public class _0007_SerializeDeserializeBinaryTree {
         TreeNode n0 = null;
 
         String expSe = "{}";
-        String actSe = new _0007_SerializeDeserializeBinaryTree().serialize(n0);
+        String actSe = new _0007_Serialize_Deserialize_Binary_Tree().serialize(n0);
         System.out.println(actSe);
         assertTrue(expSe.equals(actSe));
 
-        TreeNode deRoot = new _0007_SerializeDeserializeBinaryTree().deserialize(actSe);
+        TreeNode deRoot = new _0007_Serialize_Deserialize_Binary_Tree().deserialize(actSe);
         assertNull(deRoot);
     }
 
@@ -205,11 +205,11 @@ public class _0007_SerializeDeserializeBinaryTree {
         n2.left = n3;
 
         String expSe = "{3,9,20,#,#,15}";
-        String actSe = new _0007_SerializeDeserializeBinaryTree().serialize(n0);
+        String actSe = new _0007_Serialize_Deserialize_Binary_Tree().serialize(n0);
         System.out.println(actSe);
         assertTrue(expSe.equals(actSe));
 
-        TreeNode deRoot = new _0007_SerializeDeserializeBinaryTree().deserialize(actSe);
+        TreeNode deRoot = new _0007_Serialize_Deserialize_Binary_Tree().deserialize(actSe);
         System.out.println(deRoot.val);
         System.out.println(deRoot.left.val);
         System.out.println(deRoot.right.val);
@@ -230,11 +230,11 @@ public class _0007_SerializeDeserializeBinaryTree {
         n1.left = n3;
 
         String expSe = "{3,9,20,15}";
-        String actSe = new _0007_SerializeDeserializeBinaryTree().serialize(n0);
+        String actSe = new _0007_Serialize_Deserialize_Binary_Tree().serialize(n0);
         System.out.println(actSe);
         assertTrue(expSe.equals(actSe));
 
-        TreeNode deRoot = new _0007_SerializeDeserializeBinaryTree().deserialize(actSe);
+        TreeNode deRoot = new _0007_Serialize_Deserialize_Binary_Tree().deserialize(actSe);
         System.out.println(deRoot.val);
         System.out.println(deRoot.left.val);
         System.out.println(deRoot.right.val);

@@ -39,7 +39,12 @@ import java.util.*;
  *
  *  此题与lintcode 615. Course Schedule 相同
  */
-public class _0207_CourseSchedule {
+public class _0207_Course_Schedule {
+    /*
+    面试时要确认:
+    - prerequisites 里, 没有 duplicate
+    - numCourses 是可选的课程数量的上限
+     */
 
     /**
      * 1. get inDegree for all courses - 用 int 数组
@@ -74,12 +79,10 @@ public class _0207_CourseSchedule {
             }
         }
 
-        // 注意, 这里不能用numCourses--, 因为之后的for循环中需要用到原始的numCourses值
-        int coursesTaken = 0;
         while (!q.isEmpty()) {
             int cur = q.poll();
-            coursesTaken++;
-            if (coursesTaken == numCourses) {
+            numCourses--;
+            if (numCourses == 0) {
                 return true;
             }
 
@@ -237,11 +240,12 @@ public class _0207_CourseSchedule {
                 return true;
             }
             for (int key : map.keySet()) {
-                if (map.get(key).contains(cur)) {
-                    // 注意! 这里不能使用 map.get(key).remove(cur);
+                ArrayList<Integer> list = map.get(key);
+                if (list.contains(cur)) {
+                    // 注意! 这里不能直接使用 map.get(key).remove(cur);
                     // 因为如此移除的是cur下标所指的数值, 而不是cur这个值
-                    map.get(key).remove(new Integer(cur));
-                    if (map.get(key).size() == 0) {
+                    list.remove((Integer) cur);
+                    if (list.size() == 0) {
                         q.offer(key);
                     }
                 }
