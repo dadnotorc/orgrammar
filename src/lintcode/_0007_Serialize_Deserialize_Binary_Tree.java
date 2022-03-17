@@ -3,8 +3,10 @@ package lintcode;
 import org.junit.Test;
 import util.TreeNode;
 
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.Queue;
+import java.util.Stack;
 
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
@@ -56,7 +58,7 @@ public class _0007_Serialize_Deserialize_Binary_Tree {
      * 1. 不管子树是否为空, 都将其加入queue中, 因为可能当前层后续nodes子树不为空
      * 2. 别忘了加入"{" 和 "}"
      */
-    public String serialize(TreeNode root) {
+    public String serialize_bfs(TreeNode root) {
         if (root == null) {
             return "{}"; // 注意: 应返回"{}", 而不是""
         }
@@ -69,12 +71,11 @@ public class _0007_Serialize_Deserialize_Binary_Tree {
         sb.append("{");
 
         while (!q.isEmpty()) {
-            int sz = q.size();
-            for (int i = 0; i < sz; i++) {
-                TreeNode node = q.poll();
+            // 这里不用做 size = q.size(), 不需要一层一层的来
+            TreeNode node = q.poll();
 
-                if (node != null) {
-                    sb.append(node.val);
+            if (node != null) {
+                sb.append(node.val);
                     /*                              3
                     不在这里判断左右子树是否为空,       / \
                     因为当前层后续可能仍有nodes, 例如  9  20
@@ -82,23 +83,22 @@ public class _0007_Serialize_Deserialize_Binary_Tree {
   	                                                15  7
   	                所以第三层
                      */
-                    q.offer(node.left);
-                    q.offer(node.right);
-                } else {
-                    sb.append("#");
-                }
-
-                sb.append(",");
+                q.offer(node.left);
+                q.offer(node.right);
+            } else {
+                sb.append("#");
             }
+
+            sb.append(",");
         }
 
+        // 这一段省略也没关系
         // 删除末端多余的 ',' 和 '#'
-        // 如果 input={3,9,20,#,#,15}, 需要将 20 的右子树(null节点)删掉
-        int i = sb.length() - 1;
-        while (sb.charAt(i) == ',' || sb.charAt(i) == '#') {
-            sb.deleteCharAt(i);
-            i--;
-        }
+//        int i = sb.length() - 1;
+//        while (sb.charAt(i) == ',' || sb.charAt(i) == '#') {
+//            sb.deleteCharAt(i);
+//            i--;
+//        }
 
         sb.append('}'); // 别忘了关括号
 
@@ -113,7 +113,7 @@ public class _0007_Serialize_Deserialize_Binary_Tree {
      * 1. 别忘了考虑input="{}"
      * 2. 判断左右子树时, 记得检查index是否越界, 因为两颗子树可能为空 (values[]的index已越界)
      */
-    public TreeNode deserialize(String data) {
+    public TreeNode deserialize_bfs(String data) {
         if (data == null || data.isEmpty() || data.equals("{}")) {
             return null;
         }
@@ -126,23 +126,142 @@ public class _0007_Serialize_Deserialize_Binary_Tree {
         Queue<TreeNode> q = new LinkedList<>();
         q.offer(root);
 
-        int index = 1; // start from 1 instead of 0 because root has been created
-        while (index < values.length) { // 判断index是否越界, 而不是queue是否为空, 以免array out of index
-            int sz = q.size();
-            for (int i = 0; i < sz; i++) {
-                TreeNode parent = q.poll();
-                TreeNode left, right;
-                if (index < values.length && !values[index].equals("#")) { // left child - i
-                    left = new TreeNode(Integer.parseInt(values[index]));
-                    parent.left = left;
+        // 注意 这里每次递增 2, 而不是 ++
+        // 从 1 开始, 因为 0 已经做了 root
+        for (int i = 1; i < values.length; i += 2) { // 判断index是否越界, 而不是queue是否为空, 以免array out of index
+            TreeNode node = q.poll();
+            if (node != null) {
+                if (!values[i].equals("#")) {
+                    TreeNode left = new TreeNode(Integer.parseInt(values[i]));
+                    node.left = left;
                     q.offer(left);
                 }
-                if (index+1 < values.length && !values[index+1].equals("#")) { // right child - i + 1
-                    right = new TreeNode(Integer.parseInt(values[index+1]));
-                    parent.right = right;
+                if (i + 1 < values.length && !values[i + 1].equals("#")) { // 这里别忘了检查是否越界
+                    TreeNode right = new TreeNode(Integer.parseInt(values[i+1]));
+                    node.right = right;
                     q.offer(right);
                 }
-                index += 2;
+            }
+        }
+
+        return root;
+    }
+
+
+    /* ------ */
+
+    /**
+     * DFS 递归解法 - 跟之前的道理是一样的
+     */
+
+    public String serialize_dfs(TreeNode root) {
+        if (root == null) { return ""; }
+
+        StringBuilder sb = new StringBuilder();
+        buildString(root, sb);
+        return sb.toString();
+    }
+
+    private void buildString(TreeNode node, StringBuilder sb) {
+        if (node == null) {
+            sb.append("#,");
+        } else {
+            sb.append(node.val).append(',');
+
+            buildString(node.left, sb);
+            buildString(node.right, sb);
+        }
+    }
+
+    public TreeNode deserialize_dfs(String data) {
+        if (data == null || data.isEmpty()) { return null; }
+
+        String[] values = data.split(",");
+
+        // 注意这里是用 String, 而不是 TreeNode了
+        Queue<String> q = new LinkedList<>(Arrays.asList(values));
+
+        return buildTree(q);
+    }
+
+    private TreeNode buildTree(Queue<String> q) {
+        if (!q.isEmpty()) {
+            String val = q.poll();
+            if (!val.equals("#")) {
+                TreeNode node = new TreeNode(Integer.parseInt(val));
+
+                node.left = buildTree(q);
+                node.right = buildTree(q);
+                return node;
+            }
+        }
+
+        // val 等于 "#" 会来到到这里
+        return null;
+    }
+
+
+
+    /* ------ */
+
+    /**
+     * DFS stack解法
+     */
+
+    public String serialize(TreeNode root) {
+        if (root == null) { return ""; }
+
+        StringBuilder sb = new StringBuilder();
+        Stack<TreeNode> stack = new Stack<>();
+        TreeNode node = root;
+
+        while (node != null || !stack.isEmpty()) {
+            if (node != null) {
+                sb.append(node.val).append(',');
+                stack.push(node);
+                node = node.left;
+            } else {
+                sb.append("#,");
+                node = stack.pop(); // parent node
+                node = node.right;
+            }
+        }
+
+        return sb.toString();
+    }
+
+    // 用 stack 取代 递归
+    public TreeNode deserialize(String data) {
+        if (data == null || data.isEmpty()) { return null; }
+
+        String[] values = data.split(",");
+
+        TreeNode root = new TreeNode(Integer.parseInt(values[0]));
+
+        Stack<TreeNode> stack = new Stack<>();
+        stack.push(root);
+
+        TreeNode node = root;
+
+        int i = 1;
+        while (i < values.length) {
+            while (i < values.length && !values[i].equals("#")) {
+                node.left = new TreeNode(Integer.parseInt(values[i]));
+                i++;
+                node = node.left;
+                stack.push(node);
+            }
+
+            while (i < values.length && values[i].equals("#")) {
+                node = stack.pop();
+                i++;
+            }
+
+            if (i < values.length) {
+                node.right = new TreeNode(Integer.parseInt(values[i]));
+                i++;
+                node = node.right;
+                stack.push(node);
             }
         }
 
