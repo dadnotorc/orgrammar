@@ -1,11 +1,9 @@
-/*
-Medium
-#Array, #Greedy
- */
 package leetcode;
 
 /**
  * 55. Jump Game
+ * Medium
+ * #Array, #Greedy
  *
  * Given an array of non-negative integers, you are initially positioned at the first index of the array.
  * Each element in the array represents your maximum jump length at that position.
@@ -22,7 +20,7 @@ package leetcode;
  * Explanation: You will always arrive at index 3 no matter what. Its maximum
  *              jump length is 0, which makes it impossible to reach the last index.
  */
-public class _0055_JumpGame {
+public class _0055_Jump_Game {
 
     /*
     这题必须每格每格的去检查, 不然可能跳过, 错判 例如
@@ -71,6 +69,31 @@ public class _0055_JumpGame {
         return false;
     }
 
+
+    /**
+     * 从前往后一步一步检查, 只要没有遇到 0 都可以继续走
+     * 当遇到 0 时, 而且已达到能走到最大 index 时, 就报 false
+     *
+     * 易错点: for 循环 走到 n - 1 就可以退出了, 不需要检查最后一位, 因为已经到了
+     */
+    public boolean canJump_5(int[] nums) {
+        // if (nums == null || nums.length < 2) { return true; } // 不用特判, for 循环包含了
+
+        int maxIndex = 0;
+        for (int i = 0 ; i < nums.length - 1; i++) { // 遍历到 nums.length - 1 就可以结束了, 不用再检查最后一位了
+            if (nums[i] == 0 && i == maxIndex) {
+                return false;
+            }
+            maxIndex = Math.max(maxIndex, i + nums[i]);
+
+            // 也可写成
+//            maxIndex = Math.max(maxIndex, i + nums[i]);
+//            if (i == maxIndex) { return false; }
+//            if (maxIndex >= nums.length - 1) { return true; }
+        }
+
+        return true;
+    }
 
 
     /**

@@ -1,9 +1,3 @@
-/*
-Easy
-#String
-Google
-FAQ++
- */
 package lintcode;
 
 import java.util.ArrayList;
@@ -11,6 +5,10 @@ import java.util.List;
 
 /**
  * 914. Flip Game
+ * Easy
+ * #String
+ * Google
+ * FAQ++
  *
  * You are playing the following Flip Game with your friend:
  * Given a string that contains only two characters: + and -,
@@ -38,13 +36,16 @@ import java.util.List;
  * 	"-----+-+++-+"
  * ]
  */
-public class _0914_FlipGame {
+public class _0914_Flip_Game {
 
     /**
      * 转成char[], 每次查看两位, 例如 [0][1] 或者 [1][2] 或者 [2][3]
      *
      * 易错点:
      * 1. 将char[]转回String的时候, 不能用chars.toString(), 而应该用new String(chars)
+     *    否则返回值将会类似"[C@7f31245a"
+     *
+     * time: O(2 * n), space: O(n)
      */
     public List<String> generatePossibleNextMoves_2(String s) {
         List<String> ans = new ArrayList<>();
@@ -63,7 +64,7 @@ public class _0914_FlipGame {
             if (chars[i] == '+' && chars[j] == '+') {
                 chars[i] = '-';
                 chars[j] = '-';
-                ans.add(new String(chars)); // 不能使用toString, 否则返回值将会类似"[C@7f31245a"
+                ans.add(new String(chars)); // 不能使用toString,
                 chars[i] = '+';
                 chars[j] = '+';
             }
@@ -72,9 +73,11 @@ public class _0914_FlipGame {
         }
     }
 
-        /**
-         * 九章解法 - 使用 String indexOf 加上 subtring
-         */
+
+
+    /**
+     * 九章解法 - 使用 String indexOf 加上 subtring
+     */
     public List<String> generatePossibleNextMoves(String s) {
         List<String> ans = new ArrayList<>();
         // String indexOf(String str, int strt):
