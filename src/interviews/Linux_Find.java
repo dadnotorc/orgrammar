@@ -4,7 +4,7 @@ import java.nio.file.NotDirectoryException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class LinuxFind {
+public class Linux_Find {
 
     class File {
         String name;
