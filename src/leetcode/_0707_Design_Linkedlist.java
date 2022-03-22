@@ -45,12 +45,117 @@ package leetcode;
  * Please do not use the built-in LinkedList library.
  * At most 2000 calls will be made to get, addAtHead, addAtTail, addAtIndex and deleteAtIndex.
  */
-public class _0707_Design_Linked_List {
+public class _0707_Design_Linkedlist {
+
+    /* singly linked list */
+
+    private int length;
+    private Node head;
+
+    class Node {
+        int val;
+        Node next;
+        public Node (int val) {
+            this.val = val;
+            this.next = null;
+        }
+    }
+
+
+    //  Initializes the MyLinkedList object.
+    public _0707_Design_Linkedlist() {
+        this.length = 0;
+        this.head = null;
+    }
+
+    // Get the value of the indexth node in the linked list.
+    // If the index is invalid, return -1.
+    public int get(int index) {
+        if (index >= this.length) { return  -1; }
+
+        Node cur = this.head;
+        for (int i = 1; i <= index; i++) {
+            cur = cur.next;
+        }
+
+        return cur.val;
+    }
+
+    // Add a node of value val before the first element of the linked list.
+    // After the insertion, the new node will be the first node of the linked list.
+    public void addAtHead(int val) {
+        Node node = new Node(val);
+        node.next = this.head;
+        this.head = node;
+        this.length++;
+    }
+
+    // Append a node of value val as the last element of the linked list.
+    public void addAtTail(int val) {
+        Node node = new Node(val);
+        this.length++;
+
+        if (this.head == null) {
+            this.head = node;
+        } else {
+            Node cur = head;
+            while (cur.next != null) { // 注意! 这里不能用 cur != null, 不然无法链接最后一位
+                cur = cur.next;
+            }
+            cur.next = node;
+        }
+    }
+
+    // Add a node of value val before the indexth node in the linked list.
+    // If index equals the length of the linked list, the node will be appended to the end of the linked list.
+    // If index is greater than the length, the node will not be inserted.
+    public void addAtIndex(int index, int val) {
+        if (index < 0 || index > this.length) {
+            return;
+        }
+
+        if (index == 0) {
+            addAtHead(val);
+        } else {
+            Node node = new Node(val);
+            this.length++;
+
+            Node cur = head;
+            for (int i = 1; i < index; i++) { // 这里要小心, 到达 index - 1 就结束, 将新值插入 index 位置
+                cur = cur.next;
+            }
+
+            node.next = cur.next;
+            cur.next = node;
+        }
+
+    }
+
+    // Delete the indexth node in the linked list, if the index is valid.
+    public void deleteAtIndex(int index) {
+        if (index >= this.length) {
+            return;
+        }
+
+        this.length--; //别忘咯
+
+        if (index == 0) {
+            this.head = this.head.next;
+        } else {
+            Node cur = this.head;
+            for (int i = 1; i < index; i++) { // 到 index - 1 就停止, 因为要删掉 / 跳过 index 位
+                cur = cur.next;
+            }
+            cur.next = cur.next.next;
+        }
+
+
+    }
 
     /**
-     * 除了 head, 还加入 tail, (如果有很多 addAtTail 操作的话)
+     * double linked list - 加入 tail, (如果有很多 addAtTail 操作的话)
      */
-
+    /*
     private int length;
     private Node head;
     private Node tail;
@@ -65,7 +170,7 @@ public class _0707_Design_Linked_List {
     }
 
     //  Initializes the MyLinkedList object.
-    public _0707_Design_Linked_List() {
+    public _0707_Design_Linkedlist() {
         this.length = 0;
         this.head = this.tail = null;
     }
@@ -156,124 +261,5 @@ public class _0707_Design_Linked_List {
             cur.next = cur.next.next;
         }
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-    /* 下面的解法也对, 但是效率不如上面的, 因为加入了 tail, 减少了遍历
-
-    private int length;
-    private Node head;
-
-    class Node {
-        int val;
-        Node next;
-        public Node (int val) {
-            this.val = val;
-            this.next = null;
-        }
-    }
-
-
-    //  Initializes the MyLinkedList object.
-    public _0707_Design_Linked_List() {
-        this.length = 0;
-        this.head = null;
-    }
-
-    // Get the value of the indexth node in the linked list.
-    // If the index is invalid, return -1.
-    public int get(int index) {
-        if (index >= this.length) { return  -1; }
-
-        Node cur = this.head;
-        for (int i = 1; i <= index; i++) {
-            cur = cur.next;
-        }
-
-        return cur.val;
-    }
-
-    // Add a node of value val before the first element of the linked list.
-    // After the insertion, the new node will be the first node of the linked list.
-    public void addAtHead(int val) {
-        Node node = new Node(val);
-        node.next = this.head;
-        this.head = node;
-        this.length++;
-    }
-
-    // Append a node of value val as the last element of the linked list.
-    public void addAtTail(int val) {
-        Node node = new Node(val);
-        this.length++;
-
-        if (this.head == null) {
-            this.head = node;
-        } else {
-            Node cur = head;
-            while (cur.next != null) { // 注意! 这里不能用 cur != null, 不然无法链接最后一位
-                cur = cur.next;
-            }
-            cur.next = node;
-        }
-    }
-
-    // Add a node of value val before the indexth node in the linked list.
-    // If index equals the length of the linked list, the node will be appended to the end of the linked list.
-    // If index is greater than the length, the node will not be inserted.
-    public void addAtIndex(int index, int val) {
-        if (index > this.length) {
-            return;
-        }
-
-        if (index == 0) {
-            addAtHead(val);
-        } else {
-            Node node = new Node(val);
-            this.length++;
-
-            Node cur = head;
-            for (int i = 1; i < index; i++) { // 这里要小心, 到达 index - 1 就结束, 将新值插入 index 位置
-                cur = cur.next;
-            }
-
-            node.next = cur.next;
-            cur.next = node;
-        }
-
-    }
-
-    // Delete the indexth node in the linked list, if the index is valid.
-    public void deleteAtIndex(int index) {
-        if (index >= this.length) {
-            return;
-        }
-
-        this.length--; //别忘咯
-
-        if (index == 0) {
-            this.head = this.head.next;
-        } else {
-            Node cur = this.head;
-            for (int i = 1; i < index; i++) { // 到 index - 1 就停止, 因为要删掉 / 跳过 index 位
-                cur = cur.next;
-            }
-            cur.next = cur.next.next;
-        }
-
-
-    }
-
     */
-
 }

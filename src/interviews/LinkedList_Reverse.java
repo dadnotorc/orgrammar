@@ -8,6 +8,7 @@ import java.util.ArrayDeque;
 import java.util.Deque;
 
 /**
+ * Reverse linked list
  * Given a singly-linked list, reverse the list. This can be done iteratively or recursively.
  *
  * Example:
@@ -16,7 +17,7 @@ import java.util.Deque;
  *
  * Google
  */
-public class ReverseLinkedList {
+public class LinkedList_Reverse {
 
     /* Method 1 - Iteratively with stack */
 
