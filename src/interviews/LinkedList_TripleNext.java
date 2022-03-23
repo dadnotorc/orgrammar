@@ -39,6 +39,8 @@ public class LinkedList_TripleNext {
             return;
         }
 
+        // 找到 cur, 在 cur.next 处添加 new node
+
         Node node = new Node(val);
 
         if (index == 0) {
@@ -67,8 +69,8 @@ public class LinkedList_TripleNext {
             }
 
         } else { // index >= 3 && original length >= 3
-            Node pre = this.head;
-            Node cur = pre.next.next;
+            Node pre = this.head; // pre 从 index 0 开始
+            Node cur = pre.next.next; // cur 从 index 2 开始
 
             for (int i = 0; i < index - 3; i++) {
                 cur = cur.next;
@@ -100,6 +102,8 @@ public class LinkedList_TripleNext {
             System.out.println("invalid index");
             return;
         }
+
+        // 找到 cur, 删除 cur.next 节点
 
         if (index == 0) {
             this.head = this.head.next;
@@ -180,6 +184,25 @@ public class LinkedList_TripleNext {
         list.insert(0, 0);
 
         list.delete(8);
+        list.print();
+    }
+
+    @Test
+    public void test3() {
+        LinkedList_TripleNext list = new LinkedList_TripleNext();
+        list.insert(2, 0);
+        list.insert(1, 0);
+        list.insert(0, 0);
+
+        list.insert(5, 1);
+        list.print();
+
+        System.out.println("deleting index 1");
+        list.delete(1);
+        list.print();
+
+        System.out.println("insert at index 2");
+        list.insert(5, 2);
         list.print();
     }
 }
