@@ -1,8 +1,3 @@
-/*
-Easy
-#Array, #Sorted Array, #Interval, #Two Pointers
-Uber
- */
 package lintcode;
 
 import org.junit.Test;
@@ -16,11 +11,11 @@ import static org.junit.Assert.assertEquals;
 /**
  * 839. Merge Two Sorted Interval Lists
  * Easy
+ * #Array, #Sorted Array, #Interval, #Two Pointers
  * Uber
  *
- * Merge two sorted (ascending) lists of interval and return it as a new sorted
- *  list. The new sorted list should be made by splicing together the intervals
- *  of the two lists and sorted in ascending order.
+ * Merge two sorted (ascending) lists of interval and return it as a new sorted list.
+ * The new sorted list should be made by splicing together the intervals of the two lists and sorted in ascending order.
  *
  * - The intervals in the given list do not overlap.
  * - The intervals in different lists may overlap.
@@ -40,11 +35,19 @@ import static org.junit.Assert.assertEquals;
  * (3,4),(4,5) --> (3,5)
  * (6,7) --> (6,7)
  */
-public class _0839_MergeSortedIntervalLists {
+public class _0839_Merge_Sorted_Interval_Lists {
 
-
+    /**
+     * 双指针, 分别指向 list1 和 list2 的当前下标
+     * 设置两个 interval - prev, cur
+     * 当两个指针均未遍历完时, 记录 start 较小者为 cur, 将其与 prev 合并
+     * 将未完成遍历的指针继续
+     * 最后别忘了将 prev 也要加入 ans
+     *
+     * 易错点:
+     * - 在 combine 时, end 的值要取 Math.max(cur.end, prev.end))
+     */
     public List<Interval> mergeTwoInterval(List<Interval> list1, List<Interval> list2) {
-        // write your code here
         if (list1 == null || list1.size() == 0) {
             return list2;
         }
@@ -54,10 +57,10 @@ public class _0839_MergeSortedIntervalLists {
 
         List<Interval> ans = new ArrayList<>();
         int i = 0, j = 0;
-        Interval cur = null, last = null;
+        Interval prev = null, cur = null;
+
         while (i < list1.size() && j < list2.size()) {
-            // examine the interval with the earlier start time
-            // one at a time
+            // examine the interval with the earlier start time, one at a time
             if (list1.get(i).start < list2.get(j).start) {
                 cur = list1.get(i);
                 i++;
@@ -66,35 +69,36 @@ public class _0839_MergeSortedIntervalLists {
                 j++;
             }
 
-            last = combine(ans, last, cur);
+            prev = combine(ans, prev, cur);
         }
 
         while (i < list1.size()) {
-            last = combine(ans, last, list1.get(i));
+            prev = combine(ans, prev, list1.get(i));
             i++;
         }
 
         while (j < list2.size()) {
-            last = combine(ans, last, list2.get(j));
+            prev = combine(ans, prev, list2.get(j));
             j++;
         }
 
-        if (last != null) {
-            ans.add(last);
+        if (prev != null) {
+            ans.add(prev);
         }
 
         return ans;
     }
 
-    public Interval combine(List<Interval> list, Interval last, Interval cur) {
-        if (last == null) {
+    // 不能用 void, 好像无法传递 prev 的指针
+    public Interval combine(List<Interval> list, Interval prev, Interval cur) {
+        if (prev == null) {
             return cur;
         }
 
-        if (cur.start <= last.end) { // overlap
-            return new Interval(last.start, Math.max(cur.end, last.end));
+        if (prev.end >= cur.start) { // overlap
+            return new Interval(prev.start, Math.max(cur.end, prev.end)); // 这里要小心, end 要取较大值
         } else {
-            list.add(last);
+            list.add(prev);
             return cur;
         }
     }
@@ -113,7 +117,7 @@ public class _0839_MergeSortedIntervalLists {
         List<Interval> expected = new ArrayList<>();
         expected.add(new Interval(1, 4));
         expected.add(new Interval(5, 6));
-        List<Interval> actual = new _0839_MergeSortedIntervalLists().mergeTwoInterval(list1, list2);
+        List<Interval> actual = mergeTwoInterval(list1, list2);
 
         assertEquals(expected.size(), actual.size());
         assertEquals(expected.get(0).start, actual.get(0).start);
@@ -135,7 +139,7 @@ public class _0839_MergeSortedIntervalLists {
         expected.add(new Interval(1, 2));
         expected.add(new Interval(3, 5));
         expected.add(new Interval(6, 7));
-        List<Interval> actual = new _0839_MergeSortedIntervalLists().mergeTwoInterval(list1, list2);
+        List<Interval> actual = mergeTwoInterval(list1, list2);
 
         assertEquals(expected.size(), actual.size());
         assertEquals(expected.get(0).start, actual.get(0).start);
@@ -161,7 +165,7 @@ public class _0839_MergeSortedIntervalLists {
         expected.add(new Interval(1, 5));
         expected.add(new Interval(6, 8));
         expected.add(new Interval(10, 15));
-        List<Interval> actual = new _0839_MergeSortedIntervalLists().mergeTwoInterval(list1, list2);
+        List<Interval> actual = mergeTwoInterval(list1, list2);
 
         assertEquals(expected.size(), actual.size());
         assertEquals(expected.get(0).start, actual.get(0).start);
