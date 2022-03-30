@@ -70,7 +70,7 @@ public class LinkedList_TripleNext {
 
         } else { // index >= 3 && original length >= 3
             Node pre = this.head; // pre 从 index 0 开始
-            Node cur = pre.next.next; // cur 从 index 2 开始
+            Node cur = pre.next.next; // cur 从 index 2 开始, 如此, pre.triple_next 和 cur.next 都会变成 new node
 
             for (int i = 0; i < index - 3; i++) {
                 cur = cur.next;
