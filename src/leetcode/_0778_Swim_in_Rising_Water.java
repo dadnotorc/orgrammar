@@ -1,5 +1,9 @@
 package leetcode;
 
+import org.junit.Test;
+
+import java.util.*;
+
 /**
  * 778. Swim in Rising Water
  *
@@ -48,37 +52,133 @@ package leetcode;
 public class _0778_Swim_in_Rising_Water {
 
     /**
-     * 暴力 - 找出所有的 path, 找出每条 path 中的最大值, 选择这些最大值中的最小的那一位
-     * 使用个 boolean[][] 记录当前节点是否已经访问过
-     *
-     * 时间 O(4^ (n^2)) - 每个节点 可以选择 4 个方向, 共有 n^2 个节点
-     * 空间 O(n^2)
-     */
-    public int swimInWater(int[][] grid) {
-        int n = grid.length;
-        boolean[][] visited = new boolean[n][n];
+    暴力 - 找出所有的 path, 找出每条 path 中的最大值, 选择这些最大值中的最小的那一位
+    使用个 boolean[][] 记录当前节点是否已经访问过
 
-        return dfs_bf(grid, visited, 0, 0, -1);
+    时间 O(4^ (n^2)) - 每个节点 可以选择 4 个方向, 共有 n^2 个节点
+    空间 O(n^2)
+
+    改进 1 - 因为数组的值是从 0 至 n^2 - 1. 每个节点值都不同,
+    所以使用循环, i 从 0 到 n^2 - 1, 查找是否存在某个 path, 其中最大值 等于 i
+
+    改进 2 - i 的起始点不用从 0 开始, 而可以定为 max(grid[0][0], grid[n - 1][n - 1], 2*n - 1)
+    即 左上角节点, 右下角节点, 从左上到右下必须经过 n + (n - 1) = 2*n - 1 个节点, 即最大值位 2*n - 2
+     时间 - O(n^2 * n^2) = O(n^4) - 循环 n^2, 每次查找 n^2 数组
+     空间 - O(n^2)
+
+    改进 3 - 使用 binary search 取代 循环遍历
+     时间 - O(n^2 * log(n^2)) = O(n^2 * 2log(n)) = O(n^2 * log(n))
+     二分法 log(n^2), 每次查找 n^2 的 数组
+     空间 - O(n^2)
+     */
+
+    int[][] dirs = {{0,1},{1,0},{-1,0},{0,-1}};
+
+    // 是否存在一条 path, 其最大值 == targe.  不用 DFS, 因为递归深度可达 n^2, 数据规模太大
+    public boolean canReachWithSetMax(int[][] grid, int target) {
+        int n = grid.length;
+
+        Queue<int[]> q = new LinkedList<>();
+        q.offer(new int[] {0, 0});
+
+        boolean[][] visited = new boolean[n][n];
+        visited[0][0] = true;
+
+        while (!q.isEmpty()) {
+            int[] coord = q.poll();
+            if (coord[0] == n - 1 && coord[1] == n - 1) {
+                return true;
+            }
+
+            for (int[] dir : dirs) {
+                int x = coord[0] + dir[0];
+                int y = coord[1] + dir[1];
+                if (x < 0 || x >= n || y < 0 || y >= n ||    // 越界
+                        visited[x][y] ||                     // 已访问
+                        grid[x][y] > target) {               // 超过 target
+                    //return false; // 这里不能 return false, 会提前错误的结束
+                    continue;
+                }
+
+                visited[x][y] = true;
+                q.offer(new int[]{x, y});
+            }
+        }
+
+        return false; // queue 读完, 仍未到终点, 说明无法完成
     }
 
-    // i, j - 当前座标, max_cur_path - max in current path
-    public int dfs_bf(int[][] grid, boolean[][] visited, int i , int j, int max_cur_path) {
-        if (i < 0 || i >= grid.length || j < 0 || j >= grid.length || visited[i][j]) {
-            // 出界 或者 已经访问过
-            return Integer.MAX_VALUE;
+    public int swimInWater_binarysearch(int[][] grid) {
+        int n = grid.length;
+        int l = Math.max(2 * n - 2, // 最少经过 2n - 1 个节点, 即从 0 至 2n - 2
+                Math.max(grid[0][0], grid[n - 1][n - 1]));
+        int r = n * n - 1;
+        while (l < r) {
+            int mid = l + (r - l) / 2;
+            if (canReachWithSetMax(grid, mid)) {
+                r = mid; // mid 可以, 但是要继续找有没有更小的
+            } else {
+                l = mid + 1; // mid 达不到, 必须扩大
+            }
+        }
+        return l;
+    }
+
+    public int swimInWater(int[][] grid) {
+        int n = grid.length;
+        int start = Math.max(2 * n - 2, // 最少经过 2n - 1 个节点, 即从 0 至 2n - 2
+                    Math.max(grid[0][0], grid[n - 1][n - 1]));
+        int end = n * n;
+        for (int i = start; i < end; i++) {
+            if (canReachWithSetMax(grid, i)) {
+                return i;
+            }
         }
 
-        if (i == j && i == grid.length - 1) {
-            return Math.max(max_cur_path, grid[i][j]); // 别忘了 最后这步也要比较
+        return end;
+    }
+
+
+    /**
+     * Dijkstra - min heap
+     * 使用 PriorityQueue 记录到达 [i,j] 节点时, 所有路径中的最小值 (每条路径记录遇到的最大节点)
+     * [i, j, 路径最小值]
+     */
+    public int swimInWater_dijkstra(int[][] grid) {
+        int n = grid.length;
+
+        // PQ 中记录 [座标_i, 座标_j, 路径值]
+        // 排列顺序为 - 路径值较小者靠前
+        PriorityQueue<int[]> pq = new PriorityQueue<>(new Comparator<int[]>() {
+            @Override
+            public int compare(int[] a, int[] b) {
+                return a[2] - b[2];
+            }
+        });
+        pq.offer(new int[] {0, 0, grid[0][0]});
+
+        boolean[][] visited = new boolean[n][n];
+        visited[0][0] = true;
+
+        while (!pq.isEmpty()) {
+            int[] val = pq.poll();
+            if (val[0] == n - 1 && val[1] == n - 1) {
+                return val[2];
+            }
+
+            for (int[] dir : dirs) {
+                int x = val[0] + dir[0];
+                int y = val[1] + dir[1];
+                if (x < 0 || x >= n || y < 0 || y >= n || visited[x][y]) {
+                    //return false; // 这里不能 return false, 会提前错误的结束
+                    continue;
+                }
+
+                visited[x][y] = true;
+                pq.offer(new int[] {x, y, Math.max(val[2], grid[x][y])}); // 注意, 值要取较大者
+            }
         }
 
-        visited[i][j] = true;
-        max_cur_path = Math.max(max_cur_path, grid[i][j]);
-        int min = dfs_bf(grid, visited, i + 1, j, max_cur_path);
-        Math.min(min, dfs_bf(grid, visited, i - 1, j, max_cur_path));
-        Math.min(min, dfs_bf(grid, visited, i, j + 1, max_cur_path));
-        Math.min(min, dfs_bf(grid, visited, i, j - 1, max_cur_path));
-        visited[i][j] = false;
-        return min;
+        return n * n;
     }
 }
