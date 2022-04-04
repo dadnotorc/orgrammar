@@ -40,9 +40,39 @@ import java.util.Stack;
 public class _0230_Kth_Smallest_Element_In_BST {
 
     /**
+     * 递归 - 中序遍历, 先到左下角, 然后递归走 k 步
+     */
+    int ans, step;
+
+    public int kthSmallest(TreeNode root, int k) {
+        ans = 0;
+        step = 0;
+        traverse(root, k);
+        return ans;
+    }
+
+    private void traverse(TreeNode node, int k) {
+        if (node == null) { return; }
+
+        traverse(node.left, k);
+
+        // 中序位置
+        step++;
+        if (step == k) {
+            ans = node.val;
+            return;
+        }
+
+        traverse(node.right, k);
+    }
+
+
+
+
+    /**
      * 先走到左下角 (最小值), 然后沿着树走k步
      */
-    public int kthSmallest(TreeNode root, int k) {
+    public int kthSmallest_stack(TreeNode root, int k) {
         Stack<TreeNode> stack = new Stack<>();
         TreeNode node = root;
         while (node != null) {
@@ -74,6 +104,12 @@ public class _0230_Kth_Smallest_Element_In_BST {
 
         return stack.peek().val;
     }
+
+
+
+
+
+
 
     class TreeNode {
         int val;

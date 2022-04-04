@@ -32,9 +32,9 @@ import java.util.Map;
  * preorder is guaranteed to be the preorder traversal of the tree.
  * inorder is guaranteed to be the inorder traversal of the tree.
  */
-public class _0105_ConstructBinaryTreeFromPreorderAndInorderTraversal {
+public class _0105_Construct_Binary_Tree_From_Preorder_And_Inorder_Traversal {
 
-    // 面试时, 需要确认是否有 duplicate
+    // 面试时, 需要确认是否有 duplicate, 假设没有
 
     /*
     preorder - 上 左 右; inorder - 左 上 右
@@ -50,11 +50,22 @@ public class _0105_ConstructBinaryTreeFromPreorderAndInorderTraversal {
 
     public TreeNode buildTree(int[] preorder, int[] inorder) {
         Map<Integer, Integer> map = getInorderIndex(inorder);
-        return helper(preorder, 0, inorder, 0, inorder.length - 1, map);
+        return constructTree(preorder, 0, inorder, 0, inorder.length - 1, map);
     }
 
-    private TreeNode helper(int[] preorder, int preIndex,
-                            int[] inorder, int inStart, int inEnd, Map<Integer, Integer> map) {
+    // 通过遍历 inorder, 获得 mapping - <节点值, 其对应的 inorder 下标>
+    private Map<Integer, Integer> getInorderIndex(int[] inorder) {
+        Map<Integer, Integer> map = new HashMap<>();
+        for (int i = 0; i < inorder.length; i++) {
+            map.put(inorder[i], i);
+        }
+        return map;
+    }
+
+    // 递归 构造树
+    private TreeNode constructTree(int[] preorder, int preIndex,
+                                   int[] inorder, int inStart, int inEnd,
+                                   Map<Integer, Integer> map) {
         if (preIndex > preorder.length - 1 || inStart > inEnd) {
             return null;
         }
@@ -64,27 +75,25 @@ public class _0105_ConstructBinaryTreeFromPreorderAndInorderTraversal {
         // 从 inStart 开始到 inIndex - 1 都为 root 的左子树
         // 从 inIndex + 1 开始到 inEnd 都为 root 的右子树
 
-        // 左子节点 - preorder 中 preIndex + 1 即为当前节点的左子节点; inorder 中从 inStart 到 inIndex - 1
-        // 为左子树中的节点们
+        // 左子节点 - preorder 中 preIndex + 1 即为当前节点的左子节点;
+        // inorder 中从 inStart 到 inIndex - 1 为左子树中的节点们
 
-        // 右子节点 - (inIndex-inStart) = 左子树的大小, 所以 preorder 中 preIndex + (inIndex -
-        // inStart) + 1 即跳过左子树, 找到第一个右子节点
+        // 右子节点 - (inIndex-inStart) = 左子树的大小,
+        // 所以 preorder 中 preIndex + (inIndex - inStart) + 1 即跳过左子树, 找到第一个右子节点
         // inorder 中 inIndex + 1 到 inEnd 为右子树中的节点们
 
-        root.left = helper(preorder, preIndex + 1, inorder, inStart, inIndex - 1, map);
-        root.right = helper(preorder, preIndex + (inIndex - inStart) + 1, inorder, inIndex + 1, inEnd, map);
+        root.left = constructTree(preorder, preIndex + 1,
+                                  inorder, inStart, inIndex - 1,
+                                  map);
+
+        root.right = constructTree(preorder, preIndex + (inIndex - inStart) + 1,
+                                   inorder, inIndex + 1, inEnd,
+                                   map);
 
         return root;
     }
 
-    // 获得inorder中节点值与其下标对应的mapping
-    private Map<Integer, Integer> getInorderIndex(int[] inorder) {
-        Map<Integer, Integer> map = new HashMap<>();
-        for (int i = 0; i < inorder.length; i++) {
-            map.put(inorder[i], i);
-        }
-        return map;
-    }
+
 
 
 

@@ -1,5 +1,6 @@
 # Compiled class file
 *.class
+*.pyc
 
 # Build generated files
 bin
@@ -12,3 +13,5 @@ bin
 .settings/
 
 out/
+
+src/python/myenv/
