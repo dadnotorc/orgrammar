@@ -50,7 +50,10 @@ public class _0105_Construct_Binary_Tree_From_Preorder_And_Inorder_Traversal {
 
     public TreeNode buildTree(int[] preorder, int[] inorder) {
         Map<Integer, Integer> map = getInorderIndex(inorder);
-        return constructTree(preorder, 0, inorder, 0, inorder.length - 1, map);
+        return constructTree(
+                preorder, 0, preorder.length - 1,
+                inorder, 0, inorder.length - 1,
+                map);
     }
 
     // 通过遍历 inorder, 获得 mapping - <节点值, 其对应的 inorder 下标>
@@ -63,32 +66,39 @@ public class _0105_Construct_Binary_Tree_From_Preorder_And_Inorder_Traversal {
     }
 
     // 递归 构造树
-    private TreeNode constructTree(int[] preorder, int preIndex,
+    private TreeNode constructTree(int[] preorder, int preStart, int preEnd,
                                    int[] inorder, int inStart, int inEnd,
                                    Map<Integer, Integer> map) {
-        if (preIndex > preorder.length - 1 || inStart > inEnd) {
+        if (preStart > preEnd || inStart > inEnd) {
             return null;
         }
 
-        TreeNode root = new TreeNode(preorder[preIndex]);
+        TreeNode root = new TreeNode(preorder[preStart]);
         int inIndex = map.get(root.val);
-        // 从 inStart 开始到 inIndex - 1 都为 root 的左子树
-        // 从 inIndex + 1 开始到 inEnd 都为 root 的右子树
 
-        // 左子节点 - preorder 中 preIndex + 1 即为当前节点的左子节点;
-        // inorder 中从 inStart 到 inIndex - 1 为左子树中的节点们
+        // 左子树
+        // preorder 中 preStart + 1 为 root 的左子节点;
+        //          从 preStart + 1 到 preStart + leftSize 为左子树
+        // inorder 中从 inStart 到 inIndex - 1 为 root 左子树
 
-        // 右子节点 - (inIndex-inStart) = 左子树的大小,
-        // 所以 preorder 中 preIndex + (inIndex - inStart) + 1 即跳过左子树, 找到第一个右子节点
-        // inorder 中 inIndex + 1 到 inEnd 为右子树中的节点们
+        // 左子树的大小 leftSize = inIndex - inStart
 
-        root.left = constructTree(preorder, preIndex + 1,
-                                  inorder, inStart, inIndex - 1,
-                                  map);
+        // 右数字
+        // preorder 中 preStart + leftSize + 1 即跳过左子树, 找到第一个右子节点
+        //          从 preStart + leftSize + 1 到 preEnd 为右子树
+        // inorder 中从 inIndex + 1 到 inEnd 为 root 右子树
 
-        root.right = constructTree(preorder, preIndex + (inIndex - inStart) + 1,
-                                   inorder, inIndex + 1, inEnd,
-                                   map);
+        int leftSize = inIndex - inStart;
+
+        root.left = constructTree(
+                preorder, preStart + 1, preStart + leftSize,
+                inorder, inStart, inIndex - 1,
+                map);
+
+        root.right = constructTree(
+                preorder, preStart + leftSize + 1, preEnd,
+                inorder, inIndex + 1, inEnd,
+                map);
 
         return root;
     }
