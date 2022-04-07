@@ -1,11 +1,11 @@
-/*
-Medium
-#Array, #DP
- */
 package leetcode;
+
+import java.util.Arrays;
 
 /**
  * Minimum Path Sum
+ * Medium
+ * #Array, #DP
  *
  * Given a m x n grid filled with non-negative numbers,
  * find a path from top left to bottom right which minimizes the sum of all numbers along its path.
@@ -22,9 +22,64 @@ package leetcode;
  * Output: 7
  * Explanation: Because the path 1→3→1→1→1 minimizes the sum.
  */
-public class _0064_MinimumPathSum {
+public class _0064_Minimum_Path_Sum {
 
-    public int minPathSum_2(int[][] grid) {
+    /**
+     * DP - 1D 数组
+     */
+    public int minPathSum(int[][] grid) {
+        if (grid == null || grid.length == 0 || grid[0].length == 0) {
+            return 0;
+        }
+
+        int m = grid.length, n = grid[0].length;
+
+        int[] dp = new int[n + 1];
+        Arrays.fill(dp, Integer.MAX_VALUE);
+        dp[1] = 0;
+
+        for (int[] cur : grid) {
+            for (int i = 1; i <= n; i++) {
+                dp[i] = Math.min(dp[i - 1], dp[i]) + cur[i - 1];
+            }
+        }
+
+        return dp[n];
+    }
+
+    /**
+     * DP - 2D 数组
+     */
+    public int minPathSum_dp(int[][] grid) {
+        if (grid == null || grid.length == 0 || grid[0].length == 0) {
+            return 0;
+        }
+
+        int m = grid.length, n = grid[0].length;
+
+        int[][] dp = new int[m][n];
+
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < n; j++) {
+                if (i == 0 && j == 0) {
+                    dp[i][j] = grid[i][j];
+                } else if (i == 0) {
+                    dp[i][j] = grid[i][j] + dp[i][j - 1];
+                } else if (j == 0) {
+                    dp[i][j] = grid[i][j] + dp[i - 1][j];
+                } else {
+                    dp[i][j] = grid[i][j] + Math.min(dp[i][j - 1], dp[i - 1][j]);
+                }
+            }
+        }
+        return dp[m - 1][n - 1];
+    }
+
+
+    /**
+     * 递归
+     */
+    public int minPathSum_recursive(int[][] grid) {
         int[][] minSums = new int[grid.length][grid[0].length];
         return helper(grid, grid.length - 1, grid[0].length -1, minSums);
     }
@@ -45,27 +100,6 @@ public class _0064_MinimumPathSum {
         return minSums[x][y];
     }
 
-
-    /**
-     * DP
-     */
-    public int minPathSum(int[][] grid) {
-        int[][] minSums = new int[grid.length][grid[0].length];
-        for (int i = 0; i < grid.length; i++) {
-            for (int j = 0; j < grid[0].length; j++) {
-                if (i == 0 && j == 0) {
-                    minSums[i][j] = grid[i][j];
-                } else if (i == 0) {
-                    minSums[i][j] = grid[i][j] + minSums[i][j - 1];
-                } else if (j == 0) {
-                    minSums[i][j] = grid[i][j] + minSums[i - 1][j];
-                } else {
-                    minSums[i][j] = grid[i][j] + Math.min(minSums[i][j - 1], minSums[i - 1][j]);
-                }
-            }
-        }
-        return minSums[grid.length - 1][grid[0].length - 1];
-    }
 
     /**
      * 会TLE, Time Limit Exceeded
