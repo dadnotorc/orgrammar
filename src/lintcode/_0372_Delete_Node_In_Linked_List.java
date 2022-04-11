@@ -1,14 +1,12 @@
-/*
-Easy
-Linked List
-Apple, Adobe, Microsoft, Salesforce
- */
 package lintcode;
 
 import util.ListNode;
 
 /**
  * 372. Delete Node in a Linked List
+ * Easy
+ * Linked List
+ * Apple, Adobe, Microsoft, Salesforce
  *
  * Implement an algorithm to delete a node in the middle of a singly linked
  * list, given only access to that node.
@@ -27,9 +25,15 @@ import util.ListNode;
  * Output:
  * 1->5->null
  */
-public class _0372_DeleteNodeInLinkedList {
+public class _0372_Delete_Node_In_Linked_List {
+    /*
+    这道题没有给出 head 指针, 所以做法是将要删除的 node 用它下一位覆盖掉
 
-    // 使用下一节点覆盖当前节点, 注意特判
+    要小心注意特判
+    - 如果当前 node 或者 下一位 为空, 则将当前 node 变为空
+    - 否则, 用下一个 node 的值覆盖
+     */
+
     public void deleteNode(ListNode node) {
 
         // 特判 #1 - list 本身为空, 所以必须判断当前 node 是否为空

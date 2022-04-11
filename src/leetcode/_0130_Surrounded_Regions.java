@@ -1,16 +1,16 @@
-/*
-Medium
-#DFS, #BFS, #Union Find
- */
 package leetcode;
 
 /**
  * 130. Surrounded Regions
+ * Medium
+ * #DFS, #BFS, #Union Find
  *
- * Given a 2D board containing 'X' and 'O' (the letter O), capture all regions surrounded by 'X'.
+ * Given an m x n matrix board containing 'X' and 'O',
+ * capture all regions that are 4-directionally surrounded by 'X'.
+ *
  * A region is captured by flipping all 'O's into 'X's in that surrounded region.
  *
- * Example:
+ * Example 1
  * X X X X
  * X O O X
  * X X O X
@@ -27,8 +27,19 @@ package leetcode;
  * of the board are not flipped to 'X'. Any 'O' that is not on the border and it is not
  * connected to an 'O' on the border will be flipped to 'X'. Two cells are connected if
  * they are adjacent cells connected horizontally or vertically.
+ *
+ *
+ * Example 2:
+ * Input: board = [["X"]]
+ * Output: [["X"]]
+ *
+ * Constraints:
+ * m == board.length
+ * n == board[i].length
+ * 1 <= m, n <= 200
+ * board[i][j] is 'X' or 'O'.
  */
-public class _0130_SurroundedRegions {
+public class _0130_Surrounded_Regions {
 
     /**
      * Union Find
@@ -103,22 +114,22 @@ public class _0130_SurroundedRegions {
             return;
         }
 
-        int n = board.length;
-        int m = board[0].length;
-        int dummy = n * m; // connect 'O' on edges with this dummy node
+        int m = board.length;
+        int n = board[0].length;
+        int dummy = m * n; // connect 'O' on edges with this dummy node
 
-        UnionFind uf = new UnionFind(n * m + 1); // 多一个dummy node
+        UnionFind uf = new UnionFind(m * n + 1); // 多一个dummy node
 
         // 连通'O'节点
-        for (int i = 0; i < n; i++) {
-            for (int j = 0; j < m; j++) {
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < n; j++) {
                 if (board[i][j] == 'X') {
                     continue;
                 }
 
-                int index = i * m + j; // 当前node的index, 注意是乘以m, 而不是n
+                int index = i * n + j; // 当前node的index, 注意是乘以 n, 而不是 m
 
-                if (i == 0 || i == n - 1 || j == 0 || j == m - 1) { // 将处于边界上的'O'与dummy连通
+                if (i == 0 || i == m - 1 || j == 0 || j == n - 1) { // 将处于边界上的'O'与dummy连通
                     uf.union(index, dummy);
                 }
 
@@ -127,7 +138,7 @@ public class _0130_SurroundedRegions {
                 // 连通不在边界上的'O'与其邻居'O'
                 // 这里只检查左和上的邻居, 因为后和下的邻居在之后的循环中会遇到, 无需多次处理
                 if (i > 0 && board[i - 1][j] == 'O') {
-                    uf.union(index, index - m); // 上一层的邻居与当前节点index相差m. 注意, 相差m, 而不是n
+                    uf.union(index, index - n); // 上一层的邻居与当前节点index相差m. 注意, 相差m, 而不是n
                 }
                 if (j > 0 && board[i][j - 1] == 'O') {
                     uf.union(index, index - 1); // 左边的邻居与当前节点index相差1
@@ -137,10 +148,10 @@ public class _0130_SurroundedRegions {
 
         // 将所有不与dummy相连的'O'节点改为'X'
         // 注意, 边界从1到n-2即可, 无需访问边界上的节点
-        for (int i = 1; i < n - 1; i++) {
-            for (int j = 1; j < m - 1; j++) {
-                // 当前节点index = i * m + j, 注意是乘以m, 而不是n
-                if (board[i][j] == 'O' && !uf.isConnected(dummy, i * m + j)) {
+        for (int i = 1; i < m - 1; i++) {
+            for (int j = 1; j < n - 1; j++) {
+                // 当前节点index = i * n + j, 注意是乘以 n, 而不是 m
+                if (board[i][j] == 'O' && !uf.isConnected(dummy, i * n + j)) {
                     board[i][j] = 'X';
                 }
             }
@@ -151,7 +162,7 @@ public class _0130_SurroundedRegions {
 
 
     /**
-     * 两次遍历
+     * 另一种解法 - 两次遍历
      * 第一次遍历 - 找出边界上的'O', 使用DFS找出相连的'O', 将其标记 (标记说明其与边界上的'O'相连)
      * 第二次遍历 - 翻转所有未标记的'O'
      */
