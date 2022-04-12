@@ -1,16 +1,19 @@
-/*
-Easy
-Array
- */
 package leetcode;
 
 import org.junit.Test;
 
 /**
- * 674. Longest Continuous Increasing Subsequence
+ * 674. Longest Continuous Increasing Subsequence - only from left to right
+ * Easy
+ * #Array
  *
- * Given an unsorted array of integers, find the length of longest continuous
- * increasing subsequence (subarray).
+ * Given an unsorted array of integers nums, return the length of the
+ * longest continuous increasing subsequence (i.e. subarray).
+ * The subsequence must be strictly increasing.
+ *
+ * A continuous increasing subsequence is defined by two indices l and r (l < r)
+ * such that it is [nums[l], nums[l + 1], ..., nums[r - 1], nums[r]] and
+ * for each l <= i < r, nums[i] < nums[i + 1].
  *
  * Example 1:
  * Input: [1,3,5,4,7]
@@ -25,8 +28,11 @@ import org.junit.Test;
  * Explanation: The longest continuous increasing subsequence is [2], its length is 1.
  *
  * Note: Length of the array will not exceed 10,000.
+ *
+ * 与 lintcode 397 不同之处
+ * - 397 中, 如果是 降序 也可以 (也就是 升序 从左到右 或者 从右到左)
  */
-public class _0674_LongestContinuousIncreasingSubsequence {
+public class _0674_Longest_Continuous_Increasing_Subsequence_One_Direction {
 
     public int findLengthOfLCIS(int[] nums) {
         if (nums == null || nums.length == 0)
@@ -47,7 +53,10 @@ public class _0674_LongestContinuousIncreasingSubsequence {
         return Math.max(ans, curMax); // 注意, 如果直接return ans就会出错. 因为ans在循环中可能从未更新过, 比如 {1,3,5,7}
     }
 
-    // 另一种写法
+
+    /**
+     * 简约解法 - 把之前的 if else 语句用一句写出来
+     */
     public int findLengthOfLCIS_v2(int[] nums) {
         if (nums == null || nums.length == 0)
             return 0;
