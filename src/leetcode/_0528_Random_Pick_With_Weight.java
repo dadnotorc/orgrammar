@@ -66,8 +66,80 @@ import java.util.*;
  */
 public class _0528_Random_Pick_With_Weight {
 
+    /*
+     解法1 - 直观的做法是先计算sum, 然后针对每个值做除法计算出现概率. 但是除法很可能产生double.
+
+     解法2 - 为了避免做除法, 可以采取计算前缀和
+
+     */
+
     /**
+     * 解法2 - 前缀和 + 二分法
+     * 1. 求前缀和
+     * 2. 用二分法, 从 1 至 数组 sum 总和 之前取 随机整数, 看其分配在哪个区间
      *
+     * 例如[1,2,3,4]. 其前缀和为[1,3,6,10]. 从1到10之间取随机整数, 如果随机值为:
+     * 1 (10%几率)        -> 返回下标0
+     * [2,3]之间 (20%几率) -> 返回下标1
+     * [4,6]之间 (30%几率) -> 返回下标2
+     * [7,10]之间(40%几率) -> 返回下标3
+     *
+     * 原数组w不需要sorted, 因为计算prefixSum之后, 我们需要寻找的是随机整数在[1,sum]之间的范围, 以此寻找对应的下标
+     *
+     * 易错点:
+     * 1.  random.nextInt(sum) 时, random取值范围 [0,x) - 0 (inclusive) and sum(exclusive)
+     *     因为这题我们需要从 [1, sum] 之间取值, 所以 .nextInt() + 1
+     * 2. 二分法中, 挪动左右指针时, 是否需要+1
+     */
+
+    Random random;
+    int[] prefixSum;
+
+    public _0528_Random_Pick_With_Weight(int[] w) {
+        this.random = new Random();
+        this.prefixSum = new int[w.length];
+        prefixSum[0] = w[0];
+        for (int i = 1; i < w.length; i++) {
+            prefixSum[i] = prefixSum[i - 1] + w[i];
+        }
+    }
+
+    public int pickIndex() {
+        int n = prefixSum.length;
+        // 数组sum = prefixSum[len - 1] 前缀和最后一位
+        // random取值范围 [0,sum) - 0 (inclusive) and sum(exclusive)
+        // 我们需要的随机数范围 [1, sum], 所以 + 1
+        int target = random.nextInt(prefixSum[n - 1]) + 1;
+
+        // 二分法 原数组[1,2,3,4] 前缀和[1,3,6,10]
+        // 假设随机选4, 4属于[4,6]之间, 所以因返回下标2
+        int l = 0, r = n - 1;
+        while (l < r) {
+            int m = l + (r - l) / 2;
+            if (prefixSum[m] == target) {
+                return m;
+            }
+
+            if (prefixSum[m] < target) {
+                // target 值 > 下标 m 对应的范围, 所以最后结果肯定大于 m, 所以 +1
+                l = m + 1;
+            } else {
+                // 虽然 target 值 < prefixSum[m], 但是仍然有可能属于下标m对应的范围
+                // 例如, 假设 target=2, prefixSum[1]=3, 虽然 target<prefixSum[1], 但是2仍属于下标1对应范围[2,3]
+                // 所以不能 +1
+                r = m;
+            }
+        }
+
+        return l; // 返回l或者r均可, 因为while结束时, l=r
+    }
+
+
+
+
+
+    /**
+     * 这是扩展, weights 是是事先给定的 array, 手动加入 weightMap
      */
     TreeMap<Integer, Integer> weightMap; // <index, weight_sum>
     Random rng_new;
@@ -119,8 +191,7 @@ public class _0528_Random_Pick_With_Weight {
 
 
     public void delete_new(int index) {
-        int weightToRemove =
-                index == 0 ?
+        int weightToRemove = (index == 0) ?
                         weightMap.get(index) :
                         weightMap.get(index) - weightMap.get(index - 1);
 
@@ -145,73 +216,7 @@ public class _0528_Random_Pick_With_Weight {
 
     }
 
-    /*
-     解法1 - 直观的做法是先计算sum, 然后针对每个值做除法计算出现概率. 但是除法很可能产生double.
 
-     解法2 - 为了避免做除法, 可以采取计算前缀和
-     */
-
-
-    /**
-     * 解法2 - 前缀和 + 二分法
-     * 1. 求前缀和
-     * 2. 用二分法, 从 1 至 数组 sum 总和 之前取 随机整数, 看其分配在哪个区间
-     *
-     * 例如[1,2,3,4]. 其前缀和为[1,3,6,10]. 从1到10之间取随机整数, 如果随机值为:
-     * 1 (10%几率)        -> 返回下标0
-     * [2,3]之间 (20%几率) -> 返回下标1
-     * [4,6]之间 (30%几率) -> 返回下标2
-     * [7,10]之间(40%几率) -> 返回下标3
-     *
-     * 原数组w不需要sorted, 因为计算prefixSum之后, 我们需要寻找的是随机整数在[1,sum]之间的范围, 以此寻找对应的下标
-     *
-     * 易错点:
-     * 1.  random.nextInt(sum) 时, random取值范围 [0,x) - 0 (inclusive) and sum(exclusive)
-     *     因为这题我们需要从 [1, sum] 之间取值, 所以 .nextInt() + 1
-     * 2. 二分法中, 挪动左右指针时, 是否需要+1
-     */
-
-    Random random;
-    int[] prefixSum;
-
-//    public _0528_Random_Pick_With_Weight(int[] w) {
-//        this.random = new Random();
-//        this.prefixSum = new int[w.length];
-//        prefixSum[0] = w[0];
-//        for (int i = 1; i < w.length; i++) {
-//            prefixSum[i] = prefixSum[i - 1] + w[i];
-//        }
-//    }
-
-    public int pickIndex() {
-        int n = prefixSum.length;
-        // 数组sum = prefixSum[len - 1] 前缀和最后一位
-        // random取值范围 [0,sum) - 0 (inclusive) and sum(exclusive)
-        // 我们需要的随机数范围 [1, sum], 所以 + 1
-        int target = random.nextInt(prefixSum[n - 1]) + 1;
-
-        // 二分法 原数组[1,2,3,4] 前缀和[1,3,6,10]
-        // 假设随机选4, 4属于[4,6]之间, 所以因返回下标2
-        int l = 0, r = n - 1;
-        while (l < r) {
-            int m = l + (r - l) / 2;
-            if (prefixSum[m] == target) {
-                return m;
-            }
-
-            if (prefixSum[m] < target) {
-                // target 值大于下标 m 对应的范围, 所以最后结果肯定大于 m, 所以 +1
-                l = m + 1;
-            } else {
-                // 虽然 target 值小于prefixSum[m], 但是仍然有可能属于下标m对应的范围
-                // 例如, 假设 target=2, prefixSum[1]=3, 虽然 target<prefixSum[1], 但是2仍属于下标1对应范围[2,3]
-                // 所以不能 +1
-                r = m;
-            }
-        }
-
-        return l; // 返回l或者r均可, 因为while结束时, l=r
-    }
 
 
 
@@ -224,6 +229,7 @@ public class _0528_Random_Pick_With_Weight {
     int sum;
     int weightsAlreadyRemove;
 
+    // 这是需要的, 只是有重名的 在前面
 //    public _0528_Random_Pick_With_Weight() {
 //        map = new TreeMap<>();
 //        rng = new Random();
@@ -238,6 +244,7 @@ public class _0528_Random_Pick_With_Weight {
         map.put(sum, name);
     }
 
+    // 这是需要的, 跟前面写的一样
 //    public void addWeights(List<Integer> weights) {
 //        for (int i = 0; i < weights.size(); i++) {
 //            add(weights.get(i), "index_" + i);
@@ -253,22 +260,23 @@ public class _0528_Random_Pick_With_Weight {
     public void delete(String name) {
         if (!map.containsValue(name)) {
             System.out.println("Value " + name + " does not exit");
+        } else {
+            Set<Integer> keys = map.keySet();
+            int prevTotalWeight = 0;
+            int weightToBeRemoved = 0;
+            for (int key : keys) {
+                // find the target entry to be removed first
+                if (map.get(key).equals(name)) {
+                    weightToBeRemoved = key - prevTotalWeight;
+                    map.remove(key);
+                    sum -= weightToBeRemoved; // 不能直接做 sum - key, 因为这里的 key 已经是 prefixSum, 包含其他的 sum
+                    weightsAlreadyRemove += weightToBeRemoved;
+                    break;
+                }
+                prevTotalWeight = key;
+            }
         }
 
-        Set<Integer> keys = map.keySet();
-        int prevTotalWeight = 0;
-        int weightToBeRemoved = 0;
-        for (int key : keys) {
-            // find the target entry to be removed first
-            if (map.get(key).equals(name)) {
-                weightToBeRemoved = key - prevTotalWeight;
-                map.remove(key);
-                sum -= weightToBeRemoved; // 不能直接做 sum - key, 因为这里的 key 已经是 prefixSum, 包含其他的 sum
-                weightsAlreadyRemove += weightToBeRemoved;
-                break;
-            }
-            prevTotalWeight = key;
-        }
 
         // 这样好像不大行
 //        int prevTotalWeight = 0;

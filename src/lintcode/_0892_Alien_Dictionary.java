@@ -1,8 +1,3 @@
-/*
-Hard
-Directed Graph, Topological Sort
-Airbnb, Facebook, Google, Snapchat, Twitter
- */
 package lintcode;
 
 import org.junit.Test;
@@ -11,6 +6,9 @@ import java.util.*;
 
 /**
  * 892. Alien Dictionary
+ * Hard
+ * Directed Graph, Topological Sort
+ * Airbnb, Facebook, Google, Snapchat, Twitter
  *
  * There is a new alien language which uses the latin alphabet.
  * However, the order among letters are unknown to you.
@@ -45,21 +43,28 @@ import java.util.*;
 public class _0892_Alien_Dictionary {
 
     /**
-     * Step 1: 创建Map, key为words中出现过的所有字符'c', value为words中 > 'c' 的字符 (用Set记录)
-     * Step 2: 创建入度Map, key为所有字符, value为字典中先于该字符的数量 (Interger)
+     * Step 1: 创建 graph Map, key为words中出现过的所有字符'c', value为words中 > 'c' 的字符 (用Set记录)
+     * Step 2: 创建 indegree Map, key为所有字符, value为字典中先于该字符的数量 (Interger)
      * Step 3: 拓扑排序, 先把入度为0的字符放去Priority Queue.
      *         每次取出一个入度为0的字符'c', 找出 > 'c'的其他字符, 将其入度-1. 如该字符入度为0, 加入PQ中
      */
     public String alienOrder(String[] words) {
         Map<Character, Set<Character>> graph = constructGraph(words);
+
+        // 应对 输入为 ["abc","ab"] 这种 invalid input
+        if (graph == null) {
+            return "";
+        }
+
         Map<Character, Integer> indegree = getIndegree(graph);
+
         return topologicalSorting(graph, indegree);
     }
 
     private Map<Character, Set<Character>> constructGraph (String[] words) {
         Map<Character, Set<Character>> graph = new HashMap<>();
 
-        // create nodes - 遍历每个词中的所有字符
+        // create nodes - 遍历每个词中的所有字符 c, 创建对应的 HashSet 记录字母表中在 c 之后的字符
         for (String s : words) {
             for (int i = 0; i < s.length(); i++) {
                 char c = s.charAt(i);
@@ -82,23 +87,29 @@ public class _0892_Alien_Dictionary {
                 }
                 index++;
             }
+
+            // 应对 输入为 ["abc","ab"] 这种 invalid input, 因为题目要求
+            // The dictionary is invalid, if string a is prefix of string b and b is appear before a.
+            if (index < words[i].length() && index == words[i + 1].length()) {
+                return null;
+            }
         }
 
         return graph;
     }
 
-    // 入度 = 字典中, 有多少字符先于当前字符
+    // indegree map = 字典中, 有多少字符先于当前字符
     private Map<Character, Integer> getIndegree(Map<Character, Set<Character>> graph) {
         Map<Character, Integer> indegree = new HashMap<>();
 
-        // 不合并以下两个loop的原因是, 要先保证所有字符在indegree图中已经存在一个entry
+        // 不合并以下两个loop的原因是, 要先保证所有字符在 indegree 图中已经存在一个 entry
 
         for (Character c : graph.keySet()) {
             indegree.put(c, 0);
         }
 
         for (Character c : graph.keySet()) {
-            for (Character d : graph.get(c)) {
+            for (Character d : graph.get(c)) { // 对于字典中 c 之后的每个字符 d
                 indegree.put(d, indegree.get(d) + 1);
             }
         }
@@ -114,6 +125,8 @@ public class _0892_Alien_Dictionary {
 
         // 使用PriorityQueue的原因是, "return the smallest in normal lexicographical order"
         PriorityQueue<Character> pq = new PriorityQueue<>();
+
+        // 先把没有 indegree 的字符 加入 PQ
         for (Character c : indegree.keySet()) {
             if (indegree.get(c) == 0)
                 pq.offer(c);
@@ -124,19 +137,26 @@ public class _0892_Alien_Dictionary {
             sb.append(head);
 
             // 入度中的字符已取走, 把后续字符的入度 - 1
-            // 如果后续字符入度变成0, 加入队列中
-            for (Character neighbor : graph.get(head)) {
-                indegree.put(neighbor, indegree.get(neighbor) - 1);
-                if (indegree.get(neighbor) == 0)
-                    pq.offer(neighbor);
+            // 如果后续字符入度也变成 0, 加入队列中
+            for (Character c : graph.get(head)) {
+                indegree.put(c, indegree.get(c) - 1);
+                if (indegree.get(c) == 0)
+                    pq.offer(c);
             }
         }
 
+        // 别忘了特判
         if (sb.length() != graph.size())
             return "";
 
         return sb.toString();
     }
+
+
+
+
+
+
 
     @Test
     public void test1() {

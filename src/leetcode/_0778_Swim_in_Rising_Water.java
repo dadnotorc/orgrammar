@@ -1,7 +1,5 @@
 package leetcode;
 
-import org.junit.Test;
-
 import java.util.*;
 
 /**
@@ -72,9 +70,28 @@ public class _0778_Swim_in_Rising_Water {
      空间 - O(n^2)
      */
 
+    // 二分 ( 遍历解法在后面)
+    public int swimInWater_binarysearch(int[][] grid) {
+        int n = grid.length;
+        int l = Math.max(2 * n - 2, // 最少经过 2n - 1 个节点, 即从 0 至 2n - 2 (横行 n 个, 纵向 n - 1 个)
+                Math.max(grid[0][0], grid[n - 1][n - 1])); // 左上角 和 右下角 的值
+        int r = n * n - 1;
+        while (l < r) {
+            int mid = l + (r - l) / 2;
+            if (canReachWithSetMax(grid, mid)) {
+                r = mid; // mid 可以, 但是要继续找有没有更小的
+            } else {
+                l = mid + 1; // mid 达不到, 必须扩大
+            }
+        }
+        return l;
+    }
+
+
     int[][] dirs = {{0,1},{1,0},{-1,0},{0,-1}};
 
-    // 是否存在一条 path, 其最大值 == targe.  不用 DFS, 因为递归深度可达 n^2, 数据规模太大
+    // 是否存在一条 path, 其最大值 == targe.
+    // 不用 DFS, 因为递归深度可达 n^2, 数据规模太大
     public boolean canReachWithSetMax(int[][] grid, int target) {
         int n = grid.length;
 
@@ -108,26 +125,13 @@ public class _0778_Swim_in_Rising_Water {
         return false; // queue 读完, 仍未到终点, 说明无法完成
     }
 
-    public int swimInWater_binarysearch(int[][] grid) {
-        int n = grid.length;
-        int l = Math.max(2 * n - 2, // 最少经过 2n - 1 个节点, 即从 0 至 2n - 2
-                Math.max(grid[0][0], grid[n - 1][n - 1]));
-        int r = n * n - 1;
-        while (l < r) {
-            int mid = l + (r - l) / 2;
-            if (canReachWithSetMax(grid, mid)) {
-                r = mid; // mid 可以, 但是要继续找有没有更小的
-            } else {
-                l = mid + 1; // mid 达不到, 必须扩大
-            }
-        }
-        return l;
-    }
 
+
+    // 遍历
     public int swimInWater(int[][] grid) {
         int n = grid.length;
         int start = Math.max(2 * n - 2, // 最少经过 2n - 1 个节点, 即从 0 至 2n - 2
-                    Math.max(grid[0][0], grid[n - 1][n - 1]));
+                             Math.max(grid[0][0], grid[n - 1][n - 1]));
         int end = n * n;
         for (int i = start; i < end; i++) {
             if (canReachWithSetMax(grid, i)) {
@@ -137,6 +141,10 @@ public class _0778_Swim_in_Rising_Water {
 
         return end;
     }
+
+
+
+
 
 
     /**
