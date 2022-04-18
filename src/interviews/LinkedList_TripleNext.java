@@ -1,6 +1,6 @@
 package interviews;
 
-import org.junit.Test;
+import java.util.Scanner;
 
 /**
  * 写一个 class 对链表进行操作.
@@ -16,7 +16,7 @@ import org.junit.Test;
  */
 public class LinkedList_TripleNext {
 
-    class Node{
+    static class Node{
         int val;
         Node next;
         Node triple_next;
@@ -49,6 +49,7 @@ public class LinkedList_TripleNext {
             if (this.length >= 3) {
                 node.triple_next = node.next.next.next;
             }
+
         } else if (index <= 2) {
             Node pre = null;
             Node cur = this.head;
@@ -108,6 +109,7 @@ public class LinkedList_TripleNext {
         if (index == 0) {
             this.head = this.head.next;
         } else if (index <= 2) {
+            // 删除 index_1 或者 index_2 的时候, pre 与 cur 是相邻的
             Node pre = null;
             Node cur = this.head;
             if (index == 2) {
@@ -122,6 +124,7 @@ public class LinkedList_TripleNext {
             cur.next = cur.next.next;
 
         } else { // index >= 3
+            // 删除 index_3 或者 更后的, pre 与 cur 之间隔一位
             Node pre = this.head;
             Node cur = pre.next.next;
 
@@ -142,7 +145,7 @@ public class LinkedList_TripleNext {
     public void print() {
         Node cur = this.head;
         while (cur != null) {
-            System.out.print(cur.val + " : ");
+            System.out.print(cur.val + "\t:\t");
             if (cur.triple_next == null) {
                 System.out.println("NULL");
             } else {
@@ -153,56 +156,61 @@ public class LinkedList_TripleNext {
     }
 
 
-    @Test
-    public void test1() {
+
+    public static void main(String[] args) {
         LinkedList_TripleNext list = new LinkedList_TripleNext();
-        list.insert(0, 0);
-        list.insert(1, 1);
-        list.insert(2, 2);
-        list.insert(3, 3);
-        list.insert(4, 4);
-        list.insert(5, 5);
-        list.insert(6, 6);
-        list.insert(15, 4);
-        list.insert(20, 6);
-        list.insert(25, 3);
-        list.insert(30, 2);
-        list.insert(35, 1);
-        list.print();
-    }
+        System.out.println("Enter a number to choose a test to run");
+        Scanner sc = new Scanner(System.in);
+        int testNum = sc.nextInt();
 
-    @Test
-    public void test2() {
-        LinkedList_TripleNext list = new LinkedList_TripleNext();
-        list.insert(7, 0);
-        list.insert(6, 0);
-        list.insert(5, 0);
-        list.insert(4, 0);
-        list.insert(3, 0);
-        list.insert(2, 0);
-        list.insert(1, 0);
-        list.insert(0, 0);
+        if (testNum == 1) {
+            list.insert(0, 0);
+            list.insert(1, 1);
+            list.insert(2, 2);
+            list.insert(3, 3);
+            list.insert(4, 4);
+            list.insert(5, 5);
+            list.insert(6, 6);
+            list.print();
 
-        list.delete(8);
-        list.print();
-    }
+            System.out.println("----------");
 
-    @Test
-    public void test3() {
-        LinkedList_TripleNext list = new LinkedList_TripleNext();
-        list.insert(2, 0);
-        list.insert(1, 0);
-        list.insert(0, 0);
+            list.insert(15, 4);
+            list.insert(20, 6);
+            list.insert(25, 3);
+            list.insert(30, 2);
+            list.insert(35, 1);
+            list.print();
 
-        list.insert(5, 1);
-        list.print();
+        } else if (testNum == 2) {
+            list = new LinkedList_TripleNext();
+            list.insert(7, 0);
+            list.insert(6, 0);
+            list.insert(5, 0);
+            list.insert(4, 0);
+            list.insert(3, 0);
+            list.insert(2, 0);
+            list.insert(1, 0);
+            list.insert(0, 0);
 
-        System.out.println("deleting index 1");
-        list.delete(1);
-        list.print();
+            list.delete(8);
+            list.print();
+        } else if (testNum == 3) {
+            list = new LinkedList_TripleNext();
+            list.insert(2, 0);
+            list.insert(1, 0);
+            list.insert(0, 0);
 
-        System.out.println("insert at index 2");
-        list.insert(5, 2);
-        list.print();
+            list.insert(5, 1);
+            list.print();
+
+            System.out.println("deleting index 1");
+            list.delete(1);
+            list.print();
+
+            System.out.println("insert at index 2");
+            list.insert(5, 2);
+            list.print();
+        }
     }
 }
