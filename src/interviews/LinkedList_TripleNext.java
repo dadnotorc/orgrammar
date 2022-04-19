@@ -33,6 +33,18 @@ public class LinkedList_TripleNext {
         this.head = null;
     }
 
+    // prepend 其实就是 insert() 里, index == 0 的情况
+    public void prepend(int val) {
+        Node node = new Node(val);
+
+        node.next = this.head;
+        this.head = node;
+        if (this.length >= 3) {
+            node.triple_next = node.next.next.next;
+        }
+        this.length++;
+    }
+
     public void insert(int val, int index) {
         if (index <  0 || index > this.length) {
             System.out.println("invalid index");
@@ -43,14 +55,14 @@ public class LinkedList_TripleNext {
 
         Node node = new Node(val);
 
-        if (index == 0) {
+        if (index == 0) { // prepend to the begining
             node.next = this.head;
             this.head = node;
             if (this.length >= 3) {
                 node.triple_next = node.next.next.next;
             }
 
-        } else if (index <= 2) {
+        } else if (index <= 2) { // insert to 2nd / 3rd place
             Node pre = null;
             Node cur = this.head;
             if (index == 2) {
@@ -62,11 +74,11 @@ public class LinkedList_TripleNext {
             node.triple_next = cur.triple_next;
             cur.next = node;
 
-            if (this.length >= 3) {
+            if (cur.next.next != null) { // 就是 node.next
                 cur.triple_next = cur.next.next.next;
-                if (pre != null) {
-                    pre.triple_next = pre.next.next.next;
-                }
+            }
+            if (pre != null) {
+                pre.triple_next = pre.next.next.next; // 其实就是 node.next
             }
 
         } else { // index >= 3 && original length >= 3
@@ -210,6 +222,15 @@ public class LinkedList_TripleNext {
 
             System.out.println("insert at index 2");
             list.insert(5, 2);
+            list.print();
+        } else if (testNum == 4) {
+            list = new LinkedList_TripleNext();
+            list.prepend(3);
+            list.prepend(1);
+            list.prepend(0);
+            list.print();
+            System.out.println("----------");
+            list.insert(2,2);
             list.print();
         }
     }
