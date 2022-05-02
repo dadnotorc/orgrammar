@@ -63,6 +63,9 @@ public class LinkedList_TripleNext {
             }
 
         } else if (index <= 2) { // insert to 2nd / 3rd place
+
+            // 添加到 index_1 或者 index_2 的时候, pre 与 cur 是相邻的
+
             Node pre = null;
             Node cur = this.head;
             if (index == 2) {
@@ -82,6 +85,13 @@ public class LinkedList_TripleNext {
             }
 
         } else { // index >= 3 && original length >= 3
+
+            // 添加 index_3 或者 更后的, pre 与 cur 之间隔一位
+            // 原因是插入后, pre, pre.next, 还有 cur 的 triple_next都需要向前移一位
+
+            // 前一种情况 插入 index_1 或者 index_2 不需要这么做的原因是
+            // 不存在某个节点的 triple_next 要指向新 node
+
             Node pre = this.head; // pre 从 index 0 开始
             Node cur = pre.next.next; // cur 从 index 2 开始, 如此, pre.triple_next 和 cur.next 都会变成 new node
 
@@ -96,7 +106,8 @@ public class LinkedList_TripleNext {
 
             cur.triple_next = pre.next.triple_next;
             pre.next.triple_next = pre.triple_next;
-            pre.triple_next = node;
+            pre.triple_next = node; // 就是这步 所以要求 pre 与 cur 之间要隔开一位
+
         }
 
         this.length++; // 别忘了
@@ -157,12 +168,8 @@ public class LinkedList_TripleNext {
     public void print() {
         Node cur = this.head;
         while (cur != null) {
-            System.out.print(cur.val + "\t:\t");
-            if (cur.triple_next == null) {
-                System.out.println("NULL");
-            } else {
-                System.out.println(cur.triple_next.val);
-            }
+            System.out.println(cur.val + "\t:\t"
+                    + (cur.triple_next == null ? "NULL" : cur.triple_next.val));
             cur = cur.next;
         }
     }

@@ -1,11 +1,9 @@
-/*
-Easy
-#Two Pointers
- */
 package lintcode;
 
 /**
  * 6 · Merge Two Sorted Arrays
+ * Easy
+ * #Two Pointers
  *
  * Merge two given sorted ascending integer array A and B into a new sorted integer array.
  *
@@ -20,7 +18,20 @@ package lintcode;
  * Challenge
  * How can you optimize your algorithm if one array is very large and the other is very small?
  */
-public class _0006_MergeTwoSortedArrays {
+public class _0006_Merge_Two_Sorted_Arrays {
+
+    /*
+    如果用 list 存储, 最后转成 array 的话, 要注意
+    - 不能使用 Foo[] array = list.toArray(new Foo[0]);
+      因为:
+      this works only for arrays of reference types.
+
+    - For arrays of primitive types, use the traditional way:
+      List<Integer> list = ...;
+      int[] array = new int[list.size()];
+      for(int i = 0; i < list.size(); i++) { array[i] = list.get(i); }
+     */
+
 
     /**
      * 双指针 分别指向两个数组
@@ -65,7 +76,8 @@ public class _0006_MergeTwoSortedArrays {
         int a_len = A.length, b_len = B.length;
         int[] ans = new int[a_len + b_len];
 
-        // 优化 - 对短数组做 binary search
+        // 优化 - 遍历短数组 (因为其较少)
+        // 对短数组中所有数字, 在长数组中使用 binary search 查找下标位置
         int[] longer, shorter;
         if (a_len > b_len) {
             longer = A;

@@ -42,7 +42,7 @@ public class _2450_StartThreadPrintHelloWorld {
                     e.printStackTrace();
                 }
             });
-            Solution solution = new Solution();
+            Solution_2450 solution = new Solution_2450();
             solution.printNumberInMainSubThread(print);
         } catch (Exception e) {
             e.printStackTrace();
@@ -51,7 +51,7 @@ public class _2450_StartThreadPrintHelloWorld {
 }
 
 // 这个放在 Solution.java
-class Solution {
+class Solution_2450 {
     public void printNumberInMainSubThread(IntConsumer intConsumer) throws InterruptedException {
         new Thread(() -> {
             intConsumer.accept(1);

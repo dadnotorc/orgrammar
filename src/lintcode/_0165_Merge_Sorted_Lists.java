@@ -1,31 +1,30 @@
-/*
-Easy
-#Linked List
-Amazon, Apple, LinkedIn, Microsoft
-FAQ++
- */
 package lintcode;
 
 import org.junit.Test;
 import util.ListNode;
 
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 /**
  * 165. Merge Two Sorted Lists
+ * Easy
+ * #Linked List
+ * Amazon, Apple, LinkedIn, Microsoft
+ * FAQ++
  *
  * Merge two sorted (ascending) linked lists and return it as a new sorted list.
  * The new sorted list should be made by splicing together the nodes of the
  *  two lists and sorted in ascending order.
  *
- * time complexity:  O(n) n是l1和l2中, 较短一只的长度
+ * time complexity:  O(n) n是 l1 和 l2 中, 较短一只的长度
  * space complexity: O(1)
+ *
+ * Leetcode 21
  */
-public class _0165_MergeSortedLists {
+public class _0165_Merge_Sorted_Lists {
 
     /**
-     * 每次对比两条list的head node, 将较小者连上
+     * 每次对比两条 list 的 head node, 将较小者连上
      *
      * 易错点:
      * 1. while循环结束时, 可能仍有一条list仍未读完, 需要将其连上队尾
@@ -109,8 +108,8 @@ public class _0165_MergeSortedLists {
 
         ListNode rstList = mergeTwoLists_Iterative(l1, l2);
 
-        while (l3 != null || rstList !=null) {
-            assertTrue(l3.val == rstList.val);
+        while (l3 != null && rstList != null) {
+            assertEquals(l3.val, rstList.val);
             l3 = l3.next;
             rstList = rstList.next;
         }
@@ -155,8 +154,8 @@ public class _0165_MergeSortedLists {
 
         ListNode rstList = mergeTwoLists_Iterative(l1, l2);
 
-        while (l3 != null || rstList !=null) {
-            assertTrue(l3.val == rstList.val);
+        while (l3 != null && rstList !=null) {
+            assertEquals(l3.val, rstList.val);
             l3 = l3.next;
             rstList = rstList.next;
         }

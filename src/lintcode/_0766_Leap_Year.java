@@ -1,10 +1,8 @@
-/*
-Easy
- */
 package lintcode;
 
 /**
  * 766 · Leap Year
+ * Easy
  *
  * Determine whether year n is a leap year.return true if n is a leap year.
  *
@@ -19,15 +17,15 @@ package lintcode;
  * Input : n = 2018
  * Output : false
  */
-public class _0766_LeapYear {
+public class _0766_Leap_Year {
 
     /**
      * 普通年能被4整除且不能被100整除的为闰年
      * 世纪年能被400整除的是闰年
      */
     public boolean isLeapYear(int n) {
-        if (n <= 0) return false;
+        if (n < 0) return false;
 
-        return ((n % 4 == 0 && n % 100 != 0) || n % 400 == 0);
+        return ((n % 4 == 0 && n % 100 != 0) || n % 400 == 0); // 最外层的 () 不能少
     }
 }
