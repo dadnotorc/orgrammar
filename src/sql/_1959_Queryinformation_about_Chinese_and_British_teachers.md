@@ -5,13 +5,13 @@ who are Chinese or British in the teacher table teachers.
 
 Table definition : teachers 
 
-| columns_name | type    | explaination |
-| :----:       | :----:  | :----: |
-| id           | int     | primary key |
-| name         | varchar | teacher's name |
-| email        | varchar | teacher's email |
-| age          | int     | teacher's age |
-| country      | varchar | teacher's nationality  |
+| columns_name |  type   |      explanation      |
+|:------------:|:-------:|:---------------------:|
+|      id      |   int   |      primary key      |
+|     name     | varchar |    teacher's name     |
+|    email     | varchar |    teacher's email    |
+|     age      |   int   |     teacher's age     |
+|   country    | varchar | teacher's nationality |
 
 
 Tip:

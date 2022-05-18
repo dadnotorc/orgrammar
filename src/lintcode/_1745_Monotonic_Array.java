@@ -1,14 +1,12 @@
-/*
-Easy
-Array
-Facebook
- */
 package lintcode;
 
 import org.junit.Test;
 
 /**
  * 1745. Monotonic Array
+ * Easy
+ * Array
+ * Facebook
  *
  * An array is monotonic if it is either monotone increasing or monotone decreasing.
  *
@@ -29,42 +27,48 @@ import org.junit.Test;
  * Input: [1,3,2]
  * Output: false
  */
-public class _1745_MonotonicArray {
+public class _1745_Monotonic_Array {
 
     /* 解法2 - 九章参考 */
     // 遍历一次, 判断是否有递增或者递减的单调性, 满足其中一项即可
     // 写法较简单, 但是运行时间较长, 因为每组对比要完成两次
-    public boolean isMonotonic_jiuzhang(int[] A) {
+    public boolean isMonotonic_jiuzhang(int[] a) {
+
+        // 初始值均为正, 因为之后 for 循环里, 每次都是 && 操作
         boolean isIncreasing = true, isDecreasing = true;
 
-        for (int i = 1; i < A.length; i++) {
-            isIncreasing &= A[i - 1] <= A[i];
-            isDecreasing &= A[i - 1] >= A[i];
+        for (int i = 1; i < a.length; i++) {
+            isIncreasing &= a[i - 1] <= a[i];
+            isDecreasing &= a[i - 1] >= a[i];
         }
         return isIncreasing || isDecreasing;
     }
 
-    public boolean isMonotonic(int[] A) {
-        if (A != null && A.length <= 1)
+
+    /**
+     * 另一种写法, 写法比较复杂
+     */
+    public boolean isMonotonic(int[] a) {
+        if (a != null && a.length <= 1)
             return true;
 
         int curIndex = 1;
         // 跳过开头所以相同的数字
         // 循环到达倒数第二位时停止
-        while (curIndex + 1 < A.length) {
-            if (A[curIndex - 1] != A[curIndex])
+        while (curIndex + 1 < a.length) {
+            if (a[curIndex - 1] != a[curIndex])
                 break;
 
             curIndex++;
         }
 
         // 遇到不相同数字, 判断单调性
-        boolean isIncreasing = (A[curIndex - 1] < A[curIndex++]);
+        boolean isIncreasing = (a[curIndex - 1] < a[curIndex++]);
 
         // 判断后续数字中是否有破坏单调性的存在
-        for (int i = curIndex; i < A.length; i++) {
-            if ((isIncreasing && (A[i - 1] > A[i]))
-                    || (!isIncreasing && (A[i - 1] < A[i]))) {
+        for (int i = curIndex; i < a.length; i++) {
+            if ((isIncreasing && (a[i - 1] > a[i]))
+                    || (!isIncreasing && (a[i - 1] < a[i]))) {
                 return false;
             }
         }
