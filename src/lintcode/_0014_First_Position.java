@@ -1,14 +1,12 @@
-/*
-Easy
-#Array, #Binary Search
-Salesforce
- */
 package lintcode;
 
 import org.junit.Test;
 
 /**
  * 14. First Position of Target
+ * Easy
+ * #Array, #Binary Search
+ * Salesforce
  *
  * For a given sorted array (ascending order) and a target number, 
  *  find the first index of this number in O(log n) time complexity.
@@ -17,7 +15,24 @@ import org.junit.Test;
  * Challenge:
  * If the count of numbers is bigger than 2^32, can your code work properly?
  */
-public class _0014_FirstPosition {
+public class _0014_First_Position {
+
+	public int binarySearch_3(int[] nums, int target) {
+		if (nums == null || nums.length == 0) { return -1; }
+
+		int l = 0, r = nums.length - 1;
+
+		while (l < r) {
+			int mid = l + (r - l) / 2;
+			if (nums[mid] < target) {
+				l = mid + 1;
+			} else {
+				r = mid;
+			}
+		}
+
+		return nums[l] == target ? l : -1;
+	}
 
 	/**
      * 使用两分法
@@ -44,17 +59,13 @@ public class _0014_FirstPosition {
     			r = mid - 1;
     		}
     	}
-    	
-    	if (nums[l] == target) {
-    		return l;
-    	}
-    	
-    	return -1;
+
+		return nums[l] == target ? l : -1;
     }
 
 
 	/**
-	 * 解法2 与第一种解法类似
+	 * 解法2 与第一种解法类似, 使用 while (l + 1 < r)
 	 */
     public int binarySearch_two(int[] nums, int target) {
     	if (nums == null || nums.length == 0)
@@ -93,7 +104,7 @@ public class _0014_FirstPosition {
 	public void test2() {
 		int[] nums = new int[] {1,2,3,3,4,5,10};
 		int target = 3;
-		int result = (new _0014_FirstPosition().binarySearch(nums, target));
+		int result = (new _0014_First_Position().binarySearch(nums, target));
 		// the first index of 3 is 2.
 		org.junit.Assert.assertEquals(binarySearch(nums, target), 2);
 		org.junit.Assert.assertEquals(binarySearch_two(nums, target), 2);
@@ -103,7 +114,7 @@ public class _0014_FirstPosition {
 	public void test3() {
 		int[] nums = new int[] {1,2,3,3,4,5,10};
 		int target = 6;
-		int result = (new _0014_FirstPosition().binarySearch(nums, target));
+		int result = (new _0014_First_Position().binarySearch(nums, target));
 		// Not exist 6 in array.
 		org.junit.Assert.assertEquals(binarySearch(nums, target), -1);
 		org.junit.Assert.assertEquals(binarySearch_two(nums, target), -1);
