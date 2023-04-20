@@ -11,7 +11,12 @@ bin
 .idea/
 .project
 .settings/
+.obsidian/
+.vscode/
+
 
 out/
 
 src/python/myenv/
+
+plum/

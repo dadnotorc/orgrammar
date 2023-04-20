@@ -47,7 +47,7 @@ import java.util.ArrayList;
  * 1 <= s.length <= 20
  * s consists of only English letters (both uppercase and lowercase), digits (0-9), plus '+', minus '-', or dot '.'.
  */
-public class _65_Valid_Number {
+public class _0065_Valid_Number {
 
     /*
     使用 if else

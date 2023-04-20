@@ -1,7 +1,3 @@
-/*
-Easy
-#Hash Table, #Bit Manipulation
- */
 package leetcode;
 
 import java.util.ArrayList;
@@ -9,6 +5,8 @@ import java.util.HashSet;
 
 /**
  * 136. Single Number
+ * Easy
+ * #Hash Table, #Bit Manipulation
  *
  * Given a non-empty array of integers, every element appears twice except for one. Find that single one.
  *
@@ -22,6 +20,8 @@ import java.util.HashSet;
  * Example 2:
  * Input: [4,1,2,1,2]
  * Output: 4
+ *
+ * lintcode 82
  */
 public class _0136_SingleNumber {
 

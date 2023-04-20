@@ -1,12 +1,10 @@
-/*
-Easy
-#Bit Manipulation
-Apple, Microsoft
- */
 package lintcode;
 
 /**
  * 1332. Number of 1 Bits
+ * Easy
+ * #Bit Manipulation
+ * Apple, Microsoft
  *
  * Write a function that takes an unsigned integer and returns the number of ’1' bits
  * the corresponding binary number has (also known as the Hamming weight).
